@@ -39,7 +39,7 @@ export default function HomePage() {
               <span className="text-xl">🏀</span>
             </div>
             <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              COACH PRO
+              413OPENCOURT
             </span>
           </motion.div>
 
