@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+:root {
+  --nba-blue: #1D428A;
+  --nba-red: #C8102E;
+  --nba-dark: #0A0A0A;
+  --nba-gray: #1E1E1E;
+  --nba-light: #F5F5F5;
+}
+
+body {
+  background-color: var(--nba-dark);
+  color: var(--nba-light);
+}
