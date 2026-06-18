@@ -39,7 +39,7 @@ export default function HomePage() {
               <span className="text-xl">🏀</span>
             </div>
             <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              COACH PRO
+              413OPENCOURT
             </span>
           </motion.div>
 
@@ -56,7 +56,7 @@ export default function HomePage() {
               whileTap={{ scale: 0.95 }}
               className="px-6 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
             >
-              COACH LOGIN
+              LOGIN
             </motion.a>
           </div>
         </div>
