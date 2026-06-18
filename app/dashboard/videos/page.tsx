@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const categories = [
+  { id: "PAST", label: "Past Training Videos", icon: "📼" },
   { id: "ALL", label: "All Videos", icon: "🎬" },
   { id: "DRIBBLING", label: "Dribbling", icon: "🏀" },
   { id: "SHOOTING", label: "Shooting", icon: "🎯" },
