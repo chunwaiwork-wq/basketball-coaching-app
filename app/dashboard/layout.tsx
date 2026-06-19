@@ -15,6 +15,11 @@ const navItems = [
     label: "Drill Tracker", 
     icon: "✅"
   },
+  { 
+    href: "/dashboard/leads", 
+    label: "Leads CRM", 
+    icon: "📋"
+  },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

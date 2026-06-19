@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Lead" ADD COLUMN "contacted" BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE "Lead" ADD COLUMN "notes" TEXT;

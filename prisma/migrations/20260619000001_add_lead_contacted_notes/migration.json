@@ -1,0 +1,13 @@
+{
+  "version": "5.22.0",
+  "steps": [
+    {
+      "tag": "AlterTable",
+      "table": "Lead",
+      "addColumns": [
+        { "name": "contacted", "type": "Boolean", "default": { "name": "autoincrement", "args": [false] } },
+        { "name": "notes", "type": "Text", "optional": true }
+      ]
+    }
+  ]
+}
