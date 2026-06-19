@@ -22,9 +22,9 @@ export async function sendLeadNotification(name: string, email: string) {
 // ── Exported: email the PDF guide directly to the lead ───────────────
 
 export async function sendGuideToLead(name: string, email: string) {
-  const apiKey = process.env.SENDGRID_API_KEY;
+  const apiKey = process.env.MAILCHIMP_API_KEY;
   if (!apiKey) {
-    console.log("ℹ️  SENDGRID_API_KEY not set — can't email guide to lead");
+    console.log("ℹ️  MAILCHIMP_API_KEY not set — can't email guide to lead");
     return;
   }
 
@@ -48,32 +48,34 @@ export async function sendGuideToLead(name: string, email: string) {
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
+  const res = await fetch("https://mandrillapp.com/api/1.0/messages/send", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      personalizations: [{ to: [{ email, name }] }],
-      from: { email: "413opencourt@gmail.com", name: "413OPENCOURT" },
-      subject: "Your Free Shooting Guide 🏀",
-      content: [{ type: "text/html", value: html }],
-      attachments: [
-        {
-          filename: "free-shooting-guide.pdf",
-          content: pdfBase64,
-          type: "application/pdf",
-        },
-      ],
+      key: apiKey,
+      message: {
+        from_email: "413opencourt@gmail.com",
+        from_name: "413OPENCOURT",
+        to: [{ email, name, type: "to" }],
+        subject: "Your Free Shooting Guide 🏀",
+        html,
+        attachments: [
+          {
+            type: "application/pdf",
+            name: "free-shooting-guide.pdf",
+            content: pdfBase64,
+          },
+        ],
+      },
     }),
   });
 
-  if (res.ok) {
-    console.log("✅ Guide emailed to lead via SendGrid");
+  const data = await res.json();
+
+  if (res.ok && data?.[0]?.status === "sent") {
+    console.log("✅ Guide emailed to lead via Mailchimp");
   } else {
-    const err = await res.text();
-    console.error("❌ SendGrid guide email error:", res.status, err);
+    console.error("❌ Mailchimp guide email error:", res.status, JSON.stringify(data));
   }
 }
 
@@ -121,7 +123,7 @@ async function sendEmailToOwner(
   email: string,
   timestamp: string
 ) {
-  const apiKey = process.env.SENDGRID_API_KEY;
+  const apiKey = process.env.MAILCHIMP_API_KEY;
   if (!apiKey) return;
 
   const html = [
@@ -139,17 +141,18 @@ async function sendEmailToOwner(
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
+  const res = await fetch("https://mandrillapp.com/api/1.0/messages/send", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      personalizations: [{ to: [{ email: "413opencourt@gmail.com", name }] }],
-      from: { email: "413opencourt@gmail.com", name: "413OPENCOURT" },
-      subject: `🏀 New Lead: ${name}`,
-      content: [{ type: "text/html", value: html }],
+      key: apiKey,
+      message: {
+        from_email: "413opencourt@gmail.com",
+        from_name: "413OPENCOURT",
+        to: [{ email: "413opencourt@gmail.com", name, type: "to" }],
+        subject: `🏀 New Lead: ${name}`,
+        html,
+      },
     }),
   });
 
