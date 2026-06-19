@@ -22,9 +22,9 @@ export async function sendLeadNotification(name: string, email: string) {
 // ── Exported: email the PDF guide directly to the lead ───────────────
 
 export async function sendGuideToLead(name: string, email: string) {
-  const apiKey = process.env.MAILCHIMP_API_KEY;
+  const apiKey = process.env.BREVO_API_KEY;
   if (!apiKey) {
-    console.log("ℹ️  MAILCHIMP_API_KEY not set — can't email guide to lead");
+    console.log("ℹ️  BREVO_API_KEY not set — can't email guide to lead");
     return;
   }
 
@@ -48,34 +48,31 @@ export async function sendGuideToLead(name: string, email: string) {
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://mandrillapp.com/api/1.0/messages/send", {
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "api-key": apiKey,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      key: apiKey,
-      message: {
-        from_email: "413opencourt@gmail.com",
-        from_name: "413OPENCOURT",
-        to: [{ email, name, type: "to" }],
-        subject: "Your Free Shooting Guide 🏀",
-        html,
-        attachments: [
-          {
-            type: "application/pdf",
-            name: "free-shooting-guide.pdf",
-            content: pdfBase64,
-          },
-        ],
-      },
+      sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
+      to: [{ email, name }],
+      subject: "Your Free Shooting Guide 🏀",
+      htmlContent: html,
+      attachment: [
+        {
+          name: "free-shooting-guide.pdf",
+          content: pdfBase64,
+        },
+      ],
     }),
   });
 
-  const data = await res.json();
-
-  if (res.ok && data?.[0]?.status === "sent") {
-    console.log("✅ Guide emailed to lead via Mailchimp");
+  if (res.ok) {
+    console.log("✅ Guide emailed to lead via Brevo");
   } else {
-    console.error("❌ Mailchimp guide email error:", res.status, JSON.stringify(data));
+    const err = await res.text();
+    console.error("❌ Brevo guide email error:", res.status, err);
   }
 }
 
@@ -123,7 +120,7 @@ async function sendEmailToOwner(
   email: string,
   timestamp: string
 ) {
-  const apiKey = process.env.MAILCHIMP_API_KEY;
+  const apiKey = process.env.BREVO_API_KEY;
   if (!apiKey) return;
 
   const html = [
@@ -141,18 +138,17 @@ async function sendEmailToOwner(
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://mandrillapp.com/api/1.0/messages/send", {
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "api-key": apiKey,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      key: apiKey,
-      message: {
-        from_email: "413opencourt@gmail.com",
-        from_name: "413OPENCOURT",
-        to: [{ email: "413opencourt@gmail.com", name, type: "to" }],
-        subject: `🏀 New Lead: ${name}`,
-        html,
-      },
+      sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
+      to: [{ email: "413opencourt@gmail.com", name }],
+      subject: `🏀 New Lead: ${name}`,
+      htmlContent: html,
     }),
   });
 
