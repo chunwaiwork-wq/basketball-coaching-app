@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import TrialChat from "./components/TrialChat";
+import TrialChat from "../components/TrialChat";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
