@@ -1,0 +1,18 @@
+{
+  "version": "5.22.0",
+  "steps": [
+    {
+      "tag": "CreateTable",
+      "table": "Lead",
+      "columns": [
+        { "name": "id", "type": "Serial", "default": { "name": "autoincrement" }, "primaryKey": true },
+        { "name": "name", "type": "Text" },
+        { "name": "email", "type": "Text" },
+        { "name": "createdAt", "type": "DateTime", "default": { "name": "now" } }
+      ],
+      "uniqueConstraints": [
+        { "name": "Lead_email_key", "columns": ["email"] }
+      ]
+    }
+  ]
+}

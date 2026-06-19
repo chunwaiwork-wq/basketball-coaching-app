@@ -6,6 +6,10 @@ export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", whatsapp: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [guideData, setGuideData] = useState({ name: "", email: "" });
+  const [guideSubmitted, setGuideSubmitted] = useState(false);
+  const [guideLoading, setGuideLoading] = useState(false);
+  const [guideError, setGuideError] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -18,6 +22,42 @@ export default function HomePage() {
     const message = `Hi Coach! I want to sign up for a free trial.%0A%0AName: ${formData.name}%0AEmail: ${formData.email}%0AWhatsApp: ${formData.whatsapp}`;
     window.open(`https://wa.me/6591885348?text=${message}`, '_blank');
     setSubmitted(true);
+  };
+
+  const handleGuideSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setGuideLoading(true);
+    setGuideError("");
+
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(guideData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setGuideError(data.error || "Something went wrong");
+        setGuideLoading(false);
+        return;
+      }
+
+      setGuideSubmitted(true);
+      setGuideLoading(false);
+
+      // Trigger download
+      const link = document.createElement("a");
+      link.href = data.downloadUrl;
+      link.download = "How_to_Shoot_Better_and_Improve_Your_Basketball_Shooting.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch {
+      setGuideError("Network error. Please try again.");
+      setGuideLoading(false);
+    }
   };
 
   return (
@@ -52,6 +92,7 @@ export default function HomePage() {
           <div className="flex items-center gap-6">
             <a href="#features" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FEATURES</a>
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">REVIEWS</a>
+            <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
             <motion.a
               href="/auth"
@@ -264,6 +305,78 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Free Shooting Guide — Email Capture */}
+      <section id="guide" className="px-8 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="max-w-3xl mx-auto"
+        >
+          <div className="bg-gradient-to-b from-blue-500/10 to-blue-600/5 backdrop-blur-xl border border-blue-500/20 rounded-3xl p-10 md:p-14 text-center">
+            <div className="text-6xl mb-6">🏀</div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              GET YOUR{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
+                FREE SHOOTING GUIDE
+              </span>
+            </h2>
+            <p className="text-gray-400 mb-8 max-w-lg mx-auto">
+              Learn pro shooting techniques, form corrections, and drills used by NBA players. Enter your email and get the PDF instantly.
+            </p>
+
+            {!guideSubmitted ? (
+              <form onSubmit={handleGuideSubmit} className="max-w-md mx-auto space-y-4">
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  required
+                  value={guideData.name}
+                  onChange={(e) => setGuideData({ ...guideData, name: e.target.value })}
+                  className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-colors"
+                />
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  required
+                  value={guideData.email}
+                  onChange={(e) => setGuideData({ ...guideData, email: e.target.value })}
+                  className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-colors"
+                />
+                {guideError && (
+                  <p className="text-red-400 text-sm">{guideError}</p>
+                )}
+                <motion.button
+                  type="submit"
+                  disabled={guideLoading}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full font-semibold text-lg shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow disabled:opacity-50"
+                >
+                  {guideLoading ? "SENDING..." : "SEND MY FREE GUIDE →"}
+                </motion.button>
+              </form>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="py-8"
+              >
+                <div className="text-5xl mb-4">✅</div>
+                <h3 className="text-2xl font-bold text-green-400 mb-2">
+                  GUIDE SENT!
+                </h3>
+                <p className="text-gray-400">
+                  Check your downloads — the PDF should be opening now. If not,{" "}
+                  <a href="/free-shooting-guide.pdf" className="text-blue-400 hover:underline" download>
+                    click here to download
+                  </a>.
+                </p>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      </section>
+
       {/* Final CTA */}
       <section className="px-8 py-20">
         <motion.div
@@ -340,6 +453,7 @@ export default function HomePage() {
             <a href="#features" className="hover:text-gray-300 transition-colors">Features</a>
             <a href="#testimonials" className="hover:text-gray-300 transition-colors">Reviews</a>
             <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial." className="hover:text-gray-300 transition-colors">Free Trial</a>
+            <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="/auth" className="hover:text-gray-300 transition-colors">Coach Login</a>
           </div>
         </div>
