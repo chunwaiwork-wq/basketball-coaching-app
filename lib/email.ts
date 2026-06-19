@@ -13,10 +13,9 @@ export async function sendLeadNotification(name: string, email: string) {
     timeZoneName: "short",
   });
 
-  await Promise.allSettled([
-    sendTelegram(name, email, now),
-    sendEmailToOwner(name, email, now),
-  ]);
+  await sendTelegram(name, email, now).catch((err) =>
+    console.error("Telegram error:", err)
+  );
 }
 
 // ── Exported: email the PDF guide directly to the lead ───────────────
@@ -113,47 +112,3 @@ async function sendTelegram(name: string, email: string, timestamp: string) {
   }
 }
 
-// ── Email to owner (notify about new lead) ──────────────────────────
-
-async function sendEmailToOwner(
-  name: string,
-  email: string,
-  timestamp: string
-) {
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) return;
-
-  const html = [
-    `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
-    `  <h2 style="color: #e53e3e;">🏀 New Lead!</h2>`,
-    `  <table style="width:100%;border-collapse:collapse;">`,
-    `    <tr><td style="padding:8px;color:#666;">Name</td><td style="padding:8px;"><strong>${name}</strong></td></tr>`,
-    `    <tr><td style="padding:8px;color:#666;">Email</td><td style="padding:8px;"><strong>${email}</strong></td></tr>`,
-    `    <tr><td style="padding:8px;color:#666;">Guide</td><td style="padding:8px;">Free Shooting Guide (PDF)</td></tr>`,
-    `    <tr><td style="padding:8px;color:#666;">Time</td><td style="padding:8px;">${timestamp}</td></tr>`,
-    `  </table>`,
-    `  <br/>`,
-    `  <a href="https://basketball-coaching-app-one.vercel.app/dashboard/leads"`,
-    `     style="display:inline-block;padding:12px 24px;background:#e53e3e;color:white;text-decoration:none;border-radius:6px;">Open CRM →</a>`,
-    `</div>`,
-  ].join("\n");
-
-  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": apiKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
-      to: [{ email: "413opencourt@gmail.com", name }],
-      subject: `🏀 New Lead: ${name}`,
-      htmlContent: html,
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error("Owner email error:", res.status, err);
-  }
-}
