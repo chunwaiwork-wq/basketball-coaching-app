@@ -49,6 +49,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: "Guide is on its way to your inbox!",
+      downloadUrl: "/free-shooting-guide.pdf",
       leadId: lead.id,
     });
   } catch (error: any) {
@@ -62,6 +63,7 @@ export async function POST(request: Request) {
       return NextResponse.json({
         success: true,
         message: "You already signed up! We've re-sent the guide to your inbox.",
+        downloadUrl: "/free-shooting-guide.pdf",
         alreadyExists: true,
       });
     }
