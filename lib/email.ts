@@ -11,7 +11,7 @@ export async function sendLeadNotification(name: string, email: string) {
     timeZoneName: "short",
   });
 
-  // Fire both notifications in parallel — don't block the response
+  // Fire both notifications in parallel
   await Promise.allSettled([
     sendTelegram(name, email, now),
     sendEmail(name, email, now),
@@ -22,10 +22,7 @@ export async function sendLeadNotification(name: string, email: string) {
 
 async function sendTelegram(name: string, email: string, timestamp: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  if (!token) {
-    console.warn("TELEGRAM_BOT_TOKEN not set — skipping Telegram");
-    return;
-  }
+  if (!token) return;
 
   const text = [
     `🏀 *New Lead!*`,
@@ -52,71 +49,64 @@ async function sendTelegram(name: string, email: string, timestamp: string) {
         }),
       }
     );
-    if (!res.ok) {
-      const body = await res.text();
-      console.error("Telegram send failed:", res.status, body);
-    }
+    if (!res.ok) console.error("Telegram send failed:", await res.text());
   } catch (err) {
     console.error("Telegram send error:", err);
   }
 }
 
-// ── Email via Gmail SMTP ─────────────────────────────────────────────
+// ── Email via Resend API (zero npm dependencies) ──────────────────────
+// The user signs up at https://resend.com (free tier: 100 emails/day)
+// Then adds RESEND_API_KEY to Vercel env vars
 
 async function sendEmail(name: string, email: string, timestamp: string) {
-  const smtpEmail = process.env.SMTP_EMAIL;
-  const smtpPassword = process.env.SMTP_PASSWORD;
-
-  if (!smtpEmail || !smtpPassword) {
-    console.warn("SMTP_EMAIL or SMTP_PASSWORD not set — skipping email");
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.log(
+      "ℹ️  Email skipped — RESEND_API_KEY not set. " +
+        "Sign up at https://resend.com and add the key to Vercel env vars."
+    );
     return;
   }
 
-  try {
-    // Dynamic require — avoids build-time bundling issues on Vercel
-    const nodemailer = require("nodemailer");
+  const html = [
+    `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
+    `  <h2 style="color: #e53e3e;">🏀 New Lead!</h2>`,
+    `  <table style="width:100%;border-collapse:collapse;">`,
+    `    <tr><td style="padding:8px;color:#666;">Name</td><td style="padding:8px;"><strong>${name}</strong></td></tr>`,
+    `    <tr><td style="padding:8px;color:#666;">Email</td><td style="padding:8px;"><strong>${email}</strong></td></tr>`,
+    `    <tr><td style="padding:8px;color:#666;">Guide</td><td style="padding:8px;">Free Shooting Guide (PDF)</td></tr>`,
+    `    <tr><td style="padding:8px;color:#666;">Time</td><td style="padding:8px;">${timestamp}</td></tr>`,
+    `  </table>`,
+    `  <br/>`,
+    `  <a href="https://basketball-coaching-app-one.vercel.app/dashboard/leads"`,
+    `     style="display:inline-block;padding:12px 24px;background:#e53e3e;color:white;text-decoration:none;border-radius:6px;">Open CRM →</a>`,
+    `</div>`,
+  ].join("\n");
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // TLS
-      auth: {
-        user: smtpEmail,
-        pass: smtpPassword,
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        from: "413OPENCOURT <onboarding@resend.dev>",
+        to: ["413opencourt@gmail.com"],
+        subject: `🏀 New Lead: ${name}`,
+        html,
+      }),
     });
 
-    const mailOptions = {
-      from: `"413OPENCOURT" <${smtpEmail}>`,
-      to: "413opencourt@gmail.com",
-      subject: `🏀 New Lead: ${name}`,
-      text: [
-        `New lead captured from the free shooting guide!`,
-        ``,
-        `Name:  ${name}`,
-        `Email: ${email}`,
-        `Time:  ${timestamp}`,
-        ``,
-        `CRM: https://basketball-coaching-app-one.vercel.app/dashboard/leads`,
-      ].join("\n"),
-      html: [
-        `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
-        `  <h2 style="color: #e53e3e;">🏀 New Lead!</h2>`,
-        `  <table style="width: 100%; border-collapse: collapse;">`,
-        `    <tr><td style="padding: 8px; color: #666;">Name</td><td style="padding: 8px;"><strong>${name}</strong></td></tr>`,
-        `    <tr><td style="padding: 8px; color: #666;">Email</td><td style="padding: 8px;"><strong>${email}</strong></td></tr>`,
-        `    <tr><td style="padding: 8px; color: #666;">Guide</td><td style="padding: 8px;">Free Shooting Guide (PDF)</td></tr>`,
-        `    <tr><td style="padding: 8px; color: #666;">Time</td><td style="padding: 8px;">${timestamp}</td></tr>`,
-        `  </table>`,
-        `  <br/>`,
-        `  <a href="https://basketball-coaching-app-one.vercel.app/dashboard/leads" style="display: inline-block; padding: 12px 24px; background: #e53e3e; color: white; text-decoration: none; border-radius: 6px;">Open CRM →</a>`,
-        `</div>`,
-      ].join("\n"),
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.messageId);
+    if (res.ok) {
+      const data = await res.json();
+      console.log("Email sent via Resend:", data.id);
+    } else {
+      const err = await res.text();
+      console.error("Resend API error:", res.status, err);
+    }
   } catch (err) {
-    console.error("Email send failed:", err);
+    console.error("Email send error:", err);
   }
 }
