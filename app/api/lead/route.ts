@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../lib/prisma";
+import { sendLeadNotification } from "../../../lib/email";
 
 export async function POST(request: Request) {
   try {
@@ -24,6 +25,11 @@ export async function POST(request: Request) {
       data: { name, email },
     });
 
+    // Send email notification (fire-and-forget — don't block the response)
+    sendLeadNotification(name, email).catch((err) =>
+      console.error("Failed to send lead notification:", err)
+    );
+
     return NextResponse.json({
       success: true,
       downloadUrl: "/free-shooting-guide.pdf",
@@ -32,7 +38,8 @@ export async function POST(request: Request) {
   } catch (error: any) {
     // Handle duplicate email
     if (error?.code === "P2002") {
-      // Already signed up — still let them download
+      // Already signed up — still let them download and notify
+      sendLeadNotification(name, email).catch(() => {});
       return NextResponse.json({
         success: true,
         downloadUrl: "/free-shooting-guide.pdf",
