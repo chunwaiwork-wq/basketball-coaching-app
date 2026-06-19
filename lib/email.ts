@@ -1,5 +1,3 @@
-import nodemailer from "nodemailer";
-
 const TO_YOU = 214421742; // This Telegram chat
 
 export async function sendLeadNotification(name: string, email: string) {
@@ -74,45 +72,48 @@ async function sendEmail(name: string, email: string, timestamp: string) {
     return;
   }
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // TLS
-    auth: {
-      user: smtpEmail,
-      pass: smtpPassword,
-    },
-  });
-
-  const mailOptions = {
-    from: `"413OPENCOURT" <${smtpEmail}>`,
-    to: "413opencourt@gmail.com",
-    subject: `🏀 New Lead: ${name}`,
-    text: [
-      `New lead captured from the free shooting guide!`,
-      ``,
-      `Name:  ${name}`,
-      `Email: ${email}`,
-      `Time:  ${timestamp}`,
-      ``,
-      `CRM: https://basketball-coaching-app-one.vercel.app/dashboard/leads`,
-    ].join("\n"),
-    html: [
-      `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
-      `  <h2 style="color: #e53e3e;">🏀 New Lead!</h2>`,
-      `  <table style="width: 100%; border-collapse: collapse;">`,
-      `    <tr><td style="padding: 8px; color: #666;">Name</td><td style="padding: 8px;"><strong>${name}</strong></td></tr>`,
-      `    <tr><td style="padding: 8px; color: #666;">Email</td><td style="padding: 8px;"><strong>${email}</strong></td></tr>`,
-      `    <tr><td style="padding: 8px; color: #666;">Guide</td><td style="padding: 8px;">Free Shooting Guide (PDF)</td></tr>`,
-      `    <tr><td style="padding: 8px; color: #666;">Time</td><td style="padding: 8px;">${timestamp}</td></tr>`,
-      `  </table>`,
-      `  <br/>`,
-      `  <a href="https://basketball-coaching-app-one.vercel.app/dashboard/leads" style="display: inline-block; padding: 12px 24px; background: #e53e3e; color: white; text-decoration: none; border-radius: 6px;">Open CRM →</a>`,
-      `</div>`,
-    ].join("\n"),
-  };
-
   try {
+    // Dynamic require — avoids build-time bundling issues on Vercel
+    const nodemailer = require("nodemailer");
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // TLS
+      auth: {
+        user: smtpEmail,
+        pass: smtpPassword,
+      },
+    });
+
+    const mailOptions = {
+      from: `"413OPENCOURT" <${smtpEmail}>`,
+      to: "413opencourt@gmail.com",
+      subject: `🏀 New Lead: ${name}`,
+      text: [
+        `New lead captured from the free shooting guide!`,
+        ``,
+        `Name:  ${name}`,
+        `Email: ${email}`,
+        `Time:  ${timestamp}`,
+        ``,
+        `CRM: https://basketball-coaching-app-one.vercel.app/dashboard/leads`,
+      ].join("\n"),
+      html: [
+        `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
+        `  <h2 style="color: #e53e3e;">🏀 New Lead!</h2>`,
+        `  <table style="width: 100%; border-collapse: collapse;">`,
+        `    <tr><td style="padding: 8px; color: #666;">Name</td><td style="padding: 8px;"><strong>${name}</strong></td></tr>`,
+        `    <tr><td style="padding: 8px; color: #666;">Email</td><td style="padding: 8px;"><strong>${email}</strong></td></tr>`,
+        `    <tr><td style="padding: 8px; color: #666;">Guide</td><td style="padding: 8px;">Free Shooting Guide (PDF)</td></tr>`,
+        `    <tr><td style="padding: 8px; color: #666;">Time</td><td style="padding: 8px;">${timestamp}</td></tr>`,
+        `  </table>`,
+        `  <br/>`,
+        `  <a href="https://basketball-coaching-app-one.vercel.app/dashboard/leads" style="display: inline-block; padding: 12px 24px; background: #e53e3e; color: white; text-decoration: none; border-radius: 6px;">Open CRM →</a>`,
+        `</div>`,
+      ].join("\n"),
+    };
+
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent:", info.messageId);
   } catch (err) {
