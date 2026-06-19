@@ -366,7 +366,7 @@ export default function HomePage() {
                   GUIDE SENT!
                 </h3>
                 <p className="text-gray-400">
-                  Check your downloads — the PDF should be opening now. If not,{" "}
+                  Check your inbox — we've sent the guide to your email! If you don't see it,{" "}
                   <a href="/free-shooting-guide.pdf" className="text-blue-400 hover:underline" download>
                     click here to download
                   </a>.

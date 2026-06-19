@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../lib/prisma";
-import { sendLeadNotification } from "../../../lib/email";
+import { sendLeadNotification, sendGuideToLead } from "../../../lib/email";
 
 export async function POST(request: Request) {
   let body: { name?: string; email?: string };
@@ -36,22 +36,32 @@ export async function POST(request: Request) {
       data: { name, email },
     });
 
-    // Fire notifications asynchronously
+    // Fire notifications in background (don't block response)
     sendLeadNotification(name, email).catch((err) =>
-      console.error("Failed to send lead notification:", err)
+      console.error("Owner notification failed:", err)
+    );
+
+    // Email the PDF guide to the lead (don't block response either)
+    sendGuideToLead(name, email).catch((err) =>
+      console.error("Guide email failed:", err)
     );
 
     return NextResponse.json({
       success: true,
-      downloadUrl: "/free-shooting-guide.pdf",
+      message: "Guide is on its way to your inbox!",
       leadId: lead.id,
     });
   } catch (error: any) {
-    // Handle duplicate email (unique constraint violation)
+    // Handle duplicate email (already signed up before)
     if (error?.code === "P2002") {
+      // Still send the guide again
+      sendGuideToLead(name, email).catch((err) =>
+        console.error("Guide email failed (duplicate):", err)
+      );
+
       return NextResponse.json({
         success: true,
-        downloadUrl: "/free-shooting-guide.pdf",
+        message: "You already signed up! We've re-sent the guide to your inbox.",
         alreadyExists: true,
       });
     }

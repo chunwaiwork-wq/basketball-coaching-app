@@ -1,5 +1,7 @@
 const TO_YOU = 214421742; // This Telegram chat
 
+// ── Exported: notify the business owner ───────────────────────────────
+
 export async function sendLeadNotification(name: string, email: string) {
   const now = new Date().toLocaleString("en-US", {
     weekday: "long",
@@ -11,29 +13,75 @@ export async function sendLeadNotification(name: string, email: string) {
     timeZoneName: "short",
   });
 
-  console.log(`🔔 sendLeadNotification called for ${name} <${email}>`);
-
-  // Fire both notifications in parallel
-  const results = await Promise.allSettled([
+  await Promise.allSettled([
     sendTelegram(name, email, now),
-    sendEmail(name, email, now),
+    sendEmailToOwner(name, email, now),
   ]);
-
-  results.forEach((r, i) => {
-    if (r.status === "rejected") {
-      console.error(`Notification ${i} failed:`, r.reason);
-    }
-  });
 }
 
-// ── Telegram ──────────────────────────────────────────────────────────
+// ── Exported: email the PDF guide directly to the lead ───────────────
+
+export async function sendGuideToLead(name: string, email: string) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.log("ℹ️  RESEND_API_KEY not set — can't email guide to lead");
+    return;
+  }
+
+  console.log(`📧 Sending free shooting guide to ${name} <${email}>`);
+
+  // Read the PDF from the filesystem
+  const fs = await import("fs");
+  const path = await import("path");
+  const pdfPath = path.join(process.cwd(), "public", "free-shooting-guide.pdf");
+  const pdfBuffer = fs.readFileSync(pdfPath);
+  const pdfBase64 = pdfBuffer.toString("base64");
+
+  const html = [
+    `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
+    `  <h2 style="color: #e53e3e;">🏀 Here's Your Free Shooting Guide!</h2>`,
+    `  <p>Hey ${name},</p>`,
+    `  <p>Thanks for signing up! Your free shooting guide is attached to this email.</p>`,
+    `  <p>Practice these drills and watch your game improve 💪</p>`,
+    `  <br/>`,
+    `  <p style="color: #666;">— Coach at <strong>413OPENCOURT</strong></p>`,
+    `</div>`,
+  ].join("\n");
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "413OPENCOURT <onboarding@resend.dev>",
+      to: [email],
+      subject: "Your Free Shooting Guide 🏀",
+      html,
+      attachments: [
+        {
+          filename: "free-shooting-guide.pdf",
+          content: pdfBase64,
+        },
+      ],
+    }),
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    console.log("✅ Guide emailed to lead:", data.id);
+  } else {
+    const err = await res.text();
+    console.error("❌ Failed to email guide:", res.status, err);
+  }
+}
+
+// ── Telegram (notify owner) ──────────────────────────────────────────
 
 async function sendTelegram(name: string, email: string, timestamp: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  if (!token) {
-    console.log("ℹ️  TELEGRAM_BOT_TOKEN not set");
-    return;
-  }
+  if (!token) return;
 
   const text = [
     `🏀 *New Lead!*`,
@@ -62,31 +110,19 @@ async function sendTelegram(name: string, email: string, timestamp: string) {
 
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`Telegram error ${res.status}: ${body}`);
+    console.error("Telegram error:", res.status, body);
   }
-
-  console.log("✅ Telegram sent");
 }
 
-// ── Email via Resend API (zero npm dependencies) ──────────────────────
-// Free tier: 100 emails/day at https://resend.com
+// ── Email to owner (notify about new lead) ──────────────────────────
 
-async function sendEmail(name: string, email: string, timestamp: string) {
+async function sendEmailToOwner(
+  name: string,
+  email: string,
+  timestamp: string
+) {
   const apiKey = process.env.RESEND_API_KEY;
-
-  console.log(
-    `📧 sendEmail: RESEND_API_KEY ${
-      apiKey ? `set (${apiKey.slice(0, 8)}...)` : "NOT SET"
-    }`
-  );
-
-  if (!apiKey) {
-    console.log(
-      "ℹ️  Email skipped — RESEND_API_KEY not set. " +
-        "Add it on Vercel: https://vercel.com/chunwaiwork-wq/basketball-coaching-app-one/settings/environment-variables"
-    );
-    return;
-  }
+  if (!apiKey) return;
 
   const html = [
     `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
@@ -103,7 +139,6 @@ async function sendEmail(name: string, email: string, timestamp: string) {
     `</div>`,
   ].join("\n");
 
-  console.log("📧 Calling Resend API...");
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -118,11 +153,8 @@ async function sendEmail(name: string, email: string, timestamp: string) {
     }),
   });
 
-  if (res.ok) {
-    const data = await res.json();
-    console.log("✅ Email sent via Resend:", data.id);
-  } else {
+  if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Resend API error ${res.status}: ${err}`);
+    console.error("Owner email error:", res.status, err);
   }
 }
