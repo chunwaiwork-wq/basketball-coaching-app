@@ -3,8 +3,12 @@ import { prisma } from "../../../lib/prisma";
 import { sendLeadNotification } from "../../../lib/email";
 
 export async function POST(request: Request) {
+  let name: string, email: string;
+
   try {
-    const { name, email } = await request.json();
+    const body = await request.json();
+    name = body.name;
+    email = body.email;
 
     if (!name || !email) {
       return NextResponse.json(
@@ -25,7 +29,7 @@ export async function POST(request: Request) {
       data: { name, email },
     });
 
-    // Send email notification (fire-and-forget — don't block the response)
+    // Send notifications (fire-and-forget — don't block the response)
     sendLeadNotification(name, email).catch((err) =>
       console.error("Failed to send lead notification:", err)
     );
