@@ -11,18 +11,29 @@ export async function sendLeadNotification(name: string, email: string) {
     timeZoneName: "short",
   });
 
+  console.log(`🔔 sendLeadNotification called for ${name} <${email}>`);
+
   // Fire both notifications in parallel
-  await Promise.allSettled([
+  const results = await Promise.allSettled([
     sendTelegram(name, email, now),
     sendEmail(name, email, now),
   ]);
+
+  results.forEach((r, i) => {
+    if (r.status === "rejected") {
+      console.error(`Notification ${i} failed:`, r.reason);
+    }
+  });
 }
 
 // ── Telegram ──────────────────────────────────────────────────────────
 
 async function sendTelegram(name: string, email: string, timestamp: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  if (!token) return;
+  if (!token) {
+    console.log("ℹ️  TELEGRAM_BOT_TOKEN not set");
+    return;
+  }
 
   const text = [
     `🏀 *New Lead!*`,
@@ -35,36 +46,44 @@ async function sendTelegram(name: string, email: string, timestamp: string) {
     `👉 [Open CRM](https://basketball-coaching-app-one.vercel.app/auth)`,
   ].join("\n");
 
-  try {
-    const res = await fetch(
-      `https://api.telegram.org/bot${token}/sendMessage`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: TO_YOU,
-          text,
-          parse_mode: "Markdown",
-          disable_web_page_preview: false,
-        }),
-      }
-    );
-    if (!res.ok) console.error("Telegram send failed:", await res.text());
-  } catch (err) {
-    console.error("Telegram send error:", err);
+  const res = await fetch(
+    `https://api.telegram.org/bot${token}/sendMessage`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TO_YOU,
+        text,
+        parse_mode: "Markdown",
+        disable_web_page_preview: false,
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Telegram error ${res.status}: ${body}`);
   }
+
+  console.log("✅ Telegram sent");
 }
 
 // ── Email via Resend API (zero npm dependencies) ──────────────────────
-// The user signs up at https://resend.com (free tier: 100 emails/day)
-// Then adds RESEND_API_KEY to Vercel env vars
+// Free tier: 100 emails/day at https://resend.com
 
 async function sendEmail(name: string, email: string, timestamp: string) {
   const apiKey = process.env.RESEND_API_KEY;
+
+  console.log(
+    `📧 sendEmail: RESEND_API_KEY ${
+      apiKey ? `set (${apiKey.slice(0, 8)}...)` : "NOT SET"
+    }`
+  );
+
   if (!apiKey) {
     console.log(
       "ℹ️  Email skipped — RESEND_API_KEY not set. " +
-        "Sign up at https://resend.com and add the key to Vercel env vars."
+        "Add it on Vercel: https://vercel.com/chunwaiwork-wq/basketball-coaching-app-one/settings/environment-variables"
     );
     return;
   }
@@ -84,29 +103,26 @@ async function sendEmail(name: string, email: string, timestamp: string) {
     `</div>`,
   ].join("\n");
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "413OPENCOURT <onboarding@resend.dev>",
-        to: ["413opencourt@gmail.com"],
-        subject: `🏀 New Lead: ${name}`,
-        html,
-      }),
-    });
+  console.log("📧 Calling Resend API...");
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "413OPENCOURT <onboarding@resend.dev>",
+      to: ["413opencourt@gmail.com"],
+      subject: `🏀 New Lead: ${name}`,
+      html,
+    }),
+  });
 
-    if (res.ok) {
-      const data = await res.json();
-      console.log("Email sent via Resend:", data.id);
-    } else {
-      const err = await res.text();
-      console.error("Resend API error:", res.status, err);
-    }
-  } catch (err) {
-    console.error("Email send error:", err);
+  if (res.ok) {
+    const data = await res.json();
+    console.log("✅ Email sent via Resend:", data.id);
+  } else {
+    const err = await res.text();
+    throw new Error(`Resend API error ${res.status}: ${err}`);
   }
 }
