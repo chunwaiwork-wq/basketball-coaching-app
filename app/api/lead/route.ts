@@ -36,15 +36,18 @@ export async function POST(request: Request) {
       data: { name, email },
     });
 
-    // Fire notifications in background (don't block response)
-    sendLeadNotification(name, email).catch((err) =>
-      console.error("Owner notification failed:", err)
-    );
+    // Fire notifications and email guide (in parallel with response)
+    const [notificationResult, guideResult] = await Promise.allSettled([
+      sendLeadNotification(name, email),
+      sendGuideToLead(name, email),
+    ]);
 
-    // Email the PDF guide to the lead (don't block response either)
-    sendGuideToLead(name, email).catch((err) =>
-      console.error("Guide email failed:", err)
-    );
+    if (notificationResult.status === "rejected") {
+      console.error("Owner notification failed:", notificationResult.reason);
+    }
+    if (guideResult.status === "rejected") {
+      console.error("Guide email failed:", guideResult.reason);
+    }
 
     return NextResponse.json({
       success: true,

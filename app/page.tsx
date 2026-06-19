@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import TrialChat from "./components/TrialChat";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
@@ -10,6 +11,7 @@ export default function HomePage() {
   const [guideSubmitted, setGuideSubmitted] = useState(false);
   const [guideLoading, setGuideLoading] = useState(false);
   const [guideError, setGuideError] = useState("");
+  const [showTrialChat, setShowTrialChat] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -159,7 +161,7 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex gap-4 justify-center"
           >
-            <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial.">
+            <button onClick={() => setShowTrialChat(true)}>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -167,7 +169,7 @@ export default function HomePage() {
               >
                 START FREE TRIAL
               </motion.button>
-            </a>
+            </button>
             <a href="#features">
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -386,7 +388,7 @@ export default function HomePage() {
         >
           <h2 className="text-4xl font-bold mb-4">READY TO GO PRO?</h2>
           <p className="text-gray-400 mb-8">Join hundreds of athletes transforming their game. Start your free trial today.</p>
-          <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial.">
+          <button onClick={() => setShowTrialChat(true)}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -394,7 +396,7 @@ export default function HomePage() {
             >
               START FREE TRIAL
             </motion.button>
-          </a>
+          </button>
         </motion.div>
       </section>
             {/* Social Media */}
@@ -458,6 +460,7 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+      {showTrialChat && <TrialChat onClose={() => setShowTrialChat(false)} />}
     </main>
   );
 }
