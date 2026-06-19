@@ -22,9 +22,9 @@ export async function sendLeadNotification(name: string, email: string) {
 // ── Exported: email the PDF guide directly to the lead ───────────────
 
 export async function sendGuideToLead(name: string, email: string) {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.SENDGRID_API_KEY;
   if (!apiKey) {
-    console.log("ℹ️  RESEND_API_KEY not set — can't email guide to lead");
+    console.log("ℹ️  SENDGRID_API_KEY not set — can't email guide to lead");
     return;
   }
 
@@ -48,32 +48,32 @@ export async function sendGuideToLead(name: string, email: string) {
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://api.resend.com/emails", {
+  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "413OPENCOURT <onboarding@resend.dev>",
-      to: [email],
+      personalizations: [{ to: [{ email, name }] }],
+      from: { email: "413opencourt@gmail.com", name: "413OPENCOURT" },
       subject: "Your Free Shooting Guide 🏀",
-      html,
+      content: [{ type: "text/html", value: html }],
       attachments: [
         {
           filename: "free-shooting-guide.pdf",
           content: pdfBase64,
+          type: "application/pdf",
         },
       ],
     }),
   });
 
   if (res.ok) {
-    const data = await res.json();
-    console.log("✅ Guide emailed to lead:", data.id);
+    console.log("✅ Guide emailed to lead via SendGrid");
   } else {
     const err = await res.text();
-    console.error("❌ Failed to email guide:", res.status, err);
+    console.error("❌ SendGrid guide email error:", res.status, err);
   }
 }
 
@@ -121,7 +121,7 @@ async function sendEmailToOwner(
   email: string,
   timestamp: string
 ) {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.SENDGRID_API_KEY;
   if (!apiKey) return;
 
   const html = [
@@ -139,17 +139,17 @@ async function sendEmailToOwner(
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://api.resend.com/emails", {
+  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "413OPENCOURT <onboarding@resend.dev>",
-      to: ["413opencourt@gmail.com"],
+      personalizations: [{ to: [{ email: "413opencourt@gmail.com", name }] }],
+      from: { email: "413opencourt@gmail.com", name: "413OPENCOURT" },
       subject: `🏀 New Lead: ${name}`,
-      html,
+      content: [{ type: "text/html", value: html }],
     }),
   });
 
