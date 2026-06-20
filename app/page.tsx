@@ -204,17 +204,38 @@ export default function HomePage() {
             whileInView={{ opacity: 1 }}
             className="text-4xl md:text-5xl font-bold text-center mb-16"
           >
-            EVERYTHING YOU NEED TO{" "}
+              WHY{" "}
             <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
-              DOMINATE
+              ATHLETES CHOOSE US
             </span>
           </motion.h2>
+          <p className="text-gray-400 text-center mb-16 max-w-xl mx-auto">
+            Three pillars that set our training apart
+          </p>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: "🎥", title: "PRO TRAINING VIDEOS", desc: "HD videos covering dribbling, shooting, plays, and skillsets - organized by category.", color: "from-blue-500/20 to-blue-600/5 border-blue-500/20" },
-              { icon: "📊", title: "PROGRESS TRACKING", desc: "Log every drill, track completion rates, and watch your game improve daily.", color: "from-red-500/20 to-red-600/5 border-red-500/20" },
-              { icon: "🏀", title: "NBA-STYLE TRAINING", desc: "Professional curriculum designed by coaches who know what it takes to go pro.", color: "from-purple-500/20 to-purple-600/5 border-purple-500/20" },
+              {
+                icon: "🏠",
+                title: "CONVENIENCE",
+                desc: "Train at your preferred location — home, park, or local court. No long drives, no rigid schedules. We design a program that fits your space and your life.",
+                color: "from-blue-500/20 to-blue-600/5 border-blue-500/20",
+                shadow: "shadow-blue-500/10 hover:shadow-blue-500/25",
+              },
+              {
+                icon: "💪",
+                title: "CONFIDENCE",
+                desc: "Our structured drills and progress tracking build real confidence. Watch your handles tighten, your shot improve, and your belief in yourself soar with every session.",
+                color: "from-red-500/20 to-red-600/5 border-red-500/20",
+                shadow: "shadow-red-500/10 hover:shadow-red-500/25",
+              },
+              {
+                icon: "🎯",
+                title: "CLARITY",
+                desc: "Stop searching. We give you a step-by-step training roadmap from where you are now to where you want to be. No guesswork, just a clear path to your goals.",
+                color: "from-purple-500/20 to-purple-600/5 border-purple-500/20",
+                shadow: "shadow-purple-500/10 hover:shadow-purple-500/25",
+              },
             ].map((feature, i) => (
               <motion.div
                 key={i}
@@ -222,7 +243,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.2 }}
                 whileHover={{ y: -5 }}
-                className={`bg-gradient-to-b ${feature.color} backdrop-blur-xl border rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:shadow-2xl`}
+                className={`bg-gradient-to-b ${feature.color} backdrop-blur-xl border rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:shadow-2xl ${feature.shadow}`}
               >
                 <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-2xl mb-6">{feature.icon}</div>
                 <h3 className="font-bold text-lg mb-3 tracking-wide">{feature.title}</h3>
