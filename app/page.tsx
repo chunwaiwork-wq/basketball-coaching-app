@@ -169,15 +169,6 @@ export default function HomePage() {
               >
                 START FREE TRIAL
               </motion.button>
-            <a href="#features">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full font-semibold text-lg hover:bg-white/10 transition-all"
-              >
-                LEARN MORE
-              </motion.button>
-            </a>
           </motion.div>
         </div>
       </section>
