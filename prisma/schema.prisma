@@ -36,12 +36,14 @@ model Video {
 }
 
 model CoachingSlot {
-  id          Int       @id @default(autoincrement())
-  date        DateTime    // Session date and time
-  duration    Int       @default(60) // minutes
-  status      String    @default("available") // available, booked, confirmed, cancelled, completed
-  studentId   Int?
-  student     Student?  @relation(fields: [studentId], references: [id])
-  notes       String?
-  createdAt   DateTime  @default(now())
+  id              Int       @id @default(autoincrement())
+  date            DateTime    // Session date and time
+  duration        Int       @default(60) // minutes
+  status          String    @default("available") // available, booked, confirmed, cancelled, completed
+  studentId       Int?
+  student         Student?  @relation(fields: [studentId], references: [id])
+  notes           String?
+  googleEventId   String?   // Google Calendar event ID
+  googleEventLink String?   // Link to Google Calendar event
+  createdAt       DateTime  @default(now())
 }

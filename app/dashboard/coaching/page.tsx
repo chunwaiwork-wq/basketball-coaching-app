@@ -9,6 +9,7 @@ interface Slot {
   status: string;
   studentId: number | null;
   student?: { id: number; name: string } | null;
+  googleEventLink?: string | null;
 }
 
 export default function CoachingAdminPage() {
@@ -215,6 +216,11 @@ export default function CoachingAdminPage() {
                     <span className="text-blue-400 text-xs font-medium bg-blue-500/10 px-2 py-1 rounded-lg">
                       {slot.student.name}
                     </span>
+                  )}
+                  {slot.googleEventLink && (
+                    <a href={slot.googleEventLink} target="_blank" rel="noopener noreferrer" className="text-green-400 text-xs font-medium bg-green-500/10 px-2 py-1 rounded-lg hover:bg-green-500/20 transition-all">
+                      📅 View
+                    </a>
                   )}
                 </div>
                 <div className="flex gap-2 shrink-0">

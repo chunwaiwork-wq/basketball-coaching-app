@@ -8,6 +8,7 @@ interface Slot {
   duration: number;
   status: string;
   studentId: number | null;
+  googleEventLink?: string | null;
 }
 
 export default function BookingsPage() {
@@ -226,12 +227,12 @@ export default function BookingsPage() {
                         </div>
                         {slot.status === "confirmed" && (
                           <a
-                            href={getGoogleCalLink(slot)}
+                            href={slot.googleEventLink || getGoogleCalLink(slot)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="shrink-0 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-medium rounded-xl transition-all flex items-center gap-1"
                           >
-                            📅 Add to Calendar
+                            📅 View in Calendar
                           </a>
                         )}
                       </div>
