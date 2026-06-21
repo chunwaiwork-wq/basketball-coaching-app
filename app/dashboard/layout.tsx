@@ -82,12 +82,24 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-[#030303] flex">
       {/* Sidebar - Desktop */}
       <aside className="hidden md:flex flex-col w-60 bg-white/[0.02] border-r border-white/[0.05] p-5">
-        <Link href="/" className="flex items-center gap-3 mb-8 px-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center">
-            <span className="text-lg">🏀</span>
-          </div>
-          <span className="text-lg font-bold text-white">COACH PRO</span>
-        </Link>
+        <div className="flex items-center justify-between mb-8 px-2">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center">
+              <span className="text-lg">🏀</span>
+            </div>
+            <span className="text-lg font-bold text-white">COACH PRO</span>
+          </Link>
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.clear();
+              window.location.href = "/auth";
+            }}
+            className="text-xs px-3 py-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 border border-red-500/20 rounded-full font-medium transition-all"
+          >
+            ✕
+          </button>
+        </div>
 
         <nav className="space-y-1 flex-1">
           {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar"].includes(item.href)).map((item) => {
@@ -110,16 +122,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-gray-300 text-xs px-2 transition-colors">
           ← Back to Home
         </Link>
-        <button
-          type="button"
-          onClick={() => {
-            localStorage.clear();
-            window.location.href = "/auth";
-          }}
-          className="mt-2 flex items-center gap-2 text-gray-500 hover:text-red-400 text-xs px-2 transition-colors"
-        >
-          ✕ Log out
-        </button>
       </aside>
 
       {/* Mobile Header */}
@@ -128,9 +130,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <span className="text-xl">🏀</span>
           <span className="font-bold text-white text-sm">COACH PRO</span>
         </Link>
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white p-1">
-          {mobileOpen ? "✕" : "☰"}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.clear();
+              window.location.href = "/auth";
+            }}
+            className="text-xs px-2.5 py-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-full font-medium transition-all"
+          >
+            ✕
+          </button>
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white p-1">
+            {mobileOpen ? "✕" : "☰"}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (

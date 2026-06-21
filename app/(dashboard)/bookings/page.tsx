@@ -169,19 +169,6 @@ export default function BookingsPage() {
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
                 Live — refreshes every 15s
               </p>
-              <button
-                type="button"
-                onClick={() => {
-                  localStorage.removeItem("studentId");
-                  localStorage.removeItem("studentName");
-                  localStorage.removeItem("isCoach");
-                  setStudentId(null);
-                  setStudentName("");
-                }}
-                className="text-sm px-4 py-1.5 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 border border-red-500/20 hover:border-red-500/30 rounded-full font-medium transition-all"
-              >
-                ✕ Log out
-              </button>
             </div>
           )}
           <div className="mb-10" />

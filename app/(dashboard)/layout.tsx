@@ -40,13 +40,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-[#030303] flex">
       {/* Sidebar */}
       <aside className="hidden md:flex flex-col w-64 bg-white/[0.02] border-r border-white/[0.05] p-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 mb-10">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center">
-            <span className="text-lg">🏀</span>
-          </div>
-          <span className="text-lg font-bold text-white">COACH PRO</span>
-        </Link>
+        {/* Logo + Logout */}
+        <div className="flex items-center justify-between mb-10">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center">
+              <span className="text-lg">🏀</span>
+            </div>
+            <span className="text-lg font-bold text-white">COACH PRO</span>
+          </Link>
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.removeItem("studentId");
+              localStorage.removeItem("studentName");
+              localStorage.removeItem("isCoach");
+              window.location.href = "/auth";
+            }}
+            className="text-xs px-3 py-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 border border-red-500/20 rounded-full font-medium transition-all"
+          >
+            ✕ Log out
+          </button>
+        </div>
 
         {/* Nav Items */}
         <nav className="space-y-2">
@@ -77,15 +91,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <span className="text-xl">🏀</span>
           <span className="font-bold text-white">COACH PRO</span>
         </Link>
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white p-2">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {mobileOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.removeItem("studentId");
+              localStorage.removeItem("studentName");
+              localStorage.removeItem("isCoach");
+              window.location.href = "/auth";
+            }}
+            className="text-xs px-2.5 py-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-full font-medium transition-all"
+          >
+            ✕
+          </button>
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white p-2">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {mobileOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}
