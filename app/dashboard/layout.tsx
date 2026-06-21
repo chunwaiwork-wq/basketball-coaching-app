@@ -25,6 +25,11 @@ const navItems = [
     label: "Coaching Slots", 
     icon: "📅"
   },
+  { 
+    href: "/dashboard/calendar", 
+    label: "Calendar", 
+    icon: "🔗"
+  },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
