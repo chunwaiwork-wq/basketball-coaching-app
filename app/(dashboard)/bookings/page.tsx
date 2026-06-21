@@ -39,6 +39,13 @@ export default function BookingsPage() {
     loadData();
   }, [studentId]);
 
+  // Auto-refresh every 15 seconds so new slots appear without manual refresh
+  useEffect(() => {
+    if (!studentId) return;
+    const interval = setInterval(loadData, 15000);
+    return () => clearInterval(interval);
+  }, [studentId]);
+
   const handlePinSubmit = async () => {
     setPinError("");
     setPinLoading(true);
@@ -143,8 +150,15 @@ export default function BookingsPage() {
               COACHING
             </span>
           </h1>
-          <p className="text-gray-400 mb-2">Hey {studentName || "baller"} — book your next session below</p>
-          <p className="text-gray-500 text-sm mb-10">📍 Venue: TBC after booking • 📲 I&apos;ll send a reminder before each session</p>
+          <p className="text-gray-400 mb-1">Hey {studentName || "baller"} — book your next session below</p>
+          <p className="text-gray-500 text-sm">📍 Venue: TBC after booking • 📲 I&apos;ll send a reminder before each session</p>
+          {studentId && (
+            <p className="text-green-500/70 text-xs mt-1 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              Live — refreshes every 15s
+            </p>
+          )}
+          <div className="mb-10" />
         </motion.div>
 
         {/* Message */}
