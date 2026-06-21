@@ -22,6 +22,10 @@ export default function BookingsPage() {
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
   const [pinLoading, setPinLoading] = useState(false);
+  const [requestDate, setRequestDate] = useState("");
+  const [requestTime, setRequestTime] = useState("");
+  const [requestDuration, setRequestDuration] = useState(60);
+  const [requesting, setRequesting] = useState(false);
 
   useEffect(() => {
     const sid = parseInt(localStorage.getItem("studentId") || "0");
@@ -112,6 +116,47 @@ export default function BookingsPage() {
       setMessage({ type: "error", text: "Failed to book. Try again." });
     }
     setBooking(null);
+  };
+
+  const handleRequestSession = async () => {
+    if (!requestDate || !requestTime) {
+      setMessage({ type: "error", text: "Pick a date and time for your session" });
+      return;
+    }
+    const sid = studentId || parseInt(localStorage.getItem("studentId") || "0");
+    if (!sid) return;
+    setRequesting(true);
+    setMessage(null);
+    try {
+      const dateTime = new Date(`${requestDate}T${requestTime}:00`).toISOString();
+      // Create the slot
+      const createRes = await fetch("/api/coach/slots", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slots: [{ date: dateTime, duration: requestDuration }] }),
+      });
+      const createData = await createRes.json();
+      if (!createRes.ok) throw new Error(createData.error || "Failed to create slot");
+      // Book it for the student
+      const slotId = createData.slots[0].id;
+      const bookRes = await fetch("/api/student/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slotId, studentId: sid }),
+      });
+      const bookData = await bookRes.json();
+      if (bookRes.ok) {
+        setMessage({ type: "success", text: "✅ Session requested! I'll confirm shortly." });
+        setRequestDate("");
+        setRequestTime("");
+        loadData();
+      } else {
+        setMessage({ type: "error", text: bookData.error || "Failed to book" });
+      }
+    } catch (err) {
+      setMessage({ type: "error", text: "Something went wrong. Try again." });
+    }
+    setRequesting(false);
   };
 
   const formatDate = (iso: string) => {
@@ -327,6 +372,56 @@ export default function BookingsPage() {
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Request Your Own Session */}
+            <div className="mt-6 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5">
+              <h3 className="text-base font-bold text-white mb-3 flex items-center gap-2">
+                ✋ Request Your Own Session
+              </h3>
+              <p className="text-gray-500 text-xs mb-4">Don't see a time that works? Pick your own slot below.</p>
+              <div className="flex flex-wrap gap-2 items-end">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Date</label>
+                  <input
+                    type="date"
+                    value={requestDate}
+                    onChange={(e) => setRequestDate(e.target.value)}
+                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Time</label>
+                  <input
+                    type="time"
+                    value={requestTime}
+                    onChange={(e) => setRequestTime(e.target.value)}
+                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Duration</label>
+                  <select
+                    value={requestDuration}
+                    onChange={(e) => setRequestDuration(parseInt(e.target.value))}
+                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50"
+                  >
+                    <option value={30}>30 min</option>
+                    <option value={45}>45 min</option>
+                    <option value={60}>60 min</option>
+                    <option value={90}>90 min</option>
+                    <option value={120}>120 min</option>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleRequestSession}
+                  disabled={requesting}
+                  className="px-5 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition-all"
+                >
+                  {requesting ? "⏳" : "Request"}
+                </button>
+              </div>
             </div>
 
             {/* My Bookings */}
