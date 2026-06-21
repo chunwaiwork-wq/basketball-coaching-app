@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import NBANewsFeed from "../components/NBANewsFeed";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
@@ -199,6 +200,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* NBA News */}
+      <NBANewsFeed />
+
       {/* CTA */}
       <section className="px-8 py-20">
         <motion.div
@@ -221,7 +225,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t border-white/5 px-8 py-8">
         <div className="max-w-6xl mx-auto flex justify-between items-center text-sm text-gray-500">
-          <span>© 2024 413 OPENCOURT</span>
+          <span>© 2026 413 OPENCOURT</span>
           <span>Built for champions</span>
         </div>
       </footer>
