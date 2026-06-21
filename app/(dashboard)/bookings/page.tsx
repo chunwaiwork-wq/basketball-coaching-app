@@ -19,22 +19,49 @@ export default function BookingsPage() {
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState<number | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState("");
+  const [pinLoading, setPinLoading] = useState(false);
 
   useEffect(() => {
     const sid = parseInt(localStorage.getItem("studentId") || "0");
     const sname = localStorage.getItem("studentName") || "";
-    if (!sid) {
-      window.location.href = "/auth";
-      return;
+    if (sid) {
+      setStudentId(sid);
+      setStudentName(sname);
+    } else {
+      setLoading(false);
     }
-    setStudentId(sid);
-    setStudentName(sname);
   }, []);
 
   useEffect(() => {
     if (!studentId) return;
     loadData();
   }, [studentId]);
+
+  const handlePinSubmit = async () => {
+    setPinError("");
+    setPinLoading(true);
+    try {
+      const res = await fetch("/api/student/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: pinInput }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem("studentId", data.student.id.toString());
+        localStorage.setItem("studentName", data.student.name);
+        setStudentId(data.student.id);
+        setStudentName(data.student.name);
+      } else {
+        setPinError(data.error || "Invalid PIN");
+      }
+    } catch {
+      setPinError("Something went wrong. Try again.");
+    }
+    setPinLoading(false);
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -133,7 +160,72 @@ export default function BookingsPage() {
           )}
         </AnimatePresence>
 
-        {loading ? (
+        {!studentId ? (
+          /* --- Student PIN Login Screen --- */
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-sm mx-auto mt-10"
+          >
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 text-center">
+              <div className="text-5xl mb-4">🏀</div>
+              <h2 className="text-2xl font-bold text-white mb-2">Student Access</h2>
+              <p className="text-gray-400 text-sm mb-6">Enter your 4-digit PIN to book a session</p>
+
+              <div className="flex justify-center gap-2 mb-6">
+                {[0, 1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="w-12 h-14 rounded-xl border-2 flex items-center justify-center text-xl font-bold transition-all"
+                    style={{
+                      borderColor: pinInput.length > i ? "#3b82f6" : "rgba(255,255,255,0.15)",
+                      backgroundColor: pinInput.length > i ? "rgba(59,130,246,0.1)" : "transparent",
+                      color: pinInput.length > i ? "#60a5fa" : "rgba(255,255,255,0.2)",
+                    }}
+                  >
+                    {pinInput[i] || ""}
+                  </div>
+                ))}
+              </div>
+
+              {/* PIN Pad */}
+              <div className="grid grid-cols-3 gap-3 max-w-[200px] mx-auto mb-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+                  <button
+                    key={n}
+                    onClick={() => pinInput.length < 4 && setPinInput(pinInput + n)}
+                    className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xl font-bold transition-all active:scale-95"
+                  >
+                    {n}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setPinInput(pinInput.slice(0, -1))}
+                  className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 text-sm font-medium transition-all"
+                >
+                  ⌫
+                </button>
+                <button
+                  onClick={() => pinInput.length < 4 && setPinInput(pinInput + "0")}
+                  className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xl font-bold transition-all active:scale-95"
+                >
+                  0
+                </button>
+                <button
+                  onClick={handlePinSubmit}
+                  disabled={pinInput.length !== 4 || pinLoading}
+                  className="w-full aspect-square rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 disabled:opacity-40 text-white text-sm font-bold transition-all flex items-center justify-center"
+                >
+                  {pinLoading ? "⏳" : "✓"}
+                </button>
+              </div>
+
+              {pinError && (
+                <p className="text-red-400 text-sm mt-2">{pinError}</p>
+              )}
+            </div>
+          </motion.div>
+        ) : loading ? (
           <div className="flex justify-center py-20">
             <svg className="animate-spin h-8 w-8 text-blue-400" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
