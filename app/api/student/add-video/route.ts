@@ -52,3 +52,40 @@ export async function POST(request: Request) {
     );
   }
 }
+
+// Also support DELETE to remove a video by title + student pin
+export async function DELETE(request: Request) {
+  try {
+    const { pin, title } = await request.json();
+
+    if (!pin || !title) {
+      return NextResponse.json(
+        { error: "pin and title are required" },
+        { status: 400 }
+      );
+    }
+
+    const student = await prisma.student.findUnique({ where: { pin } });
+    if (!student) {
+      return NextResponse.json({ error: "Student not found" }, { status: 404 });
+    }
+
+    const deleted = await prisma.video.deleteMany({
+      where: {
+        studentId: student.id,
+        title,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      deleted: deleted.count,
+    });
+  } catch (err: any) {
+    console.error("Delete video error:", err);
+    return NextResponse.json(
+      { error: err.message || "Something went wrong" },
+      { status: 500 }
+    );
+  }
+}
