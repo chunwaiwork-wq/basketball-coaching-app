@@ -178,7 +178,7 @@ export default function BookingsPage() {
                   setStudentId(null);
                   setStudentName("");
                 }}
-                className="text-xs text-gray-500 hover:text-red-400 transition-colors"
+                className="text-sm px-4 py-1.5 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 border border-red-500/20 hover:border-red-500/30 rounded-full font-medium transition-all"
               >
                 ✕ Log out
               </button>
