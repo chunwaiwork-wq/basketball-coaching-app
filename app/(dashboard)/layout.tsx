@@ -54,7 +54,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               localStorage.removeItem("studentId");
               localStorage.removeItem("studentName");
               localStorage.removeItem("isCoach");
-              window.location.href = "/auth";
+              window.location.href = "/";
             }}
             className="text-sm px-3 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 hover:text-red-200 border border-red-500/30 rounded-lg font-semibold tracking-wide transition-all"
           >
@@ -98,7 +98,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               localStorage.removeItem("studentId");
               localStorage.removeItem("studentName");
               localStorage.removeItem("isCoach");
-              window.location.href = "/auth";
+              window.location.href = "/";
             }}
             className="text-xs px-2.5 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 border border-red-500/30 rounded-lg font-semibold transition-all"
           >
