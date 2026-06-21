@@ -153,10 +153,24 @@ export default function BookingsPage() {
           <p className="text-gray-400 mb-1">Hey {studentName || "baller"} — book your next session below</p>
           <p className="text-gray-500 text-sm">📍 Venue: TBC after booking • 📲 I&apos;ll send a reminder before each session</p>
           {studentId && (
-            <p className="text-green-500/70 text-xs mt-1 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-              Live — refreshes every 15s
-            </p>
+            <div className="flex items-center gap-3 mt-1">
+              <p className="text-green-500/70 text-xs flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                Live — refreshes every 15s
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem("studentId");
+                  localStorage.removeItem("studentName");
+                  setStudentId(null);
+                  setStudentName("");
+                }}
+                className="text-xs text-gray-500 hover:text-red-400 transition-colors"
+              >
+                ✕ Log out
+              </button>
+            </div>
           )}
           <div className="mb-10" />
         </motion.div>
