@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { createCalendarEvent } from "@/lib/calendar";
 
 // GET /api/coach/slots — list all coaching slots (with optional date filter)
 export async function GET(req: Request) {
@@ -77,34 +76,6 @@ export async function PATCH(req: Request) {
       data: { status },
       include: { student: { select: { id: true, name: true } } },
     });
-
-    // Auto-create Google Calendar event when confirming
-    if (status === "confirmed" && process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
-      try {
-        const startTime = new Date(slot.date);
-        const endTime = new Date(startTime.getTime() + slot.duration * 60000);
-        const studentName = slot.student?.name || "Student";
-
-        const { htmlLink } = await createCalendarEvent({
-          summary: `🏀 Coaching: ${studentName}`,
-          description: `Basketball coaching session with ${studentName}\nStatus: Confirmed\nDuration: ${slot.duration} min`,
-          startTime,
-          endTime,
-          location: "TBC",
-        });
-
-        // Store the event link
-        await prisma.coachingSlot.update({
-          where: { id: slotId },
-          data: { googleEventLink: htmlLink },
-        });
-
-        slot.googleEventLink = htmlLink;
-      } catch (calError) {
-        console.error("Failed to create Google Calendar event:", calError);
-        // Don't fail the request — calendar is a bonus feature
-      }
-    }
 
     return NextResponse.json({ slot });
   } catch (error) {
