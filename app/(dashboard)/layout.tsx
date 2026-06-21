@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const navItems = [
   { 
-    href: "/dashboard/videos", 
+    href: "/videos", 
     label: "Training Videos", 
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -14,7 +14,7 @@ const navItems = [
     )
   },
   { 
-    href: "/dashboard/tracker", 
+    href: "/tracker", 
     label: "Drill Tracker", 
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -23,7 +23,7 @@ const navItems = [
     )
   },
   { 
-    href: "/dashboard/bookings", 
+    href: "/bookings", 
     label: "Book Coaching", 
     icon: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
