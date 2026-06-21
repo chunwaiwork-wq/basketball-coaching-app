@@ -14,10 +14,8 @@ interface Slot {
 export default function BookingsPage() {
   const [studentId, setStudentId] = useState<number | null>(null);
   const [studentName, setStudentName] = useState("");
-  const [availableSlots, setAvailableSlots] = useState<Slot[]>([]);
   const [myBookings, setMyBookings] = useState<Slot[]>([]);
   const [loading, setLoading] = useState(true);
-  const [booking, setBooking] = useState<number | null>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState("");
@@ -77,45 +75,13 @@ export default function BookingsPage() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [availRes, bookRes] = await Promise.all([
-        fetch("/api/student/available-slots"),
-        fetch(`/api/student/bookings?studentId=${studentId}`),
-      ]);
-      const availData = await availRes.json();
-      const bookData = await bookRes.json();
-      setAvailableSlots(availData.slots || []);
-      setMyBookings(bookData.bookings || []);
+      const res = await fetch(`/api/student/bookings?studentId=${studentId}`);
+      const data = await res.json();
+      setMyBookings(data.bookings || []);
     } catch (err) {
       console.error("Failed to load data", err);
     }
     setLoading(false);
-  };
-
-  const handleBook = async (slotId: number) => {
-    const sid = studentId || parseInt(localStorage.getItem("studentId") || "0");
-    if (!sid) {
-      setMessage({ type: "error", text: "Please log in first" });
-      return;
-    }
-    setBooking(slotId);
-    setMessage(null);
-    try {
-      const res = await fetch("/api/student/book", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slotId, studentId: sid }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMessage({ type: "success", text: "✅ Session booked! I'll confirm shortly." });
-        loadData();
-      } else {
-        setMessage({ type: "error", text: data.error || "Something went wrong" });
-      }
-    } catch {
-      setMessage({ type: "error", text: "Failed to book. Try again." });
-    }
-    setBooking(null);
   };
 
   const handleRequestSession = async () => {
@@ -333,47 +299,6 @@ export default function BookingsPage() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Available Slots */}
-            <div>
-              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <span className="text-2xl">📅</span> Available Sessions
-              </h2>
-              {availableSlots.length === 0 ? (
-                <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 text-center">
-                  <p className="text-gray-500">No available sessions right now. Check back soon!</p>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {availableSlots.map((slot, i) => (
-                    <motion.div
-                      key={slot.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                      className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-5 hover:bg-white/[0.05] transition-all"
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="text-white font-semibold">{formatDate(slot.date)}</p>
-                          <p className="text-blue-400 text-sm mt-1">
-                            🕐 {formatTime(slot.date)} · {slot.duration} min
-                          </p>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => handleBook(slot.id)}
-                          disabled={booking === slot.id}
-                          className="shrink-0 px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition-all"
-                        >
-                          {booking === slot.id ? "⏳" : "Book"}
-                        </button>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* Request Your Own Session */}
             <div className="mt-6 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5">
               <h3 className="text-base font-bold text-white mb-3 flex items-center gap-2">
