@@ -73,7 +73,7 @@ export default function LoginPage() {
           >
             <span className="text-2xl">🏀</span>
           </motion.div>
-          <h1 className="text-3xl font-black text-white">COACH PRO</h1>
+          <h1 className="text-3xl font-black text-white">413 OPENCOURT</h1>
           <p className="text-gray-400 text-sm mt-2">Enter your 4-digit PIN to access training</p>
         </div>
 

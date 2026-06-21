@@ -221,7 +221,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t border-white/5 px-8 py-8">
         <div className="max-w-6xl mx-auto flex justify-between items-center text-sm text-gray-500">
-          <span>© 2024 COACH PRO</span>
+          <span>© 2024 413 OPENCOURT</span>
           <span>Built for champions</span>
         </div>
       </footer>

@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center">
               <span className="text-lg">🏀</span>
             </div>
-            <span className="text-lg font-bold text-white">COACH PRO</span>
+            <span className="text-lg font-bold text-white">413 OPENCOURT</span>
           </Link>
           <button
             type="button"
@@ -86,7 +86,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl">🏀</span>
-            <span className="font-bold text-white">COACH PRO</span>
+            <span className="font-bold text-white">413 OPENCOURT</span>
           </Link>
           <button
             type="button"
