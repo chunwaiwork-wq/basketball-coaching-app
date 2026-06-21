@@ -42,12 +42,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const sid = localStorage.getItem("studentId");
     const sname = localStorage.getItem("studentName");
     const coach = localStorage.getItem("isCoach");
-    if (!sid || !sname || coach !== "true") {
+
+    // Admin-only routes that students should not access
+    const adminRoutes = ["/dashboard/coaching", "/dashboard/calendar", "/dashboard/leads"];
+    const isAdminRoute = adminRoutes.includes(pathname);
+
+    if (!sid || !sname) {
       router.replace("/auth");
-    } else {
-      setAuthorized(true);
+      return;
     }
-  }, [router]);
+
+    if (isAdminRoute && coach !== "true") {
+      router.replace("/auth");
+      return;
+    }
+
+    setAuthorized(true);
+  }, [router, pathname]);
 
   if (!authorized) {
     return (
