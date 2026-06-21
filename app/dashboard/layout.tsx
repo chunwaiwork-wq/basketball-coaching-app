@@ -16,6 +16,11 @@ const navItems = [
     icon: "✅"
   },
   { 
+    href: "/bookings", 
+    label: "Book Coaching", 
+    icon: "📅"
+  },
+  { 
     href: "/dashboard/leads", 
     label: "Leads CRM", 
     icon: "📋"
