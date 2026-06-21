@@ -1,6 +1,4 @@
 "use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
 const navItems = [
@@ -34,8 +32,6 @@ const navItems = [
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-[#030303] flex">
       {/* Sidebar */}
@@ -85,13 +81,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </aside>
 
-      {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl">🏀</span>
-          <span className="font-bold text-white">COACH PRO</span>
-        </Link>
-        <div className="flex items-center gap-2">
+      {/* Mobile Header + Nav */}
+      <div className="md:hidden fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
+        <div className="flex items-center justify-between px-4 py-3">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-xl">🏀</span>
+            <span className="font-bold text-white">COACH PRO</span>
+          </Link>
           <button
             type="button"
             onClick={() => {
@@ -104,38 +100,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           >
             ✕ Log out
           </button>
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white p-2">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {mobileOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
         </div>
-      </div>
-
-      {/* Mobile Nav */}
-      {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden fixed top-14 w-full z-40 bg-black/95 backdrop-blur-xl border-b border-white/5 p-4"
-        >
+        <div className="flex gap-1 px-3 pb-2 overflow-x-auto scrollbar-none">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}>
-              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/[0.05] transition-all">
-                {item.icon}
-                <span className="text-sm font-medium">{item.label}</span>
+            <Link key={item.href} href={item.href}>
+              <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all text-xs font-medium whitespace-nowrap">
+                <span className="shrink-0">{item.icon}</span>
+                {item.label}
               </div>
             </Link>
           ))}
-        </motion.div>
-      )}
+        </div>
+      </div>
 
       {/* Main Content */}
-      <main className="flex-1 md:pt-0 pt-14">
+      <main className="flex-1 md:pt-0 pt-[88px]">
         {children}
       </main>
     </div>

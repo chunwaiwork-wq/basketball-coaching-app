@@ -40,7 +40,6 @@ const navItems = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [authorized, setAuthorized] = useState(false);
   const [isCoach, setIsCoach] = useState(false);
 
@@ -124,44 +123,40 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </Link>
       </aside>
 
-      {/* Mobile Header */}
-      <div className="md:hidden fixed top-0 w-full z-50 bg-black/90 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl">🏀</span>
-          <span className="font-bold text-white text-sm">COACH PRO</span>
-        </Link>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => {
-              localStorage.clear();
-              window.location.href = "/";
-            }}
-            className="text-xs px-2.5 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 border border-red-500/30 rounded-lg font-semibold transition-all"
-          >
-            ✕ Log out
-          </button>
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white p-1">
-            {mobileOpen ? "✕" : "☰"}
-          </button>
+      {/* Mobile Header + Nav */}
+      <div className="md:hidden fixed top-0 w-full z-50 bg-black/90 backdrop-blur-xl border-b border-white/5">
+        <div className="flex items-center justify-between px-4 py-3">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-xl">🏀</span>
+            <span className="font-bold text-white text-sm">COACH PRO</span>
+          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.clear();
+                window.location.href = "/";
+              }}
+              className="text-xs px-2.5 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 border border-red-500/30 rounded-lg font-semibold transition-all"
+            >
+              ✕ Log out
+            </button>
+          </div>
         </div>
-      </div>
-
-      {mobileOpen && (
-        <div className="md:hidden fixed top-12 w-full z-40 bg-black/95 backdrop-blur-xl border-b border-white/5 p-4">
+        <div className="flex gap-1 px-3 pb-2 overflow-x-auto scrollbar-none">
           {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar"].includes(item.href)).map((item) => (
-            <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}>
-              <div className="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-400 hover:text-white">
-                <span>{item.icon}</span>
-                <span className="text-sm">{item.label}</span>
+            <Link key={item.href} href={item.href}>
+              <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all text-xs font-medium whitespace-nowrap">
+                <span className="text-sm">{item.icon}</span>
+                {item.label}
               </div>
             </Link>
           ))}
         </div>
-      )}
+      </div>
 
       {/* Main Content */}
-      <main className="flex-1 md:pt-0 pt-12">
+      <main className="flex-1 md:pt-0 pt-[88px]">
         {children}
       </main>
     </div>
