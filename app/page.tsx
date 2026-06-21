@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import TrialChat from "../components/TrialChat";
-import NBANewsFeed from "../components/NBANewsFeed";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
@@ -254,8 +253,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <NBANewsFeed />
 
       {/* Testimonials */}
       <section id="testimonials" className="px-8 py-20">

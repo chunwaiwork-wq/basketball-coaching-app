@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import NBANewsFeed from "../components/NBANewsFeed";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
@@ -199,9 +198,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* NBA News */}
-      <NBANewsFeed />
 
       {/* CTA */}
       <section className="px-8 py-20">
