@@ -163,6 +163,7 @@ export default function BookingsPage() {
                 onClick={() => {
                   localStorage.removeItem("studentId");
                   localStorage.removeItem("studentName");
+                  localStorage.removeItem("isCoach");
                   setStudentId(null);
                   setStudentName("");
                 }}

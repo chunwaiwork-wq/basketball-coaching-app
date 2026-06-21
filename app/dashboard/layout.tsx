@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
   { 
@@ -34,7 +34,31 @@ const navItems = [
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    const sid = localStorage.getItem("studentId");
+    const sname = localStorage.getItem("studentName");
+    const coach = localStorage.getItem("isCoach");
+    if (!sid || !sname || coach !== "true") {
+      router.replace("/auth");
+    } else {
+      setAuthorized(true);
+    }
+  }, [router]);
+
+  if (!authorized) {
+    return (
+      <div className="min-h-screen bg-[#030303] flex items-center justify-center">
+        <svg className="animate-spin h-8 w-8 text-blue-400" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+        </svg>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#030303] flex">
@@ -68,6 +92,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-gray-300 text-xs px-2 transition-colors">
           ← Back to Home
         </Link>
+        <button
+          type="button"
+          onClick={() => {
+            localStorage.clear();
+            window.location.href = "/auth";
+          }}
+          className="mt-2 flex items-center gap-2 text-gray-500 hover:text-red-400 text-xs px-2 transition-colors"
+        >
+          ✕ Log out
+        </button>
       </aside>
 
       {/* Mobile Header */}
