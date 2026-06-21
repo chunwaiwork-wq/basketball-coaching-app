@@ -5,17 +5,34 @@ const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 let cachedAuth: ReturnType<typeof getAuthClient> | null = null;
 
 function getAuthClient() {
-  const credentialsJson = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-  if (!credentialsJson) {
-    throw new Error("GOOGLE_SERVICE_ACCOUNT_KEY not set");
+  // Support both Service Account (JSON key) and OAuth2 (client ID + refresh token)
+  const serviceKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+  const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
+
+  if (serviceKey) {
+    // Service Account path
+    const credentials = JSON.parse(serviceKey);
+    return new google.auth.JWT({
+      email: credentials.client_email,
+      key: credentials.private_key,
+      scopes: SCOPES,
+    });
   }
 
-  const credentials = JSON.parse(credentialsJson);
-  return new google.auth.JWT({
-    email: credentials.client_email,
-    key: credentials.private_key,
-    scopes: SCOPES,
-  });
+  if (clientId && clientSecret && refreshToken) {
+    // OAuth2 path
+    const auth = new google.auth.OAuth2(clientId, clientSecret);
+    auth.setCredentials({ refresh_token: refreshToken });
+    return auth;
+  }
+
+  throw new Error(
+    "No Google Calendar credentials configured. Set either:\n" +
+    "  - GOOGLE_SERVICE_ACCOUNT_KEY (JSON key), or\n" +
+    "  - GOOGLE_OAUTH_CLIENT_ID + GOOGLE_OAUTH_CLIENT_SECRET + GOOGLE_REFRESH_TOKEN"
+  );
 }
 
 function getCalendar() {
@@ -49,7 +66,7 @@ export async function createCalendarEvent(params: CalendarEventParams) {
       dateTime: params.endTime.toISOString(),
       timeZone: "Asia/Singapore",
     },
-    colorId: "11", // Red/Orange for coaching sessions
+    colorId: "11",
   };
 
   const response = await calendar.events.insert({
