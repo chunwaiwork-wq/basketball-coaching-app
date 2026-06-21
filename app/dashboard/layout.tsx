@@ -20,6 +20,11 @@ const navItems = [
     label: "Leads CRM", 
     icon: "📋"
   },
+  { 
+    href: "/dashboard/coaching", 
+    label: "Coaching Slots", 
+    icon: "📅"
+  },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

@@ -13,6 +13,7 @@ model Student {
   pin       String   @unique
   createdAt DateTime @default(now())
   videos    Video[]
+  bookings  CoachingSlot[]
 }
 
 model Lead {
@@ -32,4 +33,15 @@ model Video {
   studentId   Int
   student     Student  @relation(fields: [studentId], references: [id])
   createdAt   DateTime @default(now())
+}
+
+model CoachingSlot {
+  id          Int       @id @default(autoincrement())
+  date        DateTime    // Session date and time
+  duration    Int       @default(60) // minutes
+  status      String    @default("available") // available, booked, confirmed, cancelled, completed
+  studentId   Int?
+  student     Student?  @relation(fields: [studentId], references: [id])
+  notes       String?
+  createdAt   DateTime  @default(now())
 }

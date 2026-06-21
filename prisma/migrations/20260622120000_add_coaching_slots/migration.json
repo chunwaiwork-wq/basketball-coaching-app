@@ -1,0 +1,28 @@
+{
+  "version": "5.22.0",
+  "steps": [
+    {
+      "tag": "CreateTable",
+      "table": "CoachingSlot",
+      "columns": [
+        { "name": "id", "type": "Serial", "default": { "name": "autoincrement" }, "primaryKey": true },
+        { "name": "date", "type": "DateTime" },
+        { "name": "duration", "type": "Int", "default": { "name": "autoincrement", "args": [60] } },
+        { "name": "status", "type": "Text", "default": { "name": "autoincrement", "args": ["available"] } },
+        { "name": "studentId", "type": "Int", "optional": true },
+        { "name": "notes", "type": "Text", "optional": true },
+        { "name": "createdAt", "type": "DateTime", "default": { "name": "now" } }
+      ],
+      "foreignKeys": [
+        {
+          "name": "CoachingSlot_studentId_fkey",
+          "columns": ["studentId"],
+          "referencedTable": "Student",
+          "referencedColumns": ["id"],
+          "onDelete": "SetNull",
+          "onUpdate": "Cascade"
+        }
+      ]
+    }
+  ]
+}
