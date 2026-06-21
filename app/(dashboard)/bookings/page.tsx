@@ -81,13 +81,18 @@ export default function BookingsPage() {
   };
 
   const handleBook = async (slotId: number) => {
+    const sid = studentId || parseInt(localStorage.getItem("studentId") || "0");
+    if (!sid) {
+      setMessage({ type: "error", text: "Please log in first" });
+      return;
+    }
     setBooking(slotId);
     setMessage(null);
     try {
       const res = await fetch("/api/student/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slotId, studentId }),
+        body: JSON.stringify({ slotId, studentId: sid }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -193,6 +198,7 @@ export default function BookingsPage() {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
                   <button
                     key={n}
+                    type="button"
                     onClick={() => pinInput.length < 4 && setPinInput(pinInput + n)}
                     className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xl font-bold transition-all active:scale-95"
                   >
@@ -200,24 +206,43 @@ export default function BookingsPage() {
                   </button>
                 ))}
                 <button
+                  type="button"
                   onClick={() => setPinInput(pinInput.slice(0, -1))}
                   className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 text-sm font-medium transition-all"
                 >
                   ⌫
                 </button>
                 <button
+                  type="button"
                   onClick={() => pinInput.length < 4 && setPinInput(pinInput + "0")}
                   className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xl font-bold transition-all active:scale-95"
                 >
                   0
                 </button>
                 <button
+                  type="button"
                   onClick={handlePinSubmit}
                   disabled={pinInput.length !== 4 || pinLoading}
                   className="w-full aspect-square rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 disabled:opacity-40 text-white text-sm font-bold transition-all flex items-center justify-center"
                 >
                   {pinLoading ? "⏳" : "✓"}
                 </button>
+              </div>
+
+              {/* Also accept keyboard input — type your PIN directly */}
+              <div className="mt-4">
+                <label className="text-gray-500 text-xs mb-2 block">Or type your PIN:</label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={4}
+                  value={pinInput}
+                  onChange={(e) => setPinInput(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                  onKeyDown={(e) => e.key === "Enter" && pinInput.length === 4 && handlePinSubmit()}
+                  placeholder="Enter 4-digit PIN"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-center text-lg font-bold placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition-all"
+                />
               </div>
 
               {pinError && (
@@ -261,6 +286,7 @@ export default function BookingsPage() {
                           </p>
                         </div>
                         <button
+                          type="button"
                           onClick={() => handleBook(slot.id)}
                           disabled={booking === slot.id}
                           className="shrink-0 px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition-all"
