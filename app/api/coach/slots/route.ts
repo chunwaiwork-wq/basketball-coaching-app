@@ -71,9 +71,37 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: `Invalid status. Must be one of: ${validStatuses.join(", ")}` }, { status: 400 });
     }
 
+    // Before updating, get the current slot data if we're confirming
+    let googleResult = { googleEventId: null as string | null, googleEventLink: null as string | null };
+
+    if (status === "confirmed") {
+      const currentSlot = await prisma.coachingSlot.findUnique({
+        where: { id: slotId },
+        include: { student: { select: { name: true } } },
+      });
+
+      if (currentSlot?.student && !currentSlot.googleEventId) {
+        try {
+          const { createCalendarEvent } = await import("@/lib/googleCalendar");
+          const result = await createCalendarEvent({
+            date: currentSlot.date,
+            duration: currentSlot.duration,
+            studentName: currentSlot.student.name,
+          });
+          googleResult = result;
+        } catch (err) {
+          console.error("Google Calendar event creation skipped:", err);
+          // Non-blocking — session works even without calendar
+        }
+      }
+    }
+
     const slot = await prisma.coachingSlot.update({
       where: { id: slotId },
-      data: { status },
+      data: {
+        status,
+        ...(googleResult.googleEventId ? { googleEventId: googleResult.googleEventId, googleEventLink: googleResult.googleEventLink } : {}),
+      },
       include: { student: { select: { id: true, name: true } } },
     });
 
