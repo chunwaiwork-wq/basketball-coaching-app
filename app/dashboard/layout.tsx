@@ -37,11 +37,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [authorized, setAuthorized] = useState(false);
+  const [isCoach, setIsCoach] = useState(false);
 
   useEffect(() => {
     const sid = localStorage.getItem("studentId");
     const sname = localStorage.getItem("studentName");
     const coach = localStorage.getItem("isCoach");
+    setIsCoach(coach === "true");
 
     // Admin-only routes that students should not access
     const adminRoutes = ["/dashboard/coaching", "/dashboard/calendar", "/dashboard/leads"];
@@ -83,7 +85,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </Link>
 
         <nav className="space-y-1 flex-1">
-          {navItems.map((item) => {
+          {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar"].includes(item.href)).map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link key={item.href} href={item.href}>
@@ -128,7 +130,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {mobileOpen && (
         <div className="md:hidden fixed top-12 w-full z-40 bg-black/95 backdrop-blur-xl border-b border-white/5 p-4">
-          {navItems.map((item) => (
+          {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar"].includes(item.href)).map((item) => (
             <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)}>
               <div className="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-400 hover:text-white">
                 <span>{item.icon}</span>
