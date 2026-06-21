@@ -56,7 +56,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               localStorage.removeItem("isCoach");
               window.location.href = "/auth";
             }}
-            className="text-xs px-3 py-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 border border-red-500/20 rounded-full font-medium transition-all"
+            className="text-sm px-3 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 hover:text-red-200 border border-red-500/30 rounded-lg font-semibold tracking-wide transition-all"
           >
             ✕ Log out
           </button>
@@ -100,9 +100,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               localStorage.removeItem("isCoach");
               window.location.href = "/auth";
             }}
-            className="text-xs px-2.5 py-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-full font-medium transition-all"
+            className="text-xs px-2.5 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 border border-red-500/30 rounded-lg font-semibold transition-all"
           >
-            ✕
+            ✕ Log out
           </button>
           <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white p-2">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
