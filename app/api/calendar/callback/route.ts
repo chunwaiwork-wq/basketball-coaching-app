@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     const { email } = await handleCallback(code);
     return NextResponse.redirect(
       new URL(
-        `/dashboard/calendar?success=Connected+as+${encodeURIComponent(email)}`,
+        `/dashboard/calendar?success=Connected+as+${encodeURIComponent(email || "your account")}`,
         req.url
       )
     );
