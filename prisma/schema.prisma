@@ -7,13 +7,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("student") // "student" or "coach"
+  createdAt DateTime @default(now())
+  bookings  CoachingSlot[]
+}
+
 model Student {
   id        Int      @id @default(autoincrement())
   name      String
   pin       String   @unique
+  userId    Int?     @unique   // Link to User account
+  user      User?    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   videos    Video[]
-  bookings  CoachingSlot[]
+  bookings  CoachingSlot[] // used when booking without User link
 }
 
 model Lead {
@@ -50,6 +62,8 @@ model CoachingSlot {
   status          String    @default("available") // available, booked, confirmed, cancelled, completed
   studentId       Int?
   student         Student?  @relation(fields: [studentId], references: [id])
+  userId          Int?
+  user            User?     @relation(fields: [userId], references: [id])
   notes           String?
   googleEventId   String?   // Google Calendar event ID
   googleEventLink String?   // Link to Google Calendar event

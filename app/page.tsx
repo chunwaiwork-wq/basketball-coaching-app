@@ -96,8 +96,9 @@ export default function HomePage() {
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">REVIEWS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
+            <a href="/auth/signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">SIGN UP</a>
             <motion.a
-              href="/auth"
+              href="/auth/login"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-6 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
@@ -468,7 +469,7 @@ export default function HomePage() {
             <a href="#testimonials" className="hover:text-gray-300 transition-colors">Reviews</a>
             <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial." className="hover:text-gray-300 transition-colors">Free Trial</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
-            <a href="/auth" className="hover:text-gray-300 transition-colors">Coach Login</a>
+            <a href="/auth/login" className="hover:text-gray-300 transition-colors">Coach Login</a>
           </div>
         </div>
       </footer>
