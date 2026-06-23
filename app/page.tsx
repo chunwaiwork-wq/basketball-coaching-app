@@ -161,14 +161,15 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex gap-4 justify-center"
           >
-            <motion.button
-                onClick={() => setShowTrialChat(true)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full font-semibold text-lg shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow cursor-pointer"
+            <motion.a
+              href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial%20%E2%9B%B9"
+              target="_blank"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full font-semibold text-lg shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow cursor-pointer"
               >
                 START FREE TRIAL
-              </motion.button>
+              </motion.a>
           </motion.div>
         </div>
       </section>
@@ -399,14 +400,15 @@ export default function HomePage() {
         >
           <h2 className="text-4xl font-bold mb-4">READY TO GO PRO?</h2>
           <p className="text-gray-400 mb-8">Join hundreds of athletes transforming their game. Start your free trial today.</p>
-          <motion.button
-              onClick={() => setShowTrialChat(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-10 py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-200 transition-colors cursor-pointer"
+          <motion.a
+            href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial%20%E2%9B%B9"
+            target="_blank"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-200 transition-colors cursor-pointer"
             >
               START FREE TRIAL
-            </motion.button>
+            </motion.a>
         </motion.div>
       </section>
             {/* Social Media */}
