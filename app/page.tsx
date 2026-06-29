@@ -92,7 +92,6 @@ export default function HomePage() {
           </motion.div>
 
           <div className="flex items-center gap-6">
-            <a href="#features" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FEATURES</a>
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">REVIEWS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
