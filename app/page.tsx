@@ -12,6 +12,7 @@ export default function HomePage() {
   const [guideLoading, setGuideLoading] = useState(false);
   const [guideError, setGuideError] = useState("");
   const [showTrialChat, setShowTrialChat] = useState(false);
+  const [showRates, setShowRates] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -92,6 +93,7 @@ export default function HomePage() {
           </motion.div>
 
           <div className="flex items-center gap-6">
+            <button onClick={() => setShowRates(true)} className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block cursor-pointer bg-transparent border-none font-inherit">RATES</button>
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">REVIEWS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
@@ -324,98 +326,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="px-8 py-20">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-4xl md:text-5xl font-bold text-center mb-4"
-          >
-            SIMPLE{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
-              PRICING
-            </span>
-          </motion.h2>
-          <p className="text-gray-400 text-center mb-4 max-w-xl mx-auto">
-            First trial lesson <strong className="text-green-400">FREE</strong>
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {/* 1 Session */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0 }}
-              whileHover={{ y: -5 }}
-              className="bg-gradient-to-b from-blue-500/10 to-blue-600/5 border border-blue-500/20 backdrop-blur-xl rounded-2xl p-8 text-center transition-all duration-300 hover:shadow-2xl shadow-blue-500/10 hover:shadow-blue-500/25"
-            >
-              <div className="text-4xl mb-4">🏀</div>
-              <h3 className="font-bold text-xl mb-2">Single Session</h3>
-              <div className="text-4xl font-black text-white mb-1">$90</div>
-              <p className="text-gray-500 text-sm mb-6">1.5 hours</p>
-              <a
-                href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20single%20session%20($90)%20🏀"
-                target="_blank"
-                className="inline-block w-full px-6 py-3 bg-white/10 border border-white/20 rounded-full font-semibold text-sm hover:bg-white/20 transition-all"
-              >
-                BOOK NOW
-              </a>
-            </motion.div>
-
-            {/* 4 Sessions */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              whileHover={{ y: -5 }}
-              className="bg-gradient-to-b from-red-500/10 to-red-600/5 border border-red-500/20 backdrop-blur-xl rounded-2xl p-8 text-center transition-all duration-300 hover:shadow-2xl shadow-red-500/10 hover:shadow-red-500/25 relative overflow-hidden"
-            >
-              <div className="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                SAVE $20
-              </div>
-              <div className="text-4xl mb-4">🔥</div>
-              <h3 className="font-bold text-xl mb-2">4 Sessions</h3>
-              <div className="text-4xl font-black text-white mb-1">$340</div>
-              <p className="text-gray-400 text-sm mb-1"><span className="line-through text-gray-600">$360</span> <span className="text-green-400 font-semibold">$20 off</span></p>
-              <p className="text-gray-500 text-sm mb-6">$85 / session</p>
-              <a
-                href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%204%20sessions%20($340)%20🔥"
-                target="_blank"
-                className="inline-block w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-blue-500/25 transition-all"
-              >
-                BOOK NOW
-              </a>
-            </motion.div>
-
-            {/* 8 Sessions */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              whileHover={{ y: -5 }}
-              className="bg-gradient-to-b from-purple-500/10 to-purple-600/5 border border-purple-500/20 backdrop-blur-xl rounded-2xl p-8 text-center transition-all duration-300 hover:shadow-2xl shadow-purple-500/10 hover:shadow-purple-500/25 relative overflow-hidden"
-            >
-              <div className="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                BEST VALUE
-              </div>
-              <div className="text-4xl mb-4">💪</div>
-              <h3 className="font-bold text-xl mb-2">8 Sessions</h3>
-              <div className="text-4xl font-black text-white mb-1">$690</div>
-              <p className="text-gray-400 text-sm mb-1"><span className="line-through text-gray-600">$720</span> <span className="text-green-400 font-semibold">$30 off</span></p>
-              <p className="text-gray-500 text-sm mb-6">$86.25 / session</p>
-              <a
-                href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%208%20sessions%20($690)%20💪"
-                target="_blank"
-                className="inline-block w-full px-6 py-3 bg-white text-black rounded-full font-semibold text-sm hover:bg-gray-200 transition-all"
-              >
-                BOOK NOW
-              </a>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Free Shooting Guide — Email Capture */}
       <section id="guide" className="px-8 py-20">
         <motion.div
@@ -590,6 +500,96 @@ export default function HomePage() {
           </svg>
         </motion.div>
       </motion.a>
+
+      {/* Rates Modal */}
+      {showRates && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-6"
+          onClick={() => setShowRates(false)}
+          style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#0a0a1a] border border-white/10 rounded-3xl p-8 md:p-10 max-w-md w-full shadow-2xl"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">
+                <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">PRICING</span>
+              </h2>
+              <button onClick={() => setShowRates(false)} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-all text-lg cursor-pointer border-none">✕</button>
+            </div>
+
+            <p className="text-green-400 font-semibold text-center mb-6 text-lg">🎉 First trial lesson FREE</p>
+
+            <div className="space-y-4">
+              {/* 1 Session */}
+              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 flex justify-between items-center">
+                <div>
+                  <h3 className="font-bold text-white">1 Session</h3>
+                  <p className="text-gray-500 text-sm">1.5 hours</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-black text-white">$90</div>
+                  <a
+                    href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20single%20session%20($90)%20🏀"
+                    target="_blank"
+                    className="text-xs text-blue-400 hover:text-blue-300"
+                  >
+                    Book →
+                  </a>
+                </div>
+              </div>
+
+              {/* 4 Sessions */}
+              <div className="bg-gradient-to-b from-red-500/10 to-red-600/5 border border-red-500/20 rounded-2xl p-5 flex justify-between items-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">SAVE $20</div>
+                <div>
+                  <h3 className="font-bold text-white">4 Sessions</h3>
+                  <p className="text-gray-500 text-sm"><span className="line-through text-gray-600">$360</span> <span className="text-green-400">$340</span></p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-black text-white">$340</div>
+                  <a
+                    href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%204%20sessions%20($340)%20🔥"
+                    target="_blank"
+                    className="text-xs text-blue-400 hover:text-blue-300"
+                  >
+                    Book →
+                  </a>
+                </div>
+              </div>
+
+              {/* 8 Sessions */}
+              <div className="bg-gradient-to-b from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-2xl p-5 flex justify-between items-center relative overflow-hidden">
+                <div className="absolute top-2 right-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">BEST VALUE</div>
+                <div>
+                  <h3 className="font-bold text-white">8 Sessions</h3>
+                  <p className="text-gray-500 text-sm"><span className="line-through text-gray-600">$720</span> <span className="text-green-400">$690</span></p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-black text-white">$690</div>
+                  <a
+                    href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%208%20sessions%20($690)%20💪"
+                    target="_blank"
+                    className="text-xs text-blue-400 hover:text-blue-300"
+                  >
+                    Book →
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowRates(false)}
+              className="w-full mt-6 px-6 py-3 bg-white/10 border border-white/20 rounded-full font-semibold text-sm hover:bg-white/20 transition-all cursor-pointer"
+            >
+              CLOSE
+            </button>
+          </motion.div>
+        </div>
+      )}
     </main>
   );
 }
