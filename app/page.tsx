@@ -111,13 +111,18 @@ export default function HomePage() {
 
           {/* Hero Section */}
       <section className="relative pt-40 pb-20 px-8 overflow-hidden">
-        {/* GIF Background */}
+        {/* Video Background */}
         <div className="absolute inset-0 z-0 opacity-20">
-          <img 
-            src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZXpobzdpOG5yejVrcTN6dmIwMXBlejY4Z2ppc3lhNHI5bWswdmpueSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/hS36nlCKcm2vGDzdjY/giphy.gif" 
-            alt="Basketball"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             className="w-full h-full object-cover"
-          />
+          >
+            <source src="/hero-bg.webm" type="video/webm" />
+            <source src="/hero-bg-compressed.mp4" type="video/mp4" />
+          </video>
         </div>
         {/* Gradient overlay */}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#030303] via-transparent to-[#030303]" />
