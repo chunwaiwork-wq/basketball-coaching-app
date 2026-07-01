@@ -12,7 +12,7 @@ export default function AuthCallbackPage() {
     const userEmail = searchParams.get("userEmail");
     const userRole = searchParams.get("userRole");
 
-    if (userId && userName && userEmail) {
+    if (userId && userName && userEmail && userRole) {
       localStorage.setItem("userId", userId);
       localStorage.setItem("userName", userName);
       localStorage.setItem("userEmail", userEmail);
