@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { google } from "google-auth-library";
+import { OAuth2Client } from "google-auth-library";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
@@ -26,7 +26,7 @@ export async function GET(req: Request) {
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://basketball-coaching-app-one.vercel.app";
 
-    const oauth2Client = new google.auth.OAuth2({
+    const oauth2Client = new OAuth2Client({
       clientId,
       clientSecret,
       redirectUri: `${baseUrl}/api/auth/google/callback`,
