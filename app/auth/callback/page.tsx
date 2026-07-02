@@ -17,6 +17,9 @@ function CallbackHandler() {
       localStorage.setItem("userName", userName);
       localStorage.setItem("userEmail", userEmail);
       localStorage.setItem("userRole", userRole);
+      // Also set the keys the dashboard layout checks for
+      localStorage.setItem("studentId", userId);
+      localStorage.setItem("studentName", userName);
 
       if (userRole === "coach") {
         localStorage.setItem("isCoach", "true");
