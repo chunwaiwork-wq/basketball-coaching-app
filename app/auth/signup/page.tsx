@@ -44,10 +44,14 @@ export default function SignupPage() {
       }
 
       // Auto-login after signup
+      localStorage.clear();
+
       localStorage.setItem("userId", data.id.toString());
       localStorage.setItem("userName", data.name);
       localStorage.setItem("userEmail", data.email);
       localStorage.setItem("userRole", data.role);
+      localStorage.setItem("studentId", data.id.toString());
+      localStorage.setItem("studentName", data.name);
       router.push("/dashboard/videos");
     } catch {
       setError("Something went wrong. Try again.");

@@ -13,6 +13,9 @@ function CallbackHandler() {
     const userRole = searchParams.get("userRole");
 
     if (userId && userName && userEmail && userRole) {
+      // Clear any old session data first
+      localStorage.clear();
+
       localStorage.setItem("userId", userId);
       localStorage.setItem("userName", userName);
       localStorage.setItem("userEmail", userEmail);

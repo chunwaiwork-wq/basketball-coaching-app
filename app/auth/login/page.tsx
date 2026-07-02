@@ -41,10 +41,15 @@ function LoginContent() {
         return;
       }
 
+      // Clear any old session data first
+      localStorage.clear();
+
       localStorage.setItem("userId", data.id.toString());
       localStorage.setItem("userName", data.name);
       localStorage.setItem("userEmail", data.email);
       localStorage.setItem("userRole", data.role);
+      localStorage.setItem("studentId", data.id.toString());
+      localStorage.setItem("studentName", data.name);
 
       if (data.role === "coach") {
         localStorage.setItem("isCoach", "true");
