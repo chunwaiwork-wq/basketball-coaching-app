@@ -43,8 +43,10 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const lead = await prisma.lead.create({
-      data: { name, email },
+    const lead = await prisma.lead.upsert({
+      where: { email },
+      update: { name },
+      create: { name, email },
     });
     return NextResponse.json({ lead }, { status: 201 });
   } catch (error) {

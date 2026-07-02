@@ -37,10 +37,12 @@ export async function POST(req: Request) {
     });
 
     // Also create a lead in the CRM
-    await prisma.lead.create({
-      data: { name, email },
+    await prisma.lead.upsert({
+      where: { email },
+      update: { name },
+      create: { name, email },
     }).catch(() => {
-      // Lead might already exist (e.g. from trial form), ignore
+      // ignore
     });
 
     // Notify coach on Telegram
