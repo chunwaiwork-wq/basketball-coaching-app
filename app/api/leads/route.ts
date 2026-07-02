@@ -34,6 +34,28 @@ export async function GET(request: Request) {
   }
 }
 
+export async function POST(request: Request) {
+  try {
+    const { name, email } = await request.json();
+    if (!name || !email) {
+      return NextResponse.json(
+        { error: "Name and email are required" },
+        { status: 400 }
+      );
+    }
+    const lead = await prisma.lead.create({
+      data: { name, email },
+    });
+    return NextResponse.json({ lead }, { status: 201 });
+  } catch (error) {
+    console.error("Create lead error:", error);
+    return NextResponse.json(
+      { error: "Failed to create lead" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function PATCH(request: Request) {
   try {
     const { id, contacted, notes } = await request.json();
