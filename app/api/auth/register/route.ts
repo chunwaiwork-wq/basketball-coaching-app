@@ -35,6 +35,13 @@ export async function POST(req: Request) {
       data: { email, password: hashedPassword, name, role: "student" },
     });
 
+    // Also create a lead in the CRM
+    await prisma.lead.create({
+      data: { name, email },
+    }).catch(() => {
+      // Lead might already exist (e.g. from trial form), ignore
+    });
+
     return NextResponse.json({
       id: user.id,
       name: user.name,

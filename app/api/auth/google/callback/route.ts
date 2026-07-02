@@ -63,6 +63,13 @@ export async function GET(req: Request) {
           role: "student",
         },
       });
+
+      // Also create a lead in the CRM
+      await prisma.lead.create({
+        data: { name, email },
+      }).catch(() => {
+        // Lead might already exist, ignore
+      });
     }
 
     // Redirect to a special page that saves to localStorage
