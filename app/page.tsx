@@ -106,8 +106,7 @@ export default function HomePage() {
               LOGIN
             </motion.a>
           </div>
-        </div>
-      </motion.nav>
+        </motion.nav>
 
           {/* Hero Section */}
       <section className="relative pt-40 pb-20 px-8 overflow-hidden">
