@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { OAuth2Client } from "google-auth-library";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { sendLeadNotification } from "@/lib/email";
 
 export async function GET(req: Request) {
   try {
@@ -70,6 +71,9 @@ export async function GET(req: Request) {
       }).catch(() => {
         // Lead might already exist, ignore
       });
+
+      // Notify coach on Telegram
+      await sendLeadNotification(name, email).catch(() => {});
     }
 
     // Redirect to a special page that saves to localStorage
