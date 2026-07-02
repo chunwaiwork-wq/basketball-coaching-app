@@ -82,28 +82,27 @@ export default function HomePage() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-8 py-5">
-          <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <span className="text-xl">🏀</span>
-            </div>
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
+          <motion.div whileHover={{ scale: 1.02 }}>
             <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
               413OPENCOURT
             </span>
           </motion.div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
             <button onClick={() => setShowRates(true)} className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block cursor-pointer bg-transparent border-none font-inherit">RATES</button>
-            <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">REVIEWS</a>
+            <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
             <a href="/auth/signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">SIGN UP</a>
-            <motion.a
-              href="/auth/login"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
-            >
+          </div>
+
+          <motion.a
+            href="/auth/login"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
+          >
               LOGIN
             </motion.a>
           </div>
