@@ -1,0 +1,151 @@
+"use client";
+
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useState } from "react";
+
+const FAQS = [
+  {
+    q: "Who are the coaches?",
+    a: "Our coaches include veteran players like Chun Wai and other certified and experienced coaches with more than a decade of experience teaching kids and adults!",
+  },
+  {
+    q: "Where is the coaching venue?",
+    a: 'It will be located at your convenience. However, group classes are usually held at Block 840 sheltered basketball court.',
+  },
+  {
+    q: "What is the training program?",
+    a: "Depending on your level of experience, the program will be tailored to you.",
+  },
+  {
+    q: "How is the training conducted?",
+    a: "Training will be conducted in a fun and enriching manner. There will be lots of learnings and takeaways after each session.",
+  },
+  {
+    q: "Why choose 413opencourt?",
+    a: "We believe that every kid or adult can be empowered with good basketball skills and play with confidence. Our core principles are to ensure clarity, confidence and convenience to all coachees.",
+  },
+];
+
+function FaqItem({ question, answer, index }: { question: string; answer: string; index: number }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.08 }}
+      className="border-b border-white/[0.06] last:border-0"
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-white/[0.02] transition-colors"
+      >
+        <span className="text-base font-semibold text-white pr-4">{question}</span>
+        <motion.svg
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="w-5 h-5 text-gray-400 shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </motion.svg>
+      </button>
+      {open && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          className="overflow-hidden"
+        >
+          <p className="px-6 pb-5 text-sm text-gray-400 leading-relaxed">{answer}</p>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}
+
+export default function FaqPage() {
+  return (
+    <div className="min-h-screen bg-[#0a0a1a] text-white">
+      {/* Simple Nav */}
+      <nav className="border-b border-white/[0.06]">
+        <div className="max-w-4xl mx-auto flex items-center justify-between px-6 py-4">
+          <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+            ← Back to Home
+          </Link>
+          <span className="text-sm font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            413 OPEN COURT
+          </span>
+        </div>
+      </nav>
+
+      {/* Header */}
+      <header className="max-w-4xl mx-auto px-6 pt-12 pb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Got questions? We've got answers.</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">
+            ❓ Frequently Asked Questions
+          </h1>
+          <p className="text-gray-400 mt-2 max-w-xl">
+            Everything you need to know about 413 OpenCourt basketball coaching in Singapore.
+          </p>
+        </motion.div>
+      </header>
+
+      {/* FAQ Items */}
+      <main className="max-w-4xl mx-auto px-6 pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="border border-white/[0.08] rounded-2xl overflow-hidden"
+        >
+          {FAQS.map((faq, i) => (
+            <FaqItem key={i} question={faq.q} answer={faq.a} index={i} />
+          ))}
+        </motion.div>
+
+        {/* Still have questions? */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-8 border border-white/[0.08] rounded-2xl p-6 text-center"
+        >
+          <p className="text-2xl mb-2">💬</p>
+          <h2 className="text-lg font-bold text-white">Still have questions?</h2>
+          <p className="text-sm text-gray-400 mt-1 max-w-md mx-auto">
+            Feel free to reach out to us directly and we'll get back to you as soon as possible!
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-5">
+            <a
+              href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20have%20a%20question%20about%20413OPENCOURT%20🏀"
+              target="_blank"
+              className="px-6 py-3 bg-white/10 border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
+            >
+              📱 Chat on WhatsApp
+            </a>
+            <a
+              href="/rates"
+              className="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm font-semibold hover:bg-white/10 transition-all"
+            >
+              💰 View Pricing
+            </a>
+          </div>
+        </motion.div>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-white/[0.06] py-6 text-center text-xs text-gray-600">
+        <p>© 2026 413 OpenCourt Pte. Ltd. &nbsp;|&nbsp; UEN 202607219E</p>
+      </footer>
+    </div>
+  );
+}

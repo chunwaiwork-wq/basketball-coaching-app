@@ -91,6 +91,7 @@ export default function HomePage() {
 
           <div className="flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
             <Link href="/rates" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">RATES</Link>
+            <Link href="/faq" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FAQs</Link>
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
