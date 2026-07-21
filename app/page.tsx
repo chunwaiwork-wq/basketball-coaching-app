@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import TrialChat from "../components/TrialChat";
+import Link from "next/link";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
@@ -12,7 +13,6 @@ export default function HomePage() {
   const [guideLoading, setGuideLoading] = useState(false);
   const [guideError, setGuideError] = useState("");
   const [showTrialChat, setShowTrialChat] = useState(false);
-  const [showRates, setShowRates] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -90,7 +90,7 @@ export default function HomePage() {
           </motion.div>
 
           <div className="flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
-            <button onClick={() => setShowRates(true)} className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block cursor-pointer bg-transparent border-none font-inherit">RATES</button>
+            <Link href="/rates" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">RATES</Link>
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
@@ -498,128 +498,7 @@ export default function HomePage() {
           </svg>
         </motion.div>
       </motion.a>
-
-      {/* Rates Modal */}
-      {showRates && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-6"
-          onClick={() => setShowRates(false)}
-          style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-[#0a0a1a] border border-white/10 rounded-3xl p-8 md:p-10 max-w-md w-full shadow-2xl"
-          >
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">
-                <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">PRICING</span>
-              </h2>
-              <button onClick={() => setShowRates(false)} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-all text-lg cursor-pointer border-none">✕</button>
-            </div>
-
-            <p className="text-green-400 font-semibold text-center mb-6 text-lg">🎁 New Player Trial — FREE group session</p>
-
-            <div className="space-y-6">
-              {/* ===== Group Classes ===== */}
-              <div>
-                <h3 className="text-sm font-bold text-white/60 uppercase tracking-wider mb-3">🏀 Group Classes (up to 8)</h3>
-                <div className="space-y-2">
-                  <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center">
-                    <div><h4 className="font-bold text-white text-sm">Drop-in</h4><p className="text-gray-500 text-xs">1 session</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$40</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20group%20drop-in%20session%20(S%2440)%20🏀" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                  <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center">
-                    <div><h4 className="font-bold text-white text-sm">Monthly</h4><p className="text-gray-500 text-xs">4 sessions — S$35/session</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$140</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20group%20monthly%20(S%24140)%20🔥" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-b from-green-500/10 to-green-600/5 border border-green-500/20 rounded-2xl p-4 flex justify-between items-center relative overflow-hidden">
-                    <div className="absolute top-1.5 right-1.5 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">BEST VALUE</div>
-                    <div><h4 className="font-bold text-white text-sm">Term Pack</h4><p className="text-gray-500 text-xs">12 sessions — S$32.50/session</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$390</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20the%20group%20term%20pack%20(S%24390)%20💪" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* ===== Semi-Private ===== */}
-              <div>
-                <h3 className="text-sm font-bold text-white/60 uppercase tracking-wider mb-3">👥 Semi-Private (3–5 players)</h3>
-                <div className="space-y-2">
-                  <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center">
-                    <div><h4 className="font-bold text-white text-sm">Drop-in</h4><p className="text-gray-500 text-xs">1 session</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$65</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20semi-private%20drop-in%20(S%2465)%20🏀" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                  <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center">
-                    <div><h4 className="font-bold text-white text-sm">Monthly</h4><p className="text-gray-500 text-xs">4 sessions — S$60/session</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$240</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20semi-private%20monthly%20(S%24240)%20🔥" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* ===== Private 1-to-1 ===== */}
-              <div>
-                <h3 className="text-sm font-bold text-white/60 uppercase tracking-wider mb-3">🎯 Private 1-to-1 Coaching</h3>
-                <div className="space-y-2">
-                  <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center">
-                    <div><h4 className="font-bold text-white text-sm">Single Session</h4><p className="text-gray-500 text-xs">1 hour</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$95</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20private%201-to-1%20session%20(S%2495)%20🏀" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                  <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex justify-between items-center">
-                    <div><h4 className="font-bold text-white text-sm">Monthly</h4><p className="text-gray-500 text-xs">4 sessions — S$85/session</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$340</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20private%20monthly%20(S%24340)%20🔥" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-b from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-2xl p-4 flex justify-between items-center relative overflow-hidden">
-                    <div className="absolute top-1.5 right-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">BEST VALUE</div>
-                    <div><h4 className="font-bold text-white text-sm">Term Pack</h4><p className="text-gray-500 text-xs">12 sessions — S$80/session</p></div>
-                    <div className="text-right">
-                      <div className="text-xl font-black text-white">S$960</div>
-                      <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20private%20term%20pack%20(S%24960)%20💪" target="_blank" className="text-xs text-blue-400 hover:text-blue-300">Book →</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* ===== Good to Know ===== */}
-              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 text-xs text-gray-400 space-y-1">
-                <p className="font-bold text-white/80 mb-1">📌 Good to Know</p>
-                <p>• Packages billed upfront; sessions expire 6 weeks after purchase</p>
-                <p>• Free reschedules with 24hrs notice; no-shows forfeit session</p>
-                <p>• Rained-out sessions rescheduled at no charge</p>
-                <p>• Sibling discount: 10% off second child on monthly/term packs</p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowRates(false)}
-              className="w-full mt-6 px-6 py-3 bg-white/10 border border-white/20 rounded-full font-semibold text-sm hover:bg-white/20 transition-all cursor-pointer"
-            >
-              CLOSE
-            </button>
-          </motion.div>
-        </div>
-      )}
+      <TrialChat open={showTrialChat} onClose={() => setShowTrialChat(false)} />
     </main>
   );
 }
