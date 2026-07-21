@@ -13,6 +13,7 @@ export async function GET() {
     });
     return NextResponse.json({ success: true, video });
   } catch (error) {
-    return NextResponse.json({ success: false, error: String(error) }, { status: 500 });
+    const msg = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ success: false, error: msg }, { status: 500 });
   }
 }
