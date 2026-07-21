@@ -489,7 +489,6 @@ export default function HomePage() {
           </svg>
         </motion.div>
       </motion.a>
-      <TrialChat open={showTrialChat} onClose={() => setShowTrialChat(false)} />
     </main>
   );
 }
