@@ -4,26 +4,90 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const FAQS = [
+type FaqCategory = {
+  icon: string;
+  title: string;
+  items: { q: string; a: string }[];
+};
+
+const FAQ_CATEGORIES: FaqCategory[] = [
   {
-    q: "Who are the coaches?",
-    a: "Our coaches include veteran players like Chun Wai and other certified and experienced coaches with more than a decade of experience teaching kids and adults!",
+    icon: "👨‍🏫",
+    title: "About Our Coaches",
+    items: [
+      {
+        q: "Who are the coaches?",
+        a: "Our coaches include veteran players like Chun Wai and other certified and experienced coaches with more than a decade of experience teaching kids and adults!",
+      },
+      {
+        q: "Are your coaches certified?",
+        a: "Yes — our coaching staff hold NCAP Singapore certifications. All coaches also undergo background checks and child safety training before working with players.",
+      },
+      {
+        q: "Have your coaches played competitively?",
+        a: "Yes — some of our coaches have played at national team level and they currently compete in the highest Division 1 league in Singapore. They bring that competitive experience directly into how drills and game-reading are taught.",
+      },
+    ],
   },
   {
-    q: "Where is the coaching venue?",
-    a: 'It will be located at your convenience. However, group classes are usually held at Block 840 sheltered basketball court.',
+    icon: "📋",
+    title: "Programs & Training",
+    items: [
+      {
+        q: "What age groups and skill levels do you coach?",
+        a: "We coach kids from age 6–16 and working adults (17+). Each experience is tailor-made according to your level of experience — from complete beginners to competitive players.",
+      },
+      {
+        q: "What is the training program?",
+        a: "Depending on your level of experience, the program will be tailored to you.",
+      },
+      {
+        q: "How is the training conducted?",
+        a: "Training will be conducted in a fun and enriching manner. There will be lots of learnings and takeaways after each session.",
+      },
+      {
+        q: "What's your coach-to-player ratio?",
+        a: "For group classes, our maximum standard ratio is 1 coach to 8 players. This ensures individual attention and correction during every session.",
+      },
+      {
+        q: "Why choose 413opencourt?",
+        a: "We believe that every kid or adult can be empowered with good basketball skills and play with confidence. Our core principles are to ensure clarity, confidence and convenience to all coachees.",
+      },
+    ],
   },
   {
-    q: "What is the training program?",
-    a: "Depending on your level of experience, the program will be tailored to you.",
+    icon: "📍",
+    title: "Venue & Location",
+    items: [
+      {
+        q: "Where is the coaching venue?",
+        a: "It will be located at your convenience. However, group classes are usually held at Block 840 sheltered basketball court.",
+      },
+    ],
   },
   {
-    q: "How is the training conducted?",
-    a: "Training will be conducted in a fun and enriching manner. There will be lots of learnings and takeaways after each session.",
+    icon: "🛡️",
+    title: "Safety & Wellbeing",
+    items: [
+      {
+        q: "What safety measures are in place during sessions?",
+        a: "We have clear injury protocols, hydration and heat management designed for Singapore conditions, and all our coaches are first-aid trained. Every session begins with a venue safety check before play.",
+      },
+    ],
   },
   {
-    q: "Why choose 413opencourt?",
-    a: "We believe that every kid or adult can be empowered with good basketball skills and play with confidence. Our core principles are to ensure clarity, confidence and convenience to all coachees.",
+    icon: "🎁",
+    title: "Trials & Getting Started",
+    items: [
+      {
+        q: "Is there a trial session before committing?",
+        a: "Yes — we offer a free trial session so you can observe the coaching style and see if it's a good fit before signing up. Kids get a free group class, and adults get a free private session.",
+      },
+      {
+        q: "How do I book or ask more questions?",
+        a: "WhatsApp us at +65 9188 5348 or email 413opencourt@gmail.com — we'll get back to you as soon as possible!",
+      },
+    ],
   },
 ];
 
@@ -83,7 +147,7 @@ export default function FaqPage() {
       </nav>
 
       {/* Header */}
-      <header className="max-w-4xl mx-auto px-6 pt-12 pb-4">
+      <header className="max-w-4xl mx-auto px-6 pt-12 pb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -99,18 +163,26 @@ export default function FaqPage() {
         </motion.div>
       </header>
 
-      {/* FAQ Items */}
-      <main className="max-w-4xl mx-auto px-6 pb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="border border-white/[0.08] rounded-2xl overflow-hidden"
-        >
-          {FAQS.map((faq, i) => (
-            <FaqItem key={i} question={faq.q} answer={faq.a} index={i} />
-          ))}
-        </motion.div>
+      {/* FAQ Categories */}
+      <main className="max-w-4xl mx-auto px-6 pb-16 space-y-10">
+        {FAQ_CATEGORIES.map((cat, ci) => (
+          <motion.section
+            key={cat.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: ci * 0.08 }}
+          >
+            <h2 className="flex items-center gap-2 text-lg font-bold text-white mb-3 px-1">
+              <span>{cat.icon}</span>
+              {cat.title}
+            </h2>
+            <div className="border border-white/[0.08] rounded-2xl overflow-hidden">
+              {cat.items.map((faq, i) => (
+                <FaqItem key={i} question={faq.q} answer={faq.a} index={i} />
+              ))}
+            </div>
+          </motion.section>
+        ))}
 
         {/* Still have questions? */}
         <motion.div
