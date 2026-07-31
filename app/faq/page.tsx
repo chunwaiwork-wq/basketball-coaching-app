@@ -53,6 +53,50 @@ const FAQ_CATEGORIES: FaqCategory[] = [
         q: "Why choose 413opencourt?",
         a: "We believe that every kid or adult can be empowered with good basketball skills and play with confidence. Our core principles are to ensure clarity, confidence and convenience to all coachees.",
       },
+      {
+        q: "What equipment does my child need to bring?",
+        a: "They may bring along their ball, towel, and a water bottle. We'll take care of the rest!",
+      },
+    ],
+  },
+  {
+    icon: "💰",
+    title: "Pricing & Payments",
+    items: [
+      {
+        q: "How much does a trial session cost?",
+        a: "Completely free! Kids get a free group session and adults get a free private session — no commitment, no payment details needed.",
+      },
+      {
+        q: "What payment methods do you accept?",
+        a: "PayNow is our primary payment method. We'll send you the details after you confirm your booking.",
+      },
+      {
+        q: "Do siblings get a discount?",
+        a: "Yes — siblings get 10% off for a second child on monthly or term packs.",
+      },
+      {
+        q: "What happens if we miss a session?",
+        a: "Reschedules with 24 hours' notice are free. No-shows without notice will forfeit the session.",
+      },
+      {
+        q: "Are packages refundable?",
+        a: "Packages are strictly non-refundable. However, sessions are valid for 6 weeks from purchase date, and we're happy to reschedule with 24 hours' notice.",
+      },
+    ],
+  },
+  {
+    icon: "⏰",
+    title: "Scheduling",
+    items: [
+      {
+        q: "How long is each session?",
+        a: "Both group and private classes are 1 hour each.",
+      },
+      {
+        q: "Can we reschedule a session?",
+        a: "Definitely! Just give us 24 hours' notice and we'll move your session to another slot at no charge.",
+      },
     ],
   },
   {
