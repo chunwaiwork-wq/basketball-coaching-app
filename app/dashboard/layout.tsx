@@ -44,8 +44,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isCoach, setIsCoach] = useState(false);
 
   useEffect(() => {
+    const uid = localStorage.getItem("userId");
     const sid = localStorage.getItem("studentId");
     const sname = localStorage.getItem("studentName");
+    const uname = localStorage.getItem("userName");
     const coach = localStorage.getItem("isCoach");
     setIsCoach(coach === "true");
 
@@ -53,7 +55,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const adminRoutes = ["/dashboard/coaching", "/dashboard/calendar", "/dashboard/leads"];
     const isAdminRoute = adminRoutes.includes(pathname);
 
-    if (!sid || !sname) {
+    // Allow either a userId (email/Google login) or a studentId (PIN login)
+    if ((!uid && !sid) || (!uname && !sname)) {
       router.replace("/auth");
       return;
     }

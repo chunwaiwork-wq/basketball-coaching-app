@@ -51,11 +51,22 @@ export default function VideosPage() {
   const [studentName, setStudentName] = useState("");
 
   useEffect(() => {
+    const userId = localStorage.getItem("userId");
     const studentId = localStorage.getItem("studentId");
-    const name = localStorage.getItem("studentName");
+    const name = localStorage.getItem("studentName") || localStorage.getItem("userName");
     setStudentName(name || "Athlete");
 
-    if (studentId) {
+    if (userId) {
+      // Email/Google login — resolve videos by the user's linked Student server-side.
+      fetch(`/api/videos?userId=${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setVideos(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    } else if (studentId) {
+      // PIN login — the student's own id.
       fetch(`/api/videos?studentId=${studentId}`)
         .then((res) => res.json())
         .then((data) => {

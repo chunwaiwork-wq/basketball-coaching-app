@@ -50,8 +50,8 @@ export default function SignupPage() {
       localStorage.setItem("userName", data.name);
       localStorage.setItem("userEmail", data.email);
       localStorage.setItem("userRole", data.role);
-      localStorage.setItem("studentId", data.id.toString());
-      localStorage.setItem("studentName", data.name);
+      // NOTE: Do NOT set studentId to the user's id (separate ID sequences).
+      // Videos resolve via userId server-side (see /api/videos).
       router.push("/dashboard/videos");
     } catch {
       setError("Something went wrong. Try again.");

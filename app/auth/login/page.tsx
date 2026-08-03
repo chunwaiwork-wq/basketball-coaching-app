@@ -48,8 +48,9 @@ function LoginContent() {
       localStorage.setItem("userName", data.name);
       localStorage.setItem("userEmail", data.email);
       localStorage.setItem("userRole", data.role);
-      localStorage.setItem("studentId", data.id.toString());
-      localStorage.setItem("studentName", data.name);
+      // NOTE: Do NOT set studentId to the user's id. User ids and Student ids
+      // are separate auto-increment sequences — a user is not a student unless
+      // linked. Videos resolve via userId server-side (see /api/videos).
 
       if (data.role === "coach") {
         localStorage.setItem("isCoach", "true");

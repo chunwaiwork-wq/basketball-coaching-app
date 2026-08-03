@@ -20,9 +20,8 @@ function CallbackHandler() {
       localStorage.setItem("userName", userName);
       localStorage.setItem("userEmail", userEmail);
       localStorage.setItem("userRole", userRole);
-      // Also set the keys the dashboard layout checks for
-      localStorage.setItem("studentId", userId);
-      localStorage.setItem("studentName", userName);
+      // NOTE: Do NOT set studentId to the user's id (separate ID sequences).
+      // Videos resolve via userId server-side (see /api/videos).
 
       if (userRole === "coach") {
         localStorage.setItem("isCoach", "true");
