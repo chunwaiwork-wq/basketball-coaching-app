@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", whatsapp: "" });
   const [submitted, setSubmitted] = useState(false);
   const [guideData, setGuideData] = useState({ name: "", email: "" });
@@ -89,25 +90,54 @@ export default function HomePage() {
             </span>
           </motion.div>
 
-          <div className="flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
-            <Link href="/rates" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">RATES</Link>
-            <Link href="/faq" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FAQs</Link>
-            <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">TESTIMONIALS</a>
-            <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE GUIDE</a>
-            <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">FREE TRIAL</a>
-            <a href="/auth/signup" className="text-sm text-gray-400 hover:text-white transition-colors hidden md:block">SIGN UP</a>
+          <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
+            <Link href="/rates" className="text-sm text-gray-400 hover:text-white transition-colors">RATES</Link>
+            <Link href="/faq" className="text-sm text-gray-400 hover:text-white transition-colors">FAQs</Link>
+            <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors">TESTIMONIALS</a>
+            <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors">FREE GUIDE</a>
+            <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors">FREE TRIAL</a>
+            <Link href="/auth/signup" className="text-sm text-gray-400 hover:text-white transition-colors">SIGN UP</Link>
           </div>
 
-          <motion.a
-            href="/auth/login"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
-          >
+          <div className="flex items-center gap-3">
+            <motion.a
+              href="/auth/login"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold hover:bg-white/20 transition-all"
+            >
               LOGIN
             </motion.a>
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+              className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-white/5 border border-white/10 rounded-full"
+            >
+              <span className={`block w-4 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block w-4 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+              <span className={`block w-4 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            </button>
           </div>
-        </motion.nav>
+        </div>
+
+        {/* Mobile menu dropdown */}
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 px-8 py-6 flex flex-col gap-4"
+          >
+            <Link href="/rates" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">💰 RATES</Link>
+            <Link href="/faq" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">❓ FAQs</Link>
+            <a href="#testimonials" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">⭐ TESTIMONIALS</a>
+            <a href="#guide" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📖 FREE GUIDE</a>
+            <a href="#signup" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">🎁 FREE TRIAL</a>
+            <Link href="/auth/signup" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📝 SIGN UP</Link>
+          </motion.div>
+        )}
+      </motion.nav>
 
           {/* Hero Section */}
       <section className="relative pt-40 pb-20 px-8 overflow-hidden">
