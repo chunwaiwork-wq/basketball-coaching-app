@@ -96,7 +96,7 @@ export default function HomePage() {
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors">FREE TRIAL</a>
-            <Link href="/auth/signup" className="text-sm text-gray-400 hover:text-white transition-colors">SIGN UP</Link>
+            <a href="https://bit.ly/4bINSOP" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">SIGN UP</a>
           </div>
 
           <div className="flex items-center gap-3">
@@ -134,7 +134,7 @@ export default function HomePage() {
             <a href="#testimonials" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">⭐ TESTIMONIALS</a>
             <a href="#guide" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📖 FREE GUIDE</a>
             <a href="#signup" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">🎁 FREE TRIAL</a>
-            <Link href="/auth/signup" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📝 SIGN UP</Link>
+            <a href="https://bit.ly/4bINSOP" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📝 SIGN UP</a>
           </motion.div>
         )}
       </motion.nav>
