@@ -484,7 +484,8 @@ export default function HomePage() {
                     </a>
                     {/* Instagram */}
                     <a
-                      href="#"
+                      href="https://www.instagram.com/413opencourt"
+                      target="_blank"
                       className="w-14 h-14 bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 rounded-2xl flex items-center justify-center hover:scale-110 transition-transform shadow-lg hover:shadow-pink-500/25"
                     >
                       <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -493,7 +494,8 @@ export default function HomePage() {
                     </a>
                     {/* TikTok */}
                     <a
-                      href="#"
+                      href="https://www.tiktok.com/@413opencourt"
+                      target="_blank"
                       className="w-14 h-14 bg-gradient-to-br from-gray-800 to-black border border-white/10 rounded-2xl flex items-center justify-center hover:scale-110 transition-transform shadow-lg hover:shadow-gray-500/25"
                     >
                       <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
