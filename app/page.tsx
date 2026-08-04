@@ -314,7 +314,7 @@ export default function HomePage() {
                 role: "Power Forward",
                 quote: "Awesome training and Hard drills! Bring your game to the next level with Coach Wai",
                 rating: 5,
-                image: "",
+                image: "/testimonials/hongyewee.jpg",
                 color: "from-blue-500/10 to-blue-600/5 border-blue-500/20"
               },
               {
@@ -330,7 +330,7 @@ export default function HomePage() {
                 role: "Shooting Guard",
                 quote: "Been training for a few months with Coach Wai, he is very passionate and knowledgeable coach that can provide helpful tips to improve your skills and game play 👍 strongly recommended 👍",
                 rating: 5,
-                image: "",
+                image: "/testimonials/jo.jpg",
                 color: "from-purple-500/10 to-purple-600/5 border-purple-500/20"
               },
             ].map((testimonial, i) => (
