@@ -314,6 +314,7 @@ export default function HomePage() {
                 role: "Power Forward",
                 quote: "Awesome training and Hard drills! Bring your game to the next level with Coach Wai",
                 rating: 5,
+                image: "",
                 color: "from-blue-500/10 to-blue-600/5 border-blue-500/20"
               },
               {
@@ -321,6 +322,7 @@ export default function HomePage() {
                 role: "Former Pro AM NBL Player",
                 quote: "Solid drill",
                 rating: 5,
+                image: "",
                 color: "from-red-500/10 to-red-600/5 border-red-500/20"
               },
               {
@@ -328,6 +330,7 @@ export default function HomePage() {
                 role: "Shooting Guard",
                 quote: "Been training for a few months with Coach Wai, he is very passionate and knowledgeable coach that can provide helpful tips to improve your skills and game play 👍 strongly recommended 👍",
                 rating: 5,
+                image: "",
                 color: "from-purple-500/10 to-purple-600/5 border-purple-500/20"
               },
             ].map((testimonial, i) => (
@@ -345,9 +348,22 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed mb-6 italic">&ldquo;{testimonial.quote}&rdquo;</p>
-                <div>
-                  <p className="text-white font-semibold">{testimonial.name}</p>
-                  <p className="text-gray-500 text-xs">{testimonial.role}</p>
+                <div className="flex items-center gap-3">
+                  {testimonial.image ? (
+                    <img
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-white/20"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/40 to-purple-500/40 border border-white/20 flex items-center justify-center text-white font-bold text-sm">
+                      {testimonial.name.split(" ").map((n) => n[0]).join("")}
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-white font-semibold">{testimonial.name}</p>
+                    <p className="text-gray-500 text-xs">{testimonial.role}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
