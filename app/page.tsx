@@ -322,7 +322,7 @@ export default function HomePage() {
                 role: "Former Pro AM NBL Player",
                 quote: "Solid drill",
                 rating: 5,
-                image: "",
+                image: "/testimonials/yaozu.jpg",
                 color: "from-red-500/10 to-red-600/5 border-red-500/20"
               },
               {
