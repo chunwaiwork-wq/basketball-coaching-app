@@ -83,12 +83,29 @@ export default function HomePage() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
-          <motion.div whileHover={{ scale: 1.02 }}>
-            <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              413OPENCOURT
-            </span>
-          </motion.div>
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-8 py-5">
+          <div className="flex items-center gap-3">
+            {/* Mobile hamburger — left side, big tap target */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+              className="md:hidden w-12 h-12 flex flex-col items-center justify-center gap-1.5 bg-white/10 border border-white/20 rounded-xl active:scale-95 transition-transform"
+            >
+              <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+              <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            </button>
+            <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-2">
+              <img
+                src="/413opencourt_logo.png"
+                alt="413 OpenCourt logo"
+                className="h-8 md:h-9 w-auto object-contain"
+              />
+              <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                413OPENCOURT
+              </span>
+            </motion.div>
+          </div>
 
           <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
             <Link href="/rates" className="text-sm text-gray-400 hover:text-white transition-colors">RATES</Link>
@@ -108,17 +125,6 @@ export default function HomePage() {
             >
               LOGIN
             </motion.a>
-
-            {/* Mobile hamburger */}
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
-              className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-white/5 border border-white/10 rounded-full"
-            >
-              <span className={`block w-4 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
-              <span className={`block w-4 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-              <span className={`block w-4 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-            </button>
           </div>
         </div>
 
@@ -134,7 +140,6 @@ export default function HomePage() {
             <a href="#testimonials" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">⭐ TESTIMONIALS</a>
             <a href="#guide" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📖 FREE GUIDE</a>
             <a href="#signup" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">🎁 FREE TRIAL</a>
-            <a href="https://bit.ly/4bINSOP" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📝 SIGN UP</a>
           </motion.div>
         )}
       </motion.nav>
