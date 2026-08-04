@@ -85,15 +85,18 @@ export default function HomePage() {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-8 py-5">
           <div className="flex items-center gap-3">
-            {/* Mobile hamburger — left side, big tap target */}
+            {/* Mobile menu — big high-contrast pill, easy to tap */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
-              className="md:hidden w-12 h-12 flex flex-col items-center justify-center gap-1.5 bg-white/10 border border-white/20 rounded-xl active:scale-95 transition-transform"
+              className="md:hidden flex items-center gap-2.5 h-14 px-6 bg-white text-black rounded-full font-bold text-base active:scale-95 transition-transform shadow-lg shadow-black/40 select-none"
             >
-              <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
-              <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-              <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+              <span className="relative w-5 h-4 flex flex-col justify-center gap-[5px]">
+                <span className={`block w-5 h-[3px] bg-black rounded-full transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+                <span className={`block w-5 h-[3px] bg-black rounded-full transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+                <span className={`block w-5 h-[3px] bg-black rounded-full transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+              </span>
+              {mobileOpen ? "CLOSE" : "MENU"}
             </button>
             <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-2">
               <img
@@ -113,7 +116,6 @@ export default function HomePage() {
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors">FREE GUIDE</a>
             <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors">FREE TRIAL</a>
-            <a href="https://bit.ly/4bINSOP" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">SIGN UP</a>
           </div>
 
           <div className="flex items-center gap-3">
@@ -128,18 +130,18 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Mobile menu dropdown */}
+        {/* Mobile menu dropdown — big tap targets */}
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 px-8 py-6 flex flex-col gap-4"
+            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 px-4 py-4 flex flex-col"
           >
-            <Link href="/rates" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">💰 RATES</Link>
-            <Link href="/faq" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">❓ FAQs</Link>
-            <a href="#testimonials" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">⭐ TESTIMONIALS</a>
-            <a href="#guide" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">📖 FREE GUIDE</a>
-            <a href="#signup" onClick={() => setMobileOpen(false)} className="text-base text-gray-300 hover:text-white transition-colors">🎁 FREE TRIAL</a>
+            <Link href="/rates" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">💰 RATES</Link>
+            <Link href="/faq" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">❓ FAQs</Link>
+            <a href="#testimonials" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">⭐ TESTIMONIALS</a>
+            <a href="#guide" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">📖 FREE GUIDE</a>
+            <a href="#signup" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">🎁 FREE TRIAL</a>
           </motion.div>
         )}
       </motion.nav>
