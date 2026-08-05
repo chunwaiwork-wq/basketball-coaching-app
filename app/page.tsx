@@ -66,11 +66,42 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#030303] text-white overflow-hidden">
-      {/* Animated background */}
-      <div className="fixed inset-0 -z-10">
+      {/* Fixed background — basketball net + subtle glow, stays on scroll */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <svg viewBox="0 0 400 400" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" className="w-[520px] md:w-[640px] h-auto opacity-[0.07]">
+            <rect x="130" y="30" width="140" height="85" rx="6" />
+            <ellipse cx="200" cy="112" rx="64" ry="14" />
+            <line x1="200" y1="112" x2="200" y2="30" />
+            <line x1="259.5" y1="117.2" x2="230" y2="300" />
+            <line x1="259.5" y1="117.2" x2="230" y2="300" />
+            <line x1="249.9" y1="120.8" x2="230" y2="300" />
+            <line x1="249.9" y1="120.8" x2="214" y2="307" />
+            <line x1="236.0" y1="123.6" x2="230" y2="300" />
+            <line x1="236.0" y1="123.6" x2="230" y2="300" />
+            <line x1="218.8" y1="125.4" x2="214" y2="307" />
+            <line x1="218.8" y1="125.4" x2="200" y2="310" />
+            <line x1="200.0" y1="126.0" x2="200" y2="310" />
+            <line x1="200.0" y1="126.0" x2="214" y2="307" />
+            <line x1="181.2" y1="125.4" x2="186" y2="307" />
+            <line x1="181.2" y1="125.4" x2="170" y2="300" />
+            <line x1="164.0" y1="123.6" x2="170" y2="300" />
+            <line x1="164.0" y1="123.6" x2="186" y2="307" />
+            <line x1="150.1" y1="120.8" x2="170" y2="300" />
+            <line x1="150.1" y1="120.8" x2="170" y2="300" />
+            <line x1="140.5" y1="117.2" x2="170" y2="300" />
+            <line x1="140.5" y1="117.2" x2="186" y2="307" />
+            <line x1="148" y1="170" x2="252" y2="170" />
+            <line x1="156" y1="215" x2="244" y2="215" />
+            <line x1="164" y1="260" x2="236" y2="260" />
+          </svg>
+        </div>
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[100px] animate-pulse" />
       </div>
+
+      {/* Page content — above fixed background */}
+      <div className="relative z-10">
 
       {/* Navigation */}
       <motion.nav
@@ -100,9 +131,9 @@ export default function HomePage() {
             </button>
             <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-1.5 md:gap-2 min-w-0">
               <img
-                src="/413opencourt_logo.png"
+                src="/413opencourt_logo_white.png"
                 alt="413 OpenCourt logo"
-                className="h-5 md:h-8 w-auto object-contain shrink-0"
+                className="h-6 md:h-9 w-auto object-contain shrink-0"
               />
               <span className="text-[13px] md:text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent whitespace-nowrap">
                 413OPENCOURT
@@ -148,35 +179,6 @@ export default function HomePage() {
 
           {/* Hero Section */}
       <section className="relative pt-40 pb-20 px-8 overflow-hidden">
-        {/* Basketball net background (static, no animation) */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-          <svg viewBox="0 0 400 400" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" className="w-[420px] h-auto opacity-10 md:opacity-15">
-            <rect x="130" y="30" width="140" height="85" rx="6" />
-            <ellipse cx="200" cy="112" rx="64" ry="14" />
-            <line x1="200" y1="112" x2="200" y2="30" />
-            <line x1="259.5" y1="117.2" x2="230" y2="300" />
-            <line x1="259.5" y1="117.2" x2="230" y2="300" />
-            <line x1="249.9" y1="120.8" x2="230" y2="300" />
-            <line x1="249.9" y1="120.8" x2="214" y2="307" />
-            <line x1="236.0" y1="123.6" x2="230" y2="300" />
-            <line x1="236.0" y1="123.6" x2="230" y2="300" />
-            <line x1="218.8" y1="125.4" x2="214" y2="307" />
-            <line x1="218.8" y1="125.4" x2="200" y2="310" />
-            <line x1="200.0" y1="126.0" x2="200" y2="310" />
-            <line x1="200.0" y1="126.0" x2="214" y2="307" />
-            <line x1="181.2" y1="125.4" x2="186" y2="307" />
-            <line x1="181.2" y1="125.4" x2="170" y2="300" />
-            <line x1="164.0" y1="123.6" x2="170" y2="300" />
-            <line x1="164.0" y1="123.6" x2="186" y2="307" />
-            <line x1="150.1" y1="120.8" x2="170" y2="300" />
-            <line x1="150.1" y1="120.8" x2="170" y2="300" />
-            <line x1="140.5" y1="117.2" x2="170" y2="300" />
-            <line x1="140.5" y1="117.2" x2="186" y2="307" />
-            <line x1="148" y1="170" x2="252" y2="170" />
-            <line x1="156" y1="215" x2="244" y2="215" />
-            <line x1="164" y1="260" x2="236" y2="260" />
-          </svg>
-        </div>
         {/* Gradient overlay */}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#030303] via-transparent to-[#030303]" />
         
@@ -579,6 +581,7 @@ export default function HomePage() {
           </svg>
         </motion.div>
       </motion.a>
+      </div>
     </main>
   );
 }
