@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 // --- KIDS PRICING (Ages 6–16) ---
 const KIDS_GROUP = [
@@ -38,11 +39,17 @@ const ADULT_GROUP = [
   { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly, per person", price: "S$100", per: "/ mth (S$25 / session)" },
 ];
 
-const GOOD_TO_KNOW = [
+const GOOD_TO_KNOW_KIDS = [
   "Packages are billed upfront; sessions expire 6 weeks after purchase date.",
   "Reschedules with 24hrs notice are free; no-shows forfeit the session.",
   "Rained-out outdoor sessions are rescheduled at no charge.",
   "Sibling discount: 10% off a second child on any monthly or term pack.",
+];
+
+const GOOD_TO_KNOW_ADULT = [
+  "Packages are billed upfront; sessions expire 6 weeks after purchase date.",
+  "Reschedules with 24hrs notice are free; no-shows forfeit the session.",
+  "Rained-out outdoor sessions are rescheduled at no charge.",
   "Partner/sibling discount: 10% off a second adult on any monthly or term pack.",
 ];
 
@@ -112,6 +119,8 @@ function AdultPricing() {
 }
 
 export default function RatesPage() {
+  const [tab, setTab] = useState<"kids" | "adult">("kids");
+
   return (
     <div className="min-h-screen bg-[#0a0a1a] text-white">
       {/* Simple Nav */}
@@ -143,42 +152,55 @@ export default function RatesPage() {
         </motion.div>
       </header>
 
+      {/* Tab Toggle */}
+      <div className="max-w-4xl mx-auto px-6 pb-6">
+        <div className="flex gap-2 p-1 bg-white/[0.04] rounded-xl w-fit">
+          <button
+            onClick={() => setTab("kids")}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+              tab === "kids"
+                ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.06]"
+            }`}
+          >
+            🧒 Kids (6–16)
+          </button>
+          <button
+            onClick={() => setTab("adult")}
+            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+              tab === "adult"
+                ? "bg-purple-500/20 text-purple-400 border border-purple-500/30"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.06]"
+            }`}
+          >
+            🧑 Adults (17+)
+          </button>
+        </div>
+      </div>
+
       {/* Pricing Tables */}
       <main className="max-w-4xl mx-auto px-6 pb-16 space-y-8">
-        {/* Kids Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="space-y-8"
-        >
-          <div className="pt-4">
-            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-              🧒 <span className="bg-gradient-to-r from-green-400 to-emerald-300 bg-clip-text text-transparent">KIDS PRICING</span>
-            </h2>
-            <p className="text-sm text-gray-500 mt-1">Ages 6–16</p>
-          </div>
-          <KidsPricing />
-        </motion.div>
-
-        {/* Divider */}
-        <div className="border-t border-white/[0.08] pt-8" />
-
-        {/* Adults Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="space-y-8"
-        >
-          <div className="pt-4">
-            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-              🧑 <span className="bg-gradient-to-r from-purple-400 to-blue-300 bg-clip-text text-transparent">ADULT PRICING</span>
-            </h2>
-            <p className="text-sm text-gray-500 mt-1">Ages 17+</p>
-          </div>
-          <AdultPricing />
-        </motion.div>
+        {tab === "kids" ? (
+          <motion.div
+            key="kids"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-8"
+          >
+            <KidsPricing />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="adult"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-8"
+          >
+            <AdultPricing />
+          </motion.div>
+        )}
 
         {/* Free Trial */}
         <motion.div
@@ -190,8 +212,10 @@ export default function RatesPage() {
           <p className="text-2xl mb-1">🎁</p>
           <h2 className="text-xl font-bold text-green-400">NEW PLAYER TRIAL — FREE</h2>
           <p className="text-gray-300 mt-1">
-            Kids get one free group session. Adults get one free private session.{" "}
-            No commitment, no payment details needed.
+            {tab === "kids"
+              ? "Kids: one free group session. Adults: one free private session."
+              : "Adults: one free private session. Kids: one free group session."}
+            {" "}No commitment, no payment details needed.
           </p>
           <a
             href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20free%20trial%20session%20🔥"
@@ -211,7 +235,7 @@ export default function RatesPage() {
         >
           <h2 className="text-sm font-bold text-white/60 uppercase tracking-wider mb-4">📌 Good to Know</h2>
           <ul className="space-y-2">
-            {(GOOD_TO_KNOW).map((tip, i) => (
+            {(tab === "kids" ? GOOD_TO_KNOW_KIDS : GOOD_TO_KNOW_ADULT).map((tip, i) => (
               <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
                 <span className="text-gray-600 mt-0.5">•</span>
                 {tip}

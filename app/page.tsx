@@ -148,18 +148,34 @@ export default function HomePage() {
 
           {/* Hero Section */}
       <section className="relative pt-40 pb-20 px-8 overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0 z-0 opacity-20">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/hero-bg.webm" type="video/webm" />
-            <source src="/hero-bg-compressed.mp4" type="video/mp4" />
-          </video>
+        {/* Basketball net background (static, no animation) */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+          <svg viewBox="0 0 400 400" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" className="w-[420px] h-auto opacity-10 md:opacity-15">
+            <rect x="130" y="30" width="140" height="85" rx="6" />
+            <ellipse cx="200" cy="112" rx="64" ry="14" />
+            <line x1="200" y1="112" x2="200" y2="30" />
+            <line x1="259.5" y1="117.2" x2="230" y2="300" />
+            <line x1="259.5" y1="117.2" x2="230" y2="300" />
+            <line x1="249.9" y1="120.8" x2="230" y2="300" />
+            <line x1="249.9" y1="120.8" x2="214" y2="307" />
+            <line x1="236.0" y1="123.6" x2="230" y2="300" />
+            <line x1="236.0" y1="123.6" x2="230" y2="300" />
+            <line x1="218.8" y1="125.4" x2="214" y2="307" />
+            <line x1="218.8" y1="125.4" x2="200" y2="310" />
+            <line x1="200.0" y1="126.0" x2="200" y2="310" />
+            <line x1="200.0" y1="126.0" x2="214" y2="307" />
+            <line x1="181.2" y1="125.4" x2="186" y2="307" />
+            <line x1="181.2" y1="125.4" x2="170" y2="300" />
+            <line x1="164.0" y1="123.6" x2="170" y2="300" />
+            <line x1="164.0" y1="123.6" x2="186" y2="307" />
+            <line x1="150.1" y1="120.8" x2="170" y2="300" />
+            <line x1="150.1" y1="120.8" x2="170" y2="300" />
+            <line x1="140.5" y1="117.2" x2="170" y2="300" />
+            <line x1="140.5" y1="117.2" x2="186" y2="307" />
+            <line x1="148" y1="170" x2="252" y2="170" />
+            <line x1="156" y1="215" x2="244" y2="215" />
+            <line x1="164" y1="260" x2="236" y2="260" />
+          </svg>
         </div>
         {/* Gradient overlay */}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#030303] via-transparent to-[#030303]" />
@@ -226,7 +242,7 @@ export default function HomePage() {
       >
         <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 grid grid-cols-3 gap-8">
           {[
-            { number: "50+", label: "Years of Coaching Experience" },
+            { number: "50+", label: "Combined Coaching Experience (Years)" },
             { number: "5+", label: "Active Coaches" },
             { number: "50+", label: "Athletes Trained" },
           ].map((stat, i) => (
