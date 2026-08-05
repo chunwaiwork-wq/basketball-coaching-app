@@ -114,7 +114,7 @@ export default function HomePage() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-3 md:px-8 pt-[max(1rem,env(safe-area-inset-top))] pb-4 md:pt-5 md:pb-5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-3 md:px-8 py-4 md:py-5">
           <div className="flex items-center gap-2 md:gap-3 min-w-0">
             {/* Mobile menu — big high-contrast pill, easy to tap */}
             <button
@@ -160,37 +160,22 @@ export default function HomePage() {
             </motion.a>
           </div>
         </div>
-      </motion.nav>
 
-      {/* Mobile bottom-sheet menu — slides up, thumb-friendly */}
-      {mobileOpen && (
-        <>
-          {/* Backdrop */}
+        {/* Mobile menu dropdown — big tap targets */}
+        {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="md:hidden fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm"
-            onClick={() => setMobileOpen(false)}
-          />
-          {/* Sheet */}
-          <motion.div
-            initial={{ y: 300 }}
-            animate={{ y: 0 }}
-            transition={{ type: "spring", damping: 28, stiffness: 300 }}
-            className="md:hidden fixed bottom-0 left-0 right-0 z-[70] bg-[#0a0a1a]/95 backdrop-blur-xl border-t border-white/10 rounded-t-3xl px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 px-4 py-4 flex flex-col"
           >
-            <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-4" />
-            <div className="flex flex-col">
-              <Link href="/rates" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-200 hover:text-white hover:bg-white/[0.08] transition-colors font-semibold">💰 RATES</Link>
-              <Link href="/faq" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-200 hover:text-white hover:bg-white/[0.08] transition-colors font-semibold">❓ FAQs</Link>
-              <a href="#testimonials" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-200 hover:text-white hover:bg-white/[0.08] transition-colors font-semibold">⭐ TESTIMONIALS</a>
-              <a href="#guide" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-200 hover:text-white hover:bg-white/[0.08] transition-colors font-semibold">📖 FREE GUIDE</a>
-              <a href="#signup" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-200 hover:text-white hover:bg-white/[0.08] transition-colors font-semibold">🎁 FREE TRIAL</a>
-              <a href="/auth/login" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-200 hover:text-white hover:bg-white/[0.08] transition-colors font-semibold">🔑 LOGIN</a>
-            </div>
+            <Link href="/rates" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">💰 RATES</Link>
+            <Link href="/faq" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">❓ FAQs</Link>
+            <a href="#testimonials" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">⭐ TESTIMONIALS</a>
+            <a href="#guide" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">📖 FREE GUIDE</a>
+            <a href="#signup" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">🎁 FREE TRIAL</a>
           </motion.div>
-        </>
-      )}
+        )}
+      </motion.nav>
 
           {/* Hero Section */}
       <section className="relative pt-40 pb-20 px-8 overflow-hidden">
@@ -576,24 +561,6 @@ export default function HomePage() {
         </div>
       </footer>
       {showTrialChat && <TrialChat onClose={() => setShowTrialChat(false)} />}
-
-      {/* Floating MENU Button — mobile only, bottom-left thumb zone */}
-      <motion.button
-        onClick={() => setMobileOpen(!mobileOpen)}
-        aria-label="Open menu"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.92 }}
-        className="md:hidden fixed bottom-6 left-6 z-40 flex items-center gap-2 h-14 px-5 bg-white text-black rounded-full font-bold text-base shadow-2xl shadow-black/50 select-none"
-      >
-        <span className="relative w-4 h-3.5 flex flex-col justify-center gap-[4px]">
-          <span className={`block w-4 h-[3px] bg-black rounded-full transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[5.5px]" : ""}`} />
-          <span className={`block w-4 h-[3px] bg-black rounded-full transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-          <span className={`block w-4 h-[3px] bg-black rounded-full transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[5.5px]" : ""}`} />
-        </span>
-        {mobileOpen ? "CLOSE" : "MENU"}
-      </motion.button>
 
       {/* Floating WhatsApp Button */}
       <motion.a
