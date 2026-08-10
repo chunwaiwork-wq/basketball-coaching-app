@@ -52,6 +52,7 @@ export default function CoachAdminPage() {
     if (stored) {
       setPin(stored);
       setAuthed(true);
+      loadData(stored);
     }
     setChecking(false);
   }, []);
@@ -138,6 +139,13 @@ export default function CoachAdminPage() {
     localStorage.removeItem("coachPin");
     setAuthed(false);
     setPin("");
+  };
+
+  // Click a student → jump to Add Video form with them preselected
+  const handlePickStudent = (id: number) => {
+    setAddStudentId(String(id));
+    setTab("videos");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   if (checking) {
@@ -289,9 +297,14 @@ export default function CoachAdminPage() {
               <h2 className="text-lg font-bold text-white mb-4">👥 Students</h2>
               <div className="flex flex-wrap gap-2">
                 {students.map((s) => (
-                  <span key={s.id} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-gray-200">
+                  <button
+                    key={s.id}
+                    onClick={() => handlePickStudent(s.id)}
+                    className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-gray-200 hover:bg-blue-600/20 hover:border-blue-500/40 transition-all cursor-pointer"
+                    title={`Add video for ${s.name}`}
+                  >
                     {s.name} <span className="text-gray-500">· {s._count?.videos ?? 0} videos</span>
-                  </span>
+                  </button>
                 ))}
               </div>
             </div>
@@ -319,6 +332,7 @@ export default function CoachAdminPage() {
                     <th className="px-6 py-3">PIN</th>
                     <th className="px-6 py-3">Videos</th>
                     <th className="px-6 py-3">Bookings</th>
+                    <th className="px-6 py-3"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/[0.04]">
@@ -329,6 +343,14 @@ export default function CoachAdminPage() {
                       <td className="px-6 py-3 text-gray-400 font-mono">{s.pin}</td>
                       <td className="px-6 py-3 text-gray-300">{s._count?.videos ?? 0}</td>
                       <td className="px-6 py-3 text-gray-300">{s._count?.bookings ?? 0}</td>
+                      <td className="px-6 py-3 text-right">
+                        <button
+                          onClick={() => handlePickStudent(s.id)}
+                          className="text-xs px-3 py-1.5 bg-blue-600/20 border border-blue-500/30 rounded-lg text-blue-300 hover:bg-blue-600/30 transition-all whitespace-nowrap"
+                        >
+                          ➕ Add video
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
