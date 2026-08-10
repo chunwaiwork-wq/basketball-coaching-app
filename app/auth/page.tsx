@@ -22,7 +22,13 @@ export default function LoginPage() {
         const data = await res.json();
         localStorage.setItem("studentId", data.studentId.toString());
         localStorage.setItem("studentName", data.studentName);
-        localStorage.setItem("isCoach", data.studentName === "Coach" ? "true" : "false");
+        const isCoach = data.studentName === "Coach";
+        localStorage.setItem("isCoach", isCoach ? "true" : "false");
+        if (isCoach) {
+          localStorage.setItem("coachPin", enteredPin);
+        } else {
+          localStorage.removeItem("coachPin");
+        }
         router.push("/dashboard/videos");
       } else {
         setError("Invalid PIN. Try again.");

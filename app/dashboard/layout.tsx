@@ -35,6 +35,11 @@ const navItems = [
     label: "Calendar", 
     icon: "🔗"
   },
+  { 
+    href: "/dashboard/admin", 
+    label: "Coach Admin", 
+    icon: "👑"
+  },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -52,7 +57,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setIsCoach(coach === "true");
 
     // Admin-only routes that students should not access
-    const adminRoutes = ["/dashboard/coaching", "/dashboard/calendar", "/dashboard/leads"];
+    const adminRoutes = ["/dashboard/coaching", "/dashboard/calendar", "/dashboard/leads", "/dashboard/admin"];
     const isAdminRoute = adminRoutes.includes(pathname);
 
     // Allow either a userId (email/Google login) or a studentId (PIN login)
@@ -104,7 +109,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
 
         <nav className="space-y-1 flex-1">
-          {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar"].includes(item.href)).map((item) => {
+          {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar", "/dashboard/admin"].includes(item.href)).map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link key={item.href} href={item.href}>
@@ -147,7 +152,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </div>
         <div className="flex gap-1 px-3 pb-2 overflow-x-auto scrollbar-none">
-          {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar"].includes(item.href)).map((item) => (
+          {navItems.filter(item => isCoach || !["/dashboard/leads", "/dashboard/coaching", "/dashboard/calendar", "/dashboard/admin"].includes(item.href)).map((item) => (
             <Link key={item.href} href={item.href}>
               <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all text-xs font-medium whitespace-nowrap">
                 <span className="text-sm">{item.icon}</span>
