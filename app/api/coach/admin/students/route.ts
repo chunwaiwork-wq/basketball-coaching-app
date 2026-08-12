@@ -61,3 +61,38 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to add student" }, { status: 500 });
   }
 }
+
+// DELETE /api/coach/admin/students — remove a student (and their videos/sessions)
+// body: { pin: coachPin, studentId }
+export async function DELETE(request: Request) {
+  try {
+    const { pin, studentId } = await request.json();
+
+    const coach = await verifyCoach(pin);
+    if (!coach) {
+      return NextResponse.json({ error: "Unauthorized — coach PIN required" }, { status: 401 });
+    }
+    if (!studentId) {
+      return NextResponse.json({ error: "studentId required" }, { status: 400 });
+    }
+    if (parseInt(studentId) === coach.id) {
+      return NextResponse.json({ error: "You cannot delete the Coach account" }, { status: 400 });
+    }
+
+    const student = await prisma.student.findUnique({ where: { id: parseInt(studentId) } });
+    if (!student) {
+      return NextResponse.json({ error: "Student not found" }, { status: 404 });
+    }
+
+    // Remove dependent records first
+    await prisma.video.deleteMany({ where: { studentId: student.id } });
+    await prisma.sessionRecord.deleteMany({ where: { studentId: student.id } });
+    await prisma.coachingSlot.updateMany({ where: { studentId: student.id }, data: { studentId: null } });
+    await prisma.student.delete({ where: { id: student.id } });
+
+    return NextResponse.json({ success: true, deleted: student.name });
+  } catch (error) {
+    console.error("Coach delete student error:", error);
+    return NextResponse.json({ error: "Failed to delete student" }, { status: 500 });
+  }
+}
