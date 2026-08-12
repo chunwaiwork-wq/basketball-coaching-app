@@ -19,14 +19,26 @@ model User {
 }
 
 model Student {
+  id          Int             @id @default(autoincrement())
+  name        String
+  pin         String          @unique
+  userId      Int?            @unique   // Link to User account
+  user        User?           @relation(fields: [userId], references: [id])
+  packageSize Int?                       // Sessions bought: 4 or 8 (null = not set)
+  createdAt   DateTime        @default(now())
+  videos      Video[]
+  bookings    CoachingSlot[]  // used when booking without User link
+  sessions    SessionRecord[]
+}
+
+model SessionRecord {
   id        Int      @id @default(autoincrement())
-  name      String
-  pin       String   @unique
-  userId    Int?     @unique   // Link to User account
-  user      User?    @relation(fields: [userId], references: [id])
+  studentId Int
+  student   Student  @relation(fields: [studentId], references: [id])
+  clockIn   DateTime @default(now())
+  clockOut  DateTime?
+  status    String   @default("active") // "active" | "completed" | "cancelled"
   createdAt DateTime @default(now())
-  videos    Video[]
-  bookings  CoachingSlot[] // used when booking without User link
 }
 
 model Lead {
