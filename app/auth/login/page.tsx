@@ -12,6 +12,9 @@ function LoginContent() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [pin, setPin] = useState("");
+  const [pinError, setPinError] = useState("");
+  const [pinLoading, setPinLoading] = useState(false);
 
   // Handle Google callback errors
   useEffect(() => {
@@ -62,6 +65,42 @@ function LoginContent() {
       setError("Something went wrong. Try again.");
     }
     setLoading(false);
+  };
+
+  const handlePinLogin = async (pinValue?: string) => {
+    const enteredPin = (pinValue ?? pin).trim();
+    if (!/^\d{4}$/.test(enteredPin)) {
+      setPinError("Enter your 4-digit PIN");
+      return;
+    }
+    setPinError("");
+    setPinLoading(true);
+    try {
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: enteredPin }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPinError(data.error || "Invalid PIN. Try again.");
+        setPin("");
+      } else {
+        localStorage.setItem("studentId", data.studentId.toString());
+        localStorage.setItem("studentName", data.studentName);
+        const isCoach = data.studentName === "Coach";
+        localStorage.setItem("isCoach", isCoach ? "true" : "false");
+        if (isCoach) {
+          localStorage.setItem("coachPin", enteredPin);
+        } else {
+          localStorage.removeItem("coachPin");
+        }
+        router.push("/dashboard/videos");
+      }
+    } catch {
+      setPinError("Something went wrong. Try again.");
+    }
+    setPinLoading(false);
   };
 
   return (
@@ -144,7 +183,66 @@ function LoginContent() {
             ))}
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          {tab === "coach" ? (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handlePinLogin();
+              }}
+              className="space-y-5"
+            >
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">PIN</label>
+                <input
+                  type="password"
+                  inputMode="numeric"
+                  maxLength={4}
+                  value={pin}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/\D/g, "").slice(0, 4);
+                    setPin(v);
+                    if (v.length === 4) handlePinLogin(v);
+                  }}
+                  placeholder="Enter your 4-digit PIN"
+                  required
+                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all text-center tracking-[0.5em]"
+                />
+                <p className="text-xs text-gray-600 mt-2">Coach, use your 4-digit PIN to sign in</p>
+              </div>
+
+              <AnimatePresence>
+                {pinError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-red-400 text-sm bg-red-500/10 py-2.5 px-4 rounded-xl border border-red-500/20"
+                  >
+                    {pinError}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+
+              <motion.button
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                type="submit"
+                disabled={pinLoading}
+                className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-bold text-base hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-600/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {pinLoading ? (
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                ) : (
+                  "🔑 Login with PIN"
+                )}
+              </motion.button>
+            </form>
+          ) : (
+            <>
+            <form onSubmit={handleLogin} className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
               <input
@@ -219,6 +317,19 @@ function LoginContent() {
             </motion.button>
           </form>
 
+          <motion.a
+            href="/auth"
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className="w-full py-3.5 bg-white/[0.03] border border-white/[0.15] rounded-xl font-bold text-base text-white hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2 mt-4"
+          >
+            🔑 Login with PIN
+          </motion.a>
+          </>
+          )}
+
+          {tab === "student" && (
+          <>
           {/* Divider */}
           <div className="flex items-center gap-3 my-6">
             <div className="flex-1 h-px bg-white/[0.08]" />
@@ -249,13 +360,7 @@ function LoginContent() {
             </a>
           </p>
 
-          {tab === "student" && (
-            <p className="text-center mt-3 text-xs text-gray-600">
-              Still have a PIN?{" "}
-              <a href="/auth" className="text-gray-400 hover:text-gray-300 transition-colors">
-                Login with PIN
-              </a>
-            </p>
+          </>
           )}
 
           <div className="text-center mt-8">
