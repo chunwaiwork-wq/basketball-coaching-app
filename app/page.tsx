@@ -358,6 +358,13 @@ export default function HomePage() {
                 image: "/testimonials/jo.jpg",
                 color: "from-purple-500/10 to-purple-600/5 border-purple-500/20"
               },
+              {
+                name: "Nathan",
+                role: "Parent",
+                quote: "Coach Wai is patient and encouraging, and my child has become more confident on the court.",
+                rating: 5,
+                color: "from-emerald-500/10 to-emerald-600/5 border-emerald-500/20"
+              },
             ].map((testimonial, i) => (
               <motion.div
                 key={i}
