@@ -61,8 +61,14 @@ export default function VideosPage() {
       // Send the email too so the API can verify this user owns the account.
       const email = localStorage.getItem("userEmail") || "";
       fetch(`/api/videos?userId=${userId}&email=${encodeURIComponent(email)}`)
-        .then((res) => res.json())
-        .then((data) => {
+        .then(async (res) => {
+          if (!res.ok) {
+            // Stale/invalid session (e.g. logged in before the privacy update) → re-login.
+            localStorage.clear();
+            window.location.href = "/auth/login";
+            return null;
+          }
+          const data = await res.json();
           setVideos(data);
           setLoading(false);
         })
@@ -71,8 +77,14 @@ export default function VideosPage() {
       // PIN login — the student's own id. Send the PIN so the API can verify it.
       const pin = localStorage.getItem("studentPin") || "";
       fetch(`/api/videos?studentId=${studentId}&pin=${encodeURIComponent(pin)}`)
-        .then((res) => res.json())
-        .then((data) => {
+        .then(async (res) => {
+          if (!res.ok) {
+            // Stale/invalid session (e.g. logged in before the privacy update) → re-login.
+            localStorage.clear();
+            window.location.href = "/auth/login";
+            return null;
+          }
+          const data = await res.json();
           setVideos(data);
           setLoading(false);
         })
