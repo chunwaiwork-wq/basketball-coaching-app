@@ -88,6 +88,7 @@ function LoginContent() {
       } else {
         localStorage.setItem("studentId", data.studentId.toString());
         localStorage.setItem("studentName", data.studentName);
+        localStorage.setItem("studentPin", enteredPin);
         const isCoach = data.studentName === "Coach";
         localStorage.setItem("isCoach", isCoach ? "true" : "false");
         if (isCoach) {

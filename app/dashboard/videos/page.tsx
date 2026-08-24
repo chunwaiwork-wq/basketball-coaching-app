@@ -58,7 +58,9 @@ export default function VideosPage() {
 
     if (userId) {
       // Email/Google login — resolve videos by the user's linked Student server-side.
-      fetch(`/api/videos?userId=${userId}`)
+      // Send the email too so the API can verify this user owns the account.
+      const email = localStorage.getItem("userEmail") || "";
+      fetch(`/api/videos?userId=${userId}&email=${encodeURIComponent(email)}`)
         .then((res) => res.json())
         .then((data) => {
           setVideos(data);
@@ -66,8 +68,9 @@ export default function VideosPage() {
         })
         .catch(() => setLoading(false));
     } else if (studentId) {
-      // PIN login — the student's own id.
-      fetch(`/api/videos?studentId=${studentId}`)
+      // PIN login — the student's own id. Send the PIN so the API can verify it.
+      const pin = localStorage.getItem("studentPin") || "";
+      fetch(`/api/videos?studentId=${studentId}&pin=${encodeURIComponent(pin)}`)
         .then((res) => res.json())
         .then((data) => {
           setVideos(data);
