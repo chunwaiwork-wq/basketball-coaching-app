@@ -162,6 +162,32 @@ export default function CoachAdminPage() {
     }
   };
 
+  // Reset a student's session count after they renew their package.
+  // Previously attended sessions are archived (kept in history, no longer counted).
+  const handleResetSessions = async (studentId: number, name: string) => {
+    if (
+      !confirm(
+        `Reset ${name}'s session count?\n\nTheir attended sessions will be ARCHIVED (kept in history, but no longer counted) so their package starts fresh. Use this when they renew.`
+      )
+    )
+      return;
+    const res = await fetch("/api/coach/admin/sessions/reset", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pin, studentId }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok) {
+      setSessionMsg({
+        ok: true,
+        text: `🔄 ${name} reset — ${data.archived} session${data.archived === 1 ? "" : "s"} archived. Package starts fresh.`,
+      });
+      await Promise.all([loadSessions(pin), loadData(pin)]);
+    } else {
+      setSessionMsg({ ok: false, text: data.error || "Reset failed" });
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -641,6 +667,7 @@ export default function CoachAdminPage() {
                       <th className="px-6 py-3">Attended</th>
                       <th className="px-6 py-3">Remaining</th>
                       <th className="px-6 py-3">Progress</th>
+                      <th className="px-6 py-3">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.04]">
@@ -684,12 +711,30 @@ export default function CoachAdminPage() {
                               </div>
                             )}
                           </td>
+                          <td className="px-6 py-3">
+                            <button
+                              onClick={() => handleResetSessions(s.id, s.name)}
+                              disabled={attended === 0}
+                              title={
+                                attended === 0
+                                  ? "No sessions to reset yet"
+                                  : `Renewed? Reset ${s.name}'s count back to ${pkg ?? "full"}`
+                              }
+                              className={`text-xs px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap ${
+                                attended === 0
+                                  ? "bg-white/[0.03] border-white/[0.08] text-gray-600 cursor-not-allowed"
+                                  : "bg-blue-600/20 border-blue-500/30 text-blue-300 hover:bg-blue-600/30"
+                              }`}
+                            >
+                              🔄 Reset
+                            </button>
+                          </td>
                         </tr>
                       );
                     })}
                     {students.length === 0 && (
                       <tr>
-                        <td colSpan={5} className="px-6 py-10 text-center text-gray-500">No students yet.</td>
+                        <td colSpan={6} className="px-6 py-10 text-center text-gray-500">No students yet.</td>
                       </tr>
                     )}
                   </tbody>
@@ -725,9 +770,11 @@ export default function CoachAdminPage() {
                           <td className="px-6 py-3 text-gray-300">{durMin} min</td>
                           <td className="px-6 py-3">
                             <span className={`px-2 py-0.5 rounded-full text-xs border ${
-                              s.status === "completed" ? "bg-green-500/20 text-green-400 border-green-500/30" : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+                              s.status === "completed" ? "bg-green-500/20 text-green-400 border-green-500/30"
+                              : s.status === "archived" ? "bg-white/10 text-gray-400 border-white/20"
+                              : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
                             }`}>
-                              {s.status}
+                              {s.status === "archived" ? "archived · prev plan" : s.status}
                             </span>
                           </td>
                           <td className="px-6 py-3 text-right">
