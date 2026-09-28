@@ -188,6 +188,26 @@ export default function CoachAdminPage() {
     }
   };
 
+  // Undo an accidental reset: restore archived sessions so they count again.
+  const handleUndoReset = async (studentId: number, name: string) => {
+    if (!confirm(`Undo reset for ${name}?\n\nTheir archived sessions will count toward the package again.`)) return;
+    const res = await fetch("/api/coach/admin/sessions/reset", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pin, studentId, undo: true }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok) {
+      setSessionMsg({
+        ok: true,
+        text: `↩️ ${name} — ${data.restored} archived session${data.restored === 1 ? "" : "s"} restored.`,
+      });
+      await Promise.all([loadSessions(pin), loadData(pin)]);
+    } else {
+      setSessionMsg({ ok: false, text: data.error || "Undo failed" });
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -673,6 +693,7 @@ export default function CoachAdminPage() {
                   <tbody className="divide-y divide-white/[0.04]">
                     {students.map((s) => {
                       const attended = sessions.filter((x) => x.studentId === s.id && x.status === "completed").length;
+                      const archived = sessions.filter((x) => x.studentId === s.id && x.status === "archived").length;
                       const pkg = s.packageSize ?? null;
                       const remaining = pkg ? Math.max(0, pkg - attended) : null;
                       const pct = pkg ? Math.min(100, Math.round((attended / pkg) * 100)) : 0;
@@ -712,22 +733,33 @@ export default function CoachAdminPage() {
                             )}
                           </td>
                           <td className="px-6 py-3">
-                            <button
-                              onClick={() => handleResetSessions(s.id, s.name)}
-                              disabled={attended === 0}
-                              title={
-                                attended === 0
-                                  ? "No sessions to reset yet"
-                                  : `Renewed? Reset ${s.name}'s count back to ${pkg ?? "full"}`
-                              }
-                              className={`text-xs px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap ${
-                                attended === 0
-                                  ? "bg-white/[0.03] border-white/[0.08] text-gray-600 cursor-not-allowed"
-                                  : "bg-blue-600/20 border-blue-500/30 text-blue-300 hover:bg-blue-600/30"
-                              }`}
-                            >
-                              🔄 Reset
-                            </button>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => handleResetSessions(s.id, s.name)}
+                                disabled={attended === 0}
+                                title={
+                                  attended === 0
+                                    ? "No sessions to reset yet"
+                                    : `Renewed? Reset ${s.name}'s count back to ${pkg ?? "full"}`
+                                }
+                                className={`text-xs px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap ${
+                                  attended === 0
+                                    ? "bg-white/[0.03] border-white/[0.08] text-gray-600 cursor-not-allowed"
+                                    : "bg-blue-600/20 border-blue-500/30 text-blue-300 hover:bg-blue-600/30"
+                                }`}
+                              >
+                                🔄 Reset
+                              </button>
+                              {archived > 0 && attended === 0 && (
+                                <button
+                                  onClick={() => handleUndoReset(s.id, s.name)}
+                                  title={`Undo reset — restore ${archived} archived session${archived === 1 ? "" : "s"}`}
+                                  className="text-xs px-2.5 py-1.5 rounded-lg border bg-white/[0.03] border-white/[0.08] text-gray-300 hover:bg-white/[0.08] transition-all whitespace-nowrap"
+                                >
+                                  ↩️ Undo
+                                </button>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       );

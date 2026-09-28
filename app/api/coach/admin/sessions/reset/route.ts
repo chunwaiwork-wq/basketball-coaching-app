@@ -8,16 +8,18 @@ async function verifyCoach(pin: string | null) {
   return prisma.student.findUnique({ where: { pin: COACH_PIN } });
 }
 
-// POST /api/coach/admin/sessions/reset — reset a student's session count (for renewals)
-// body: { pin, studentId }
+// POST /api/coach/admin/sessions/reset — reset (or undo a reset of) a student's session count
+// body: { pin, studentId, undo?: boolean }
 //
-// When a student renews their package (e.g. buys another 4 sessions) the coach
-// resets their count so the package starts fresh. We ARCHIVE the previously
-// completed sessions instead of deleting them, so attendance history is kept
-// but no longer counts toward the current package.
+// RESET (default): when a student renews their package the coach resets their
+// count so it starts fresh. Previously completed sessions are ARCHIVED (kept in
+// history, no longer counted) rather than deleted.
+//
+// UNDO (undo: true): restores archived sessions back to completed — used to fix
+// an accidental reset.
 export async function POST(request: Request) {
   try {
-    const { pin, studentId } = await request.json();
+    const { pin, studentId, undo } = await request.json();
 
     const coach = await verifyCoach(pin);
     if (!coach) {
@@ -30,6 +32,21 @@ export async function POST(request: Request) {
     const student = await prisma.student.findUnique({ where: { id: parseInt(studentId) } });
     if (!student) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
+    }
+
+    if (undo) {
+      // Restore previously archived sessions so they count again.
+      const result = await prisma.sessionRecord.updateMany({
+        where: { studentId: student.id, status: "archived" },
+        data: { status: "completed" },
+      });
+
+      return NextResponse.json({
+        success: true,
+        student: student.name,
+        restored: result.count,
+        message: `${student.name} — ${result.count} archived session${result.count === 1 ? "" : "s"} restored.`,
+      });
     }
 
     // Archive completed sessions only — an in-progress (active) session is left
