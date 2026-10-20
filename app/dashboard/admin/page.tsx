@@ -676,7 +676,7 @@ export default function CoachAdminPage() {
             <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
               <div className="px-6 py-4 border-b border-white/[0.06]">
                 <h2 className="text-lg font-bold text-white">📈 Attendance</h2>
-                <p className="text-gray-500 text-sm mt-0.5">Set each student's package (4 or 8 sessions) and see how many they've attended.</p>
+                <p className="text-gray-500 text-sm mt-0.5">Set each student's package (4, 8 or 12 sessions) and see how many they've attended.</p>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
@@ -709,6 +709,7 @@ export default function CoachAdminPage() {
                               <option value="" className="bg-[#0a0a1a]">Not set</option>
                               <option value={4} className="bg-[#0a0a1a]">4 sessions</option>
                               <option value={8} className="bg-[#0a0a1a]">8 sessions</option>
+                              <option value={12} className="bg-[#0a0a1a]">12 sessions</option>
                             </select>
                           </td>
                           <td className="px-6 py-3 text-gray-300">

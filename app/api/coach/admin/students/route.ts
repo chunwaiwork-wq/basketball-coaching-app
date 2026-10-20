@@ -32,8 +32,8 @@ export async function POST(request: Request) {
     if (!name || !name.trim()) {
       return NextResponse.json({ error: "Student name is required" }, { status: 400 });
     }
-    if (packageSize !== null && packageSize !== undefined && ![4, 8].includes(packageSize)) {
-      return NextResponse.json({ error: "packageSize must be 4 or 8 (or null)" }, { status: 400 });
+    if (packageSize !== null && packageSize !== undefined && ![4, 8, 12].includes(packageSize)) {
+      return NextResponse.json({ error: "packageSize must be 4, 8 or 12 (or null)" }, { status: 400 });
     }
     if (studentPin && !/^\d{4}$/.test(studentPin)) {
       return NextResponse.json({ error: "studentPin must be exactly 4 digits" }, { status: 400 });

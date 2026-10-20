@@ -21,8 +21,8 @@ export async function POST(request: Request) {
     if (!studentId) {
       return NextResponse.json({ error: "studentId required" }, { status: 400 });
     }
-    if (packageSize !== null && packageSize !== undefined && ![4, 8].includes(packageSize)) {
-      return NextResponse.json({ error: "packageSize must be 4 or 8 (or null to clear)" }, { status: 400 });
+    if (packageSize !== null && packageSize !== undefined && ![4, 8, 12].includes(packageSize)) {
+      return NextResponse.json({ error: "packageSize must be 4, 8 or 12 (or null to clear)" }, { status: 400 });
     }
 
     const student = await prisma.student.findUnique({ where: { id: parseInt(studentId) } });
