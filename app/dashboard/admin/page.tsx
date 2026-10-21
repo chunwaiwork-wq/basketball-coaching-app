@@ -21,13 +21,13 @@ interface SessionRec {
 
 interface PaymentRec {
   id: number;
-  studentId: number;
+  studentId: number | null;
   amount: number;
   sessions: number | null;
   method: string;
   note: string | null;
   paidAt: string;
-  student: { id: number; name: string };
+  student: { id: number; name: string } | null;
 }
 
 interface Video {
@@ -162,8 +162,9 @@ export default function CoachAdminPage() {
 
   const handleAddPayment = async () => {
     setRevMsg(null);
+    const isBulk = revStudentId === "bulk";
     if (!revStudentId) {
-      setRevMsg({ ok: false, text: "Choose a student first" });
+      setRevMsg({ ok: false, text: "Choose a student — or pick “Bulk month total”" });
       return;
     }
     const amt = parseFloat(revAmount);
@@ -176,7 +177,7 @@ export default function CoachAdminPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         pin,
-        studentId: parseInt(revStudentId),
+        studentId: isBulk ? null : parseInt(revStudentId),
         amount: amt,
         sessions: revSessions === "" ? null : parseInt(revSessions),
         method: revMethod,
@@ -186,7 +187,7 @@ export default function CoachAdminPage() {
     });
     const data = await res.json().catch(() => ({}));
     if (res.ok) {
-      const nm = data.payment?.student?.name ?? "Student";
+      const nm = data.payment?.student?.name ?? "bulk total";
       setRevMsg({ ok: true, text: `✅ Logged $${amt.toFixed(2)} from ${nm}` });
       setRevAmount("");
       setRevSessions("");
@@ -970,6 +971,7 @@ export default function CoachAdminPage() {
                   className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
                 >
                   <option value="" className="bg-[#0a0a1a]">Student…</option>
+                  <option value="bulk" className="bg-[#0a0a1a]">📦 Bulk month total (no student)</option>
                   {students.map((s) => (
                     <option key={s.id} value={s.id} className="bg-[#0a0a1a]">{s.name}</option>
                   ))}
@@ -1113,7 +1115,9 @@ export default function CoachAdminPage() {
                         <td className="px-6 py-3 text-gray-400 whitespace-nowrap">
                           {new Date(p.paidAt).toLocaleDateString("en-SG", { day: "2-digit", month: "short", year: "numeric" })}
                         </td>
-                        <td className="px-6 py-3 text-white font-semibold">{p.student?.name ?? "—"}</td>
+                        <td className="px-6 py-3 text-white font-semibold">
+                          {p.student?.name ?? <span className="text-gray-400 italic font-normal">📦 Bulk total</span>}
+                        </td>
                         <td className="px-6 py-3 text-gray-400">{p.method}</td>
                         <td className="px-6 py-3 text-gray-400">{p.sessions ?? "—"}</td>
                         <td className="px-6 py-3 text-gray-500 max-w-[220px] truncate">{p.note || "—"}</td>

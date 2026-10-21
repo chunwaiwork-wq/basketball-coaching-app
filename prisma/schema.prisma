@@ -34,8 +34,8 @@ model Student {
 
 model Payment {
   id        Int      @id @default(autoincrement())
-  studentId Int
-  student   Student  @relation(fields: [studentId], references: [id])
+  studentId Int?                              // null = bulk/month total (no single student)
+  student   Student? @relation(fields: [studentId], references: [id])
   amount    Float                          // SGD
   sessions  Int?                           // sessions paid for (if a package)
   method    String   @default("PayNow")    // Cash | PayNow | Bank Transfer | Card | Other

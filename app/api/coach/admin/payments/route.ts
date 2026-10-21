@@ -47,11 +47,13 @@ export async function GET(request: Request) {
       if (t >= monthStart) thisMonth += amt;
       if (t >= yearStart) thisYear += amt;
 
-      const key = p.student.id;
-      const prev = byStudentMap.get(key) ?? { studentId: key, name: p.student.name, total: 0, count: 0 };
-      prev.total += amt;
-      prev.count += 1;
-      byStudentMap.set(key, prev);
+      const key = p.student?.id ?? 0;
+      if (p.student) {
+        const prev = byStudentMap.get(key) ?? { studentId: key, name: p.student.name, total: 0, count: 0 };
+        prev.total += amt;
+        prev.count += 1;
+        byStudentMap.set(key, prev);
+      }
 
       const d = new Date(p.paidAt);
       const mKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
@@ -97,17 +99,24 @@ export async function POST(request: Request) {
     if (!coach) {
       return NextResponse.json({ error: "Unauthorized — coach PIN required" }, { status: 401 });
     }
-    if (!studentId) {
-      return NextResponse.json({ error: "Choose a student" }, { status: 400 });
-    }
     const amt = Number(amount);
     if (!Number.isFinite(amt) || amt <= 0) {
       return NextResponse.json({ error: "Amount must be a number greater than 0" }, { status: 400 });
     }
 
-    const student = await prisma.student.findUnique({ where: { id: parseInt(studentId) } });
-    if (!student) {
-      return NextResponse.json({ error: "Student not found" }, { status: 404 });
+    // studentId optional: omitted / "bulk" = unattributed month total
+    const isBulk = studentId === undefined || studentId === null || studentId === "" || studentId === "bulk" || studentId === 0 || studentId === "0";
+    let linkedStudentId: number | null = null;
+    if (!isBulk) {
+      const parsedId = parseInt(studentId);
+      if (!Number.isFinite(parsedId)) {
+        return NextResponse.json({ error: "Choose a student" }, { status: 400 });
+      }
+      const student = await prisma.student.findUnique({ where: { id: parsedId } });
+      if (!student) {
+        return NextResponse.json({ error: "Student not found" }, { status: 404 });
+      }
+      linkedStudentId = student.id;
     }
 
     let sess: number | null = null;
@@ -129,11 +138,11 @@ export async function POST(request: Request) {
 
     const payment = await prisma.payment.create({
       data: {
-        studentId: student.id,
+        studentId: linkedStudentId,
         amount: Math.round(amt * 100) / 100,
         sessions: sess,
         method: payMethod,
-        note: note && String(note).trim() ? String(note).trim() : null,
+        note: note && String(note).trim() ? String(note).trim() : (isBulk ? "Bulk month total" : null),
         paidAt: when,
       },
       include: { student: { select: { id: true, name: true } } },
