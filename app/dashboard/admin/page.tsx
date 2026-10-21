@@ -19,6 +19,17 @@ interface SessionRec {
   student: { id: number; name: string; packageSize?: number | null };
 }
 
+interface PaymentRec {
+  id: number;
+  studentId: number;
+  amount: number;
+  sessions: number | null;
+  method: string;
+  note: string | null;
+  paidAt: string;
+  student: { id: number; name: string };
+}
+
 interface Video {
   id: number;
   title: string;
@@ -36,7 +47,7 @@ interface Booking {
   student?: { id: number; name: string } | null;
 }
 
-type Tab = "overview" | "students" | "videos" | "bookings" | "sessions";
+type Tab = "overview" | "students" | "videos" | "bookings" | "sessions" | "revenue";
 
 export default function CoachAdminPage() {
   const [pin, setPin] = useState("");
@@ -63,6 +74,22 @@ export default function CoachAdminPage() {
   const [addCategory, setAddCategory] = useState("PAST");
   const [addMsg, setAddMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
+  // Revenue tab state
+  const [payments, setPayments] = useState<PaymentRec[]>([]);
+  const [revenueTotals, setRevenueTotals] = useState<{
+    allTime: number; thisMonth: number; thisYear: number;
+    count: number; avgPerPayment: number; payingStudents: number;
+  } | null>(null);
+  const [byStudent, setByStudent] = useState<{ studentId: number; name: string; total: number; count: number }[]>([]);
+  const [monthly, setMonthly] = useState<{ month: string; total: number }[]>([]);
+  const [revStudentId, setRevStudentId] = useState("");
+  const [revAmount, setRevAmount] = useState("");
+  const [revSessions, setRevSessions] = useState("");
+  const [revMethod, setRevMethod] = useState("PayNow");
+  const [revNote, setRevNote] = useState("");
+  const [revDate, setRevDate] = useState("");
+  const [revMsg, setRevMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
   useEffect(() => {
     const stored = localStorage.getItem("coachPin") || "";
     if (stored) {
@@ -70,9 +97,16 @@ export default function CoachAdminPage() {
       setAuthed(true);
       loadData(stored);
       loadSessions(stored);
+      loadPayments(stored);
     }
     setChecking(false);
   }, []);
+
+  // Refresh revenue whenever the Revenue tab is opened
+  useEffect(() => {
+    if (tab === "revenue" && pin) loadPayments(pin);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab]);
 
   // Live clock for the sessions tab (tick every 30s to update elapsed time)
   useEffect(() => {
@@ -108,6 +142,75 @@ export default function CoachAdminPage() {
       if (res.ok) setSessions(data.sessions || []);
     } catch {
       // non-fatal
+    }
+  };
+
+  const loadPayments = async (p: string) => {
+    try {
+      const res = await fetch(`/api/coach/admin/payments?pin=${encodeURIComponent(p)}`);
+      const data = await res.json();
+      if (res.ok) {
+        setPayments(data.payments || []);
+        setRevenueTotals(data.totals || null);
+        setByStudent(data.byStudent || []);
+        setMonthly(data.monthly || []);
+      }
+    } catch {
+      // non-fatal
+    }
+  };
+
+  const handleAddPayment = async () => {
+    setRevMsg(null);
+    if (!revStudentId) {
+      setRevMsg({ ok: false, text: "Choose a student first" });
+      return;
+    }
+    const amt = parseFloat(revAmount);
+    if (!Number.isFinite(amt) || amt <= 0) {
+      setRevMsg({ ok: false, text: "Enter an amount greater than 0" });
+      return;
+    }
+    const res = await fetch("/api/coach/admin/payments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pin,
+        studentId: parseInt(revStudentId),
+        amount: amt,
+        sessions: revSessions === "" ? null : parseInt(revSessions),
+        method: revMethod,
+        note: revNote,
+        paidAt: revDate ? new Date(revDate).toISOString() : undefined,
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok) {
+      const nm = data.payment?.student?.name ?? "Student";
+      setRevMsg({ ok: true, text: `✅ Logged $${amt.toFixed(2)} from ${nm}` });
+      setRevAmount("");
+      setRevSessions("");
+      setRevNote("");
+      setRevDate("");
+      await loadPayments(pin);
+    } else {
+      setRevMsg({ ok: false, text: data.error || "Failed to log payment" });
+    }
+  };
+
+  const handleDeletePayment = async (paymentId: number, label: string) => {
+    if (!confirm(`Delete this payment record (${label})? This cannot be undone.`)) return;
+    const res = await fetch("/api/coach/admin/payments", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pin, paymentId }),
+    });
+    if (res.ok) {
+      setRevMsg({ ok: true, text: "Payment deleted" });
+      await loadPayments(pin);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      setRevMsg({ ok: false, text: data.error || "Failed to delete payment" });
     }
   };
 
@@ -345,6 +448,7 @@ export default function CoachAdminPage() {
     { id: "students", label: "Students", icon: "👥" },
     { id: "videos", label: "Videos", icon: "🎥" },
     { id: "sessions", label: "Sessions", icon: "⏱️" },
+    { id: "revenue", label: "Revenue", icon: "💰" },
     { id: "bookings", label: "Bookings", icon: "📅" },
   ];
 
@@ -378,11 +482,12 @@ export default function CoachAdminPage() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           {[
             { label: "Students", value: stats.students, icon: "👥" },
             { label: "Videos", value: stats.videos, icon: "🎥" },
             { label: "Sessions Done", value: stats.sessions, icon: "⏱️" },
+            { label: "Revenue", value: `$${(revenueTotals?.allTime ?? 0).toFixed(0)}`, icon: "💰" },
             { label: "Bookings", value: stats.bookings, icon: "📅" },
           ].map((s) => (
             <motion.div
@@ -824,6 +929,210 @@ export default function CoachAdminPage() {
                     {sessions.filter((s) => s.status !== "active").length === 0 && (
                       <tr>
                         <td colSpan={6} className="px-6 py-10 text-center text-gray-500">No sessions yet. Clock a student in to get started!</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!loading && tab === "revenue" && (
+          <div className="space-y-8">
+            {/* Summary cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { label: "Total earned", value: revenueTotals?.allTime ?? 0, icon: "💰", accent: "from-green-500/20 to-green-600/5 border-green-500/25" },
+                { label: "This month", value: revenueTotals?.thisMonth ?? 0, icon: "📅", accent: "from-blue-500/20 to-blue-600/5 border-blue-500/25" },
+                { label: "This year", value: revenueTotals?.thisYear ?? 0, icon: "🎯", accent: "from-purple-500/20 to-purple-600/5 border-purple-500/25" },
+                { label: "Avg payment", value: revenueTotals?.avgPerPayment ?? 0, icon: "📊", accent: "from-yellow-500/20 to-yellow-600/5 border-yellow-500/25" },
+              ].map((c) => (
+                <div key={c.label} className={`bg-gradient-to-br ${c.accent} border rounded-2xl p-5`}>
+                  <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-2">
+                    <span className="text-base">{c.icon}</span>
+                    {c.label}
+                  </div>
+                  <p className="text-2xl lg:text-3xl font-black text-white">${c.value.toFixed(2)}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Log a payment */}
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
+              <h2 className="text-lg font-bold text-white mb-1">💵 Log a payment</h2>
+              <p className="text-gray-500 text-sm mb-4">Record money received from a student — package renewals, drop-ins, anything.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                <select
+                  value={revStudentId}
+                  onChange={(e) => { setRevStudentId(e.target.value); setRevMsg(null); }}
+                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
+                >
+                  <option value="" className="bg-[#0a0a1a]">Student…</option>
+                  {students.map((s) => (
+                    <option key={s.id} value={s.id} className="bg-[#0a0a1a]">{s.name}</option>
+                  ))}
+                </select>
+
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={revAmount}
+                  onChange={(e) => setRevAmount(e.target.value)}
+                  placeholder="Amount ($)"
+                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+                />
+
+                <input
+                  type="number"
+                  min="0"
+                  value={revSessions}
+                  onChange={(e) => setRevSessions(e.target.value)}
+                  placeholder="Sessions (opt)"
+                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+                />
+
+                <select
+                  value={revMethod}
+                  onChange={(e) => setRevMethod(e.target.value)}
+                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
+                >
+                  {["PayNow", "Cash", "Bank Transfer", "Card", "Other"].map((m) => (
+                    <option key={m} value={m} className="bg-[#0a0a1a]">{m}</option>
+                  ))}
+                </select>
+
+                <input
+                  type="date"
+                  value={revDate}
+                  onChange={(e) => setRevDate(e.target.value)}
+                  title="Payment date (defaults to today)"
+                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all [color-scheme:dark]"
+                />
+
+                <button
+                  onClick={handleAddPayment}
+                  className="px-5 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-xl font-bold text-sm hover:from-green-500 hover:to-green-400 transition-all shadow-lg shadow-green-600/25 whitespace-nowrap"
+                >
+                  + Add payment
+                </button>
+              </div>
+
+              <input
+                type="text"
+                value={revNote}
+                onChange={(e) => setRevNote(e.target.value)}
+                placeholder="Note (optional) — e.g. 4-session renewal, July block"
+                className="mt-3 w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+              />
+
+              {revMsg && (
+                <p className={`mt-3 text-sm ${revMsg.ok ? "text-green-400" : "text-red-400"}`}>{revMsg.text}</p>
+              )}
+            </div>
+
+            {/* Last 6 months + revenue by student */}
+            <div className="grid lg:grid-cols-2 gap-6">
+              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
+                <h2 className="text-lg font-bold text-white mb-1">📈 Last 6 months</h2>
+                <p className="text-gray-500 text-sm mb-5">Monthly money collected</p>
+                <div className="space-y-3">
+                  {monthly.map((m) => {
+                    const max = Math.max(...monthly.map((x) => x.total), 1);
+                    const pct = Math.round((m.total / max) * 100);
+                    const [yr, mo] = m.month.split("-");
+                    const label = new Date(parseInt(yr), parseInt(mo) - 1, 1).toLocaleDateString("en-SG", { month: "short" });
+                    return (
+                      <div key={m.month} className="flex items-center gap-3">
+                        <span className="text-xs text-gray-500 w-9 shrink-0">{label}</span>
+                        <div className="flex-1 h-6 bg-white/[0.04] rounded-lg overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-lg transition-all"
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-mono text-gray-300 w-20 text-right shrink-0">
+                          ${m.total.toFixed(0)}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
+                <div className="px-6 py-4 border-b border-white/[0.06]">
+                  <h2 className="text-lg font-bold text-white">🏆 Revenue by student</h2>
+                  <p className="text-gray-500 text-sm mt-0.5">{revenueTotals?.payingStudents ?? 0} paying students</p>
+                </div>
+                <div className="divide-y divide-white/[0.04] max-h-[340px] overflow-y-auto">
+                  {byStudent.map((b) => (
+                    <div key={b.studentId} className="flex items-center justify-between px-6 py-3">
+                      <div>
+                        <p className="text-white font-semibold text-sm">{b.name}</p>
+                        <p className="text-gray-500 text-xs">{b.count} payment{b.count === 1 ? "" : "s"}</p>
+                      </div>
+                      <span className="text-green-400 font-bold font-mono text-sm">${b.total.toFixed(2)}</span>
+                    </div>
+                  ))}
+                  {byStudent.length === 0 && (
+                    <p className="px-6 py-10 text-center text-gray-500 text-sm">No payments logged yet.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Payment history */}
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-white/[0.06] flex items-center justify-between">
+                <h2 className="text-lg font-bold text-white">🧾 Payment history ({payments.length})</h2>
+                {revenueTotals && revenueTotals.allTime > 0 && (
+                  <span className="text-sm text-gray-400">
+                    Total: <span className="text-green-400 font-bold">${revenueTotals.allTime.toFixed(2)}</span>
+                  </span>
+                )}
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-left text-gray-500 text-xs uppercase tracking-wider">
+                      <th className="px-6 py-3">Date</th>
+                      <th className="px-6 py-3">Student</th>
+                      <th className="px-6 py-3">Method</th>
+                      <th className="px-6 py-3">Sessions</th>
+                      <th className="px-6 py-3">Note</th>
+                      <th className="px-6 py-3 text-right">Amount</th>
+                      <th className="px-6 py-3"></th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.04]">
+                    {payments.map((p) => (
+                      <tr key={p.id} className="hover:bg-white/[0.02]">
+                        <td className="px-6 py-3 text-gray-400 whitespace-nowrap">
+                          {new Date(p.paidAt).toLocaleDateString("en-SG", { day: "2-digit", month: "short", year: "numeric" })}
+                        </td>
+                        <td className="px-6 py-3 text-white font-semibold">{p.student?.name ?? "—"}</td>
+                        <td className="px-6 py-3 text-gray-400">{p.method}</td>
+                        <td className="px-6 py-3 text-gray-400">{p.sessions ?? "—"}</td>
+                        <td className="px-6 py-3 text-gray-500 max-w-[220px] truncate">{p.note || "—"}</td>
+                        <td className="px-6 py-3 text-right text-green-400 font-bold font-mono">${p.amount.toFixed(2)}</td>
+                        <td className="px-6 py-3 text-right">
+                          <button
+                            onClick={() => handleDeletePayment(p.id, `$${p.amount.toFixed(2)} · ${p.student?.name ?? ""}`)}
+                            className="text-xs px-3 py-1.5 bg-red-600/20 border border-red-500/30 rounded-lg text-red-300 hover:bg-red-600/30 transition-all"
+                          >
+                            ✕
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                    {payments.length === 0 && (
+                      <tr>
+                        <td colSpan={7} className="px-6 py-10 text-center text-gray-500">
+                          No payments yet. Log your first one above ☝️
+                        </td>
                       </tr>
                     )}
                   </tbody>

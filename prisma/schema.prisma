@@ -29,6 +29,22 @@ model Student {
   videos      Video[]
   bookings    CoachingSlot[]  // used when booking without User link
   sessions    SessionRecord[]
+  payments    Payment[]
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  student   Student  @relation(fields: [studentId], references: [id])
+  amount    Float                          // SGD
+  sessions  Int?                           // sessions paid for (if a package)
+  method    String   @default("PayNow")    // Cash | PayNow | Bank Transfer | Card | Other
+  note      String?
+  paidAt    DateTime @default(now())       // when payment was received
+  createdAt DateTime @default(now())
+
+  @@index([studentId])
+  @@index([paidAt])
 }
 
 model SessionRecord {
