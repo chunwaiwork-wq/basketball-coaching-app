@@ -4,11 +4,20 @@ import { motion } from "framer-motion";
 import TrialChat from "../components/TrialChat";
 import Link from "next/link";
 
+// Training locations — keep in sync with app/basketball-training-*/page.tsx
+const LOCATIONS = [
+  { name: "Tampines", slug: "tampines" },
+  { name: "Khatib", slug: "khatib" },
+  { name: "Kembangan", slug: "kembangan" },
+  { name: "Boon Keng", slug: "boon-keng" },
+];
+
+const BOOK_TRIAL_HREF =
+  "https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20my%20free%20trial%20and%20assessment%20%E2%9B%B9";
+
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", whatsapp: "" });
-  const [submitted, setSubmitted] = useState(false);
   const [guideData, setGuideData] = useState({ name: "", email: "" });
   const [guideSubmitted, setGuideSubmitted] = useState(false);
   const [guideLoading, setGuideLoading] = useState(false);
@@ -20,13 +29,6 @@ export default function HomePage() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-    const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const message = `Hi Coach! I want to sign up for a free trial.%0A%0AName: ${formData.name}%0AEmail: ${formData.email}%0AWhatsApp: ${formData.whatsapp}`;
-    window.open(`https://wa.me/6591885348?text=${message}`, '_blank');
-    setSubmitted(true);
-  };
 
   const handleGuideSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,7 +148,7 @@ export default function HomePage() {
             <Link href="/faq" className="text-sm text-gray-400 hover:text-white transition-colors">FAQs</Link>
             <a href="#testimonials" className="text-sm text-gray-400 hover:text-white transition-colors">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-gray-400 hover:text-white transition-colors">FREE GUIDE</a>
-            <a href="#signup" className="text-sm text-gray-400 hover:text-white transition-colors">FREE TRIAL</a>
+            <a href={BOOK_TRIAL_HREF} target="_blank" className="text-sm text-gray-400 hover:text-white transition-colors">FREE TRIAL</a>
           </div>
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
@@ -172,7 +174,7 @@ export default function HomePage() {
             <Link href="/faq" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">❓ FAQs</Link>
             <a href="#testimonials" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">⭐ TESTIMONIALS</a>
             <a href="#guide" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">📖 FREE GUIDE</a>
-            <a href="#signup" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">🎁 FREE TRIAL</a>
+            <a href={BOOK_TRIAL_HREF} target="_blank" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-gray-300 hover:text-white hover:bg-white/[0.06] transition-colors">🎁 FREE TRIAL</a>
           </motion.div>
         )}
       </motion.nav>
@@ -210,53 +212,160 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto mb-12 leading-relaxed"
+            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Be the go-to basketball development program for kids and adults
-            starting from zero.
+            <span className="text-white font-semibold">FREE 60-minute basketball skills assessment</span>,
+            for kids and adults starting from zero. Train at Tampines, Khatib, Kembangan or Boon Keng.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex gap-4 justify-center"
+            className="flex flex-col items-center gap-3"
           >
             <motion.a
-              href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial%20%E2%9B%B9"
+              href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20my%20free%20trial%20and%20assessment%20%E2%9B%B9"
               target="_blank"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full font-semibold text-lg shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-shadow cursor-pointer"
               >
-                START FREE TRIAL
+                Book My Free Trial and Assessment
               </motion.a>
+            <p className="text-gray-500 text-sm">No payment details needed.</p>
           </motion.div>
         </div>
       </section>
 
-      {/* Stats Bar */}
+      {/* Proof line — approved version: 4.9/5 rating + Head Coach Wai only */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
         className="max-w-4xl mx-auto px-8 py-10"
       >
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 grid grid-cols-3 gap-8">
-          {[
-            { number: "50+", label: "Combined Coaching Experience (Years)" },
-            { number: "5+", label: "Active Coaches" },
-            { number: "50+", label: "Athletes Trained" },
-          ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-3xl font-black bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">
-                {stat.number}
-              </div>
-              <div className="text-gray-500 text-sm mt-1">{stat.label}</div>
-            </div>
-          ))}
+        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-center">
+          <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent whitespace-nowrap">
+            4.9/5 Google rating
+          </span>
+          <span className="hidden sm:block text-gray-600">·</span>
+          <span className="text-gray-400 text-sm md:text-base">
+            Head Coach Wai, former Division 2 player, 20 years&apos; experience.
+          </span>
         </div>
       </motion.div>
+
+      {/* Programmes */}
+      <section id="programmes" className="px-8 py-16">
+        <div className="max-w-5xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-4xl md:text-5xl font-bold text-center mb-4"
+          >
+            PROGRAMMES
+          </motion.h2>
+          <p className="text-gray-400 text-center mb-12 max-w-xl mx-auto">
+            Two ways to train — pick what fits your level and your schedule.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              {
+                icon: "🎯",
+                title: "1-to-1 / Private",
+                who: "For adults",
+                price: "from $70 / session",
+                desc: "One coach, one player. Every drill built around your game, your pace and your goals.",
+                color: "from-blue-500/20 to-blue-600/5 border-blue-500/20",
+                shadow: "hover:shadow-blue-500/25",
+              },
+              {
+                icon: "🤝",
+                title: "Small Group",
+                who: "For youth and adults",
+                price: "from $50 / session",
+                desc: "Train with a small group — game-realistic reps, competition, and the same structured plan.",
+                color: "from-red-500/20 to-red-600/5 border-red-500/20",
+                shadow: "hover:shadow-red-500/25",
+              },
+            ].map((p, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.15 }}
+                whileHover={{ y: -5 }}
+                className={`bg-gradient-to-b ${p.color} backdrop-blur-xl border rounded-2xl p-8 transition-all duration-300 hover:shadow-2xl ${p.shadow}`}
+              >
+                <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-2xl mb-6">{p.icon}</div>
+                <h3 className="font-bold text-xl mb-1">{p.title}</h3>
+                <p className="text-gray-500 text-sm mb-4">{p.who}</p>
+                <p className="text-2xl font-black bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-4">{p.price}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{p.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Where we train — links to the four location pages */}
+          <div className="mt-12 text-center">
+            <p className="text-gray-500 text-xs uppercase tracking-[0.2em] mb-4">Where we train</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {LOCATIONS.map((loc) => (
+                <Link
+                  key={loc.slug}
+                  href={`/basketball-training-${loc.slug}`}
+                  className="px-4 py-2 bg-white/[0.04] border border-white/[0.08] rounded-full text-sm text-gray-300 hover:text-white hover:bg-white/[0.08] transition-colors"
+                >
+                  📍 {loc.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section id="how-it-works" className="px-8 py-16">
+        <div className="max-w-5xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-4xl md:text-5xl font-bold text-center mb-4"
+          >
+            HOW IT{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
+              WORKS
+            </span>
+          </motion.h2>
+          <p className="text-gray-400 text-center mb-12 max-w-xl mx-auto">
+            Three steps, no guesswork.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { step: "1", title: "Free skills assessment", desc: "A free 60-minute session where we see exactly where you or your child are starting from." },
+              { step: "2", title: "Matched plan and roadmap", desc: "You get a clear plan built around your goals — what to work on, in what order." },
+              { step: "3", title: "Progress tracking", desc: "Every session is tracked, so you can see the improvement instead of guessing." },
+            ].map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.15 }}
+                className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8"
+              >
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center font-black text-lg mb-5">
+                  {s.step}
+                </div>
+                <h3 className="font-bold text-lg mb-3">{s.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{s.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Features */}
       <section id="features" className="px-8 py-20">
@@ -313,6 +422,36 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Head Coach */}
+      <section id="coach" className="px-8 py-16">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="bg-gradient-to-b from-white/[0.06] to-white/[0.02] backdrop-blur-xl border border-white/[0.08] rounded-3xl p-10 md:p-12"
+          >
+            <p className="text-blue-400 text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+              Head Coach
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Coach Wai</h2>
+            <p className="text-gray-300 leading-relaxed mb-6 max-w-2xl">
+              Former Division 2 player with 20 years of experience coaching players of every level —
+              from complete beginners to competitive athletes.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {["Former Division 2 player", "20 years' coaching experience"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-4 py-2 bg-white/[0.04] border border-white/[0.08] rounded-full text-sm text-gray-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -482,16 +621,19 @@ export default function HomePage() {
           whileInView={{ opacity: 1, scale: 1 }}
           className="max-w-4xl mx-auto bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center"
         >
-          <h2 className="text-4xl font-bold mb-4">READY TO ELEVATE YOUR GAME?</h2>
-          <p className="text-gray-400 mb-8">Join hundreds of athletes transforming their game. Start your free trial today.</p>
+          <h2 className="text-4xl font-bold mb-4">READY TO SEE WHERE YOU&apos;RE AT?</h2>
+          <p className="text-gray-400 mb-8">
+            Book your free 60-minute skills assessment at Tampines, Khatib, Kembangan or Boon Keng.
+            No payment details needed.
+          </p>
           <motion.a
-            href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial%20%E2%9B%B9"
+            href={BOOK_TRIAL_HREF}
             target="_blank"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-block px-10 py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-200 transition-colors cursor-pointer"
             >
-              START FREE TRIAL
+              Book My Free Trial and Assessment
             </motion.a>
         </motion.div>
               </section>
