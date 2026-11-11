@@ -782,7 +782,7 @@ export default function CoachAdminPage() {
             <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
               <div className="px-6 py-4 border-b border-white/[0.06]">
                 <h2 className="text-lg font-bold text-white">📈 Attendance</h2>
-                <p className="text-gray-500 text-sm mt-0.5">Set each student's package (4, 8 or 12 sessions) and see how many they've attended.</p>
+                <p className="text-gray-500 text-sm mt-0.5">Set each student&apos;s package (4, 8, 10 or 12 sessions) and see how many they&apos;ve attended.</p>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
