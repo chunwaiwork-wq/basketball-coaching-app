@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const { email, password, name } = await req.json();
+    const { email, password, name, whatsapp } = await req.json();
 
     if (!email || !password || !name) {
       return NextResponse.json(
@@ -39,8 +39,8 @@ export async function POST(req: Request) {
     // Also create a lead in the CRM
     await prisma.lead.upsert({
       where: { email },
-      update: { name },
-      create: { name, email },
+      update: { name, ...(whatsapp ? { notes: `WhatsApp: ${String(whatsapp).trim()}` } : {}) },
+      create: { name, email, ...(whatsapp ? { notes: `WhatsApp: ${String(whatsapp).trim()}` } : {}) },
     }).catch(() => {
       // ignore
     });

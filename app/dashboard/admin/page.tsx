@@ -815,6 +815,7 @@ export default function CoachAdminPage() {
                               <option value="" className="bg-[#0a0a1a]">Not set</option>
                               <option value={4} className="bg-[#0a0a1a]">4 sessions</option>
                               <option value={8} className="bg-[#0a0a1a]">8 sessions</option>
+                              <option value={10} className="bg-[#0a0a1a]">10 sessions</option>
                               <option value={12} className="bg-[#0a0a1a]">12 sessions</option>
                             </select>
                           </td>
