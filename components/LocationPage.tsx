@@ -18,14 +18,16 @@ function bookHref(location: string) {
 
 // Venue details per location — confirmed by Coach Wai
 type LocationDetail = {
-  image: string;
   headline: string;
   venues: { name: string; note?: string }[];
 };
 
+// One court photo shared by all four location pages (same image everywhere)
+const COURT_IMAGE = "/locations/tampines.jpg";
+const COACH_PORTRAIT = "/coach-wai-portrait.jpg";
+
 const LOCATION_DETAILS: Record<string, LocationDetail> = {
   tampines: {
-    image: "/locations/tampines.jpg",
     headline: "Two courts in Tampines",
     venues: [
       { name: "Blk 840 Tampines Street 82", note: "Sheltered court" },
@@ -33,17 +35,14 @@ const LOCATION_DETAILS: Record<string, LocationDetail> = {
     ],
   },
   khatib: {
-    image: "/locations/khatib.jpg",
     headline: "Khatib Multi-purpose Court",
     venues: [{ name: "Khatib Multi-purpose Court", note: "Sheltered court" }],
   },
   kembangan: {
-    image: "/locations/kembangan.jpg",
     headline: "Telok Kurau Park",
     venues: [{ name: "Telok Kurau Park", note: "Half court" }],
   },
   "boon-keng": {
-    image: "/locations/boon-keng.jpg",
     headline: "McNair Sheltered Basketball Court",
     venues: [{ name: "McNair Sheltered Basketball Court", note: "Sheltered court" }],
   },
@@ -177,7 +176,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
               className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden border border-[#E9DFC9]/10 shadow-2xl shadow-black/50"
             >
               <img
-                src={details.image}
+                src={COURT_IMAGE}
                 alt={`Kids playing basketball at our outdoor court in ${location}, Singapore`}
                 width={1600}
                 height={900}
@@ -296,13 +295,31 @@ export default function LocationPage({ location, slug }: { location: string; slu
 
         {/* Head coach */}
         <section className="px-8 py-12">
-          <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#E9DFC9]/[0.06] to-[#E9DFC9]/[0.02] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-3xl p-10 md:p-12">
-            <p className="text-[#E07B3C] text-xs font-semibold tracking-[0.2em] uppercase mb-4">Head Coach</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Coach Wai</h2>
-            <p className="text-[#E9DFC9]/85 leading-relaxed max-w-2xl">
-              Former Division 2 player with 20 years of experience coaching players of every level — from
-              complete beginners to competitive athletes. Training in {location} and across Singapore.
-            </p>
+          <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#E9DFC9]/[0.06] to-[#E9DFC9]/[0.02] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            <div className="relative shrink-0">
+              <span
+                className="absolute inset-0 -m-2 rounded-3xl bg-[#C65A24]/20 blur-xl"
+                aria-hidden="true"
+              />
+              <img
+                src={COACH_PORTRAIT}
+                alt="Coach Wai — Head Coach at 413OPENCOURT"
+                width={800}
+                height={961}
+                className="relative w-60 sm:w-72 md:w-80 lg:w-96 h-auto rounded-2xl border border-[#C65A24]/30 shadow-2xl shadow-black/60"
+              />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <p className="text-[#E07B3C] text-xs font-bold tracking-[0.2em] uppercase mb-2">
+                Head Coach
+              </p>
+              <p className="text-2xl md:text-3xl font-extrabold mb-3">Coach Wai</p>
+              <p className="text-[#E9DFC9]/85 leading-relaxed">
+                Former Division 2 player with 20 years of experience coaching players of every level
+                — from complete beginners to competitive athletes. Training in {location} and across
+                Singapore.
+              </p>
+            </div>
           </div>
         </section>
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-// --- KIDS PRICING (Ages 6–16) ---
+// --- KIDS PRICING (Ages 3–16) ---
 const KIDS_GROUP = [
   { name: "Drop-in Session", detail: "1 session, single class", price: "S$40", per: "/ session" },
   { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly", price: "S$140", per: "/ mth (S$35 / session)", highlight: false },
@@ -147,7 +147,7 @@ export default function RatesPage() {
             2026 Pricing
           </h1>
           <p className="text-[#E9DFC9]/70 mt-2 max-w-xl">
-            Structured basketball coaching for kids (ages 6–16) and adults (17+). Every player gets a Player Card that tracks drills, homework and progress.
+            Structured basketball coaching for kids (ages 3–16) and adults (17+). Every player gets a Player Card that tracks drills, homework and progress.
           </p>
         </motion.div>
       </header>
@@ -163,7 +163,7 @@ export default function RatesPage() {
                 : "text-[#E9DFC9]/70 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06]"
             }`}
           >
-            🧒 Kids (6–16)
+            🧒 Kids (3–16)
           </button>
           <button
             onClick={() => setTab("adult")}
