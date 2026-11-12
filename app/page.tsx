@@ -15,9 +15,132 @@ const LOCATIONS = [
 const BOOK_TRIAL_HREF =
   "https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20my%20free%20trial%20and%20assessment%20%E2%9B%B9";
 
+// FAQ content — kept in sync with app/faq/page.tsx
+const HOME_FAQS: { icon: string; title: string; items: { q: string; a: string }[] }[] = [
+  {
+    icon: "👨‍🏫",
+    title: "About Our Coaches",
+    items: [
+      {
+        q: "Who are the coaches?",
+        a: "Our coaches include veteran players like Chun Wai and other certified and experienced coaches with more than a decade of experience teaching kids and adults!",
+      },
+      {
+        q: "Are your coaches certified?",
+        a: "Yes — our coaching staff hold NCAP Singapore certifications. All coaches also undergo background checks and child safety training before working with players.",
+      },
+      {
+        q: "Have your coaches played competitively?",
+        a: "Yes — some of our coaches have played at national team level and they currently compete in the highest Division 1 league in Singapore. They bring that competitive experience directly into how drills and game-reading are taught.",
+      },
+    ],
+  },
+  {
+    icon: "📋",
+    title: "Programs & Training",
+    items: [
+      {
+        q: "What age groups and skill levels do you coach?",
+        a: "We coach kids from age 6–16 and working adults (17+). Each experience is tailor-made according to your level of experience — from complete beginners to competitive players.",
+      },
+      {
+        q: "How is the training conducted?",
+        a: "Training will be conducted in a fun and enriching manner. There will be lots of learnings and takeaways after each session.",
+      },
+      {
+        q: "What's your coach-to-player ratio?",
+        a: "For group classes, our maximum standard ratio is 1 coach to 8 players. This ensures individual attention and correction during every session.",
+      },
+      {
+        q: "Why choose 413opencourt?",
+        a: "We believe that every kid or adult can be empowered with good basketball skills and play with confidence. Our core principles are to ensure clarity, confidence and convenience to all coachees.",
+      },
+      {
+        q: "What equipment does my child need to bring?",
+        a: "They may bring along their ball, towel, and a water bottle. We'll take care of the rest!",
+      },
+    ],
+  },
+  {
+    icon: "💰",
+    title: "Pricing & Payments",
+    items: [
+      {
+        q: "How much does a trial session cost?",
+        a: "Completely free! Kids get a free group session and adults get a free private session — no commitment, no payment details needed.",
+      },
+      {
+        q: "What payment methods do you accept?",
+        a: "PayNow is our primary payment method. We'll send you the details after you confirm your booking.",
+      },
+      {
+        q: "Do siblings get a discount?",
+        a: "Yes — siblings get 10% off for a second child on monthly or term packs.",
+      },
+      {
+        q: "What happens if we miss a session?",
+        a: "Reschedules with 24 hours' notice are free. No-shows without notice will forfeit the session.",
+      },
+      {
+        q: "Are packages refundable?",
+        a: "Packages are strictly non-refundable. However, sessions are valid for 6 weeks from purchase date, and we're happy to reschedule with 24 hours' notice.",
+      },
+    ],
+  },
+  {
+    icon: "⏰",
+    title: "Scheduling",
+    items: [
+      {
+        q: "How long is each session?",
+        a: "Both group and private classes are 1 hour each.",
+      },
+      {
+        q: "Can we reschedule a session?",
+        a: "Definitely! Just give us 24 hours' notice and we'll move your session to another slot at no charge.",
+      },
+    ],
+  },
+  {
+    icon: "📍",
+    title: "Venue & Location",
+    items: [
+      {
+        q: "Where is the coaching venue?",
+        a: "It will be located at your convenience. However, group classes are usually held at Block 840 sheltered basketball court.",
+      },
+    ],
+  },
+  {
+    icon: "🛡️",
+    title: "Safety & Wellbeing",
+    items: [
+      {
+        q: "What safety measures are in place during sessions?",
+        a: "We have clear injury protocols, hydration and heat management designed for Singapore conditions, and all our coaches are first-aid trained. Every session begins with a venue safety check before play.",
+      },
+    ],
+  },
+  {
+    icon: "🎁",
+    title: "Trials & Getting Started",
+    items: [
+      {
+        q: "Is there a trial session before committing?",
+        a: "Yes — we offer a free trial session so you can observe the coaching style and see if it's a good fit before signing up. Kids get a free group class, and adults get a free private session.",
+      },
+      {
+        q: "How do I book or ask more questions?",
+        a: "WhatsApp us at +65 9188 5348 or email 413opencourt@gmail.com — we'll get back to you as soon as possible!",
+      },
+    ],
+  },
+];
+
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<string | null>("0-0");
   const [guideData, setGuideData] = useState({ name: "", email: "" });
   const [guideSubmitted, setGuideSubmitted] = useState(false);
   const [guideLoading, setGuideLoading] = useState(false);
@@ -145,7 +268,7 @@ export default function HomePage() {
 
           <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
             <Link href="/rates" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">RATES</Link>
-            <Link href="/faq" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">FAQs</Link>
+            <a href="#faqs" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">FAQs</a>
             <a href="#testimonials" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">FREE GUIDE</a>
             <a href={BOOK_TRIAL_HREF} target="_blank" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">FREE TRIAL</a>
@@ -171,7 +294,7 @@ export default function HomePage() {
             className="md:hidden bg-[#171717]/95 backdrop-blur-xl border-b border-[#E9DFC9]/10 px-4 py-4 flex flex-col"
           >
             <Link href="/rates" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">💰 RATES</Link>
-            <Link href="/faq" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">❓ FAQs</Link>
+            <a href="#faqs" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">❓ FAQs</a>
             <a href="#testimonials" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">⭐ TESTIMONIALS</a>
             <a href="#guide" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">📖 FREE GUIDE</a>
             <a href={BOOK_TRIAL_HREF} target="_blank" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">🎁 FREE TRIAL</a>
@@ -547,6 +670,115 @@ export default function HomePage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section id="faqs" className="px-8 py-20">
+        <div className="max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-4xl md:text-5xl font-bold text-center mb-4"
+          >
+            FREQUENTLY ASKED{" "}
+            <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">
+              QUESTIONS
+            </span>
+          </motion.h2>
+          <p className="text-[#E9DFC9]/70 text-center mb-16">
+            Everything parents and players ask us before their first session
+          </p>
+
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                mainEntity: HOME_FAQS.flatMap((cat) =>
+                  cat.items.map((item) => ({
+                    "@type": "Question",
+                    name: item.q,
+                    acceptedAnswer: { "@type": "Answer", text: item.a },
+                  }))
+                ),
+              }),
+            }}
+          />
+
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            {HOME_FAQS.map((cat, ci) => (
+              <motion.div
+                key={cat.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: ci * 0.05 }}
+                className="rounded-2xl border border-[#E9DFC9]/10 bg-[#E9DFC9]/[0.03] overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 border-b border-[#E9DFC9]/10 bg-[#C65A24]/[0.07]">
+                  <span className="text-xl leading-none">{cat.icon}</span>
+                  <h3 className="text-[#E9DFC9] font-bold text-sm tracking-wide uppercase">
+                    {cat.title}
+                  </h3>
+                </div>
+                <div>
+                  {cat.items.map((item, ii) => {
+                    const key = `${ci}-${ii}`;
+                    const isOpen = openFaq === key;
+                    return (
+                      <div key={key} className="border-b border-[#E9DFC9]/[0.06] last:border-0">
+                        <button
+                          onClick={() => setOpenFaq(isOpen ? null : key)}
+                          aria-expanded={isOpen}
+                          className="w-full flex items-start justify-between gap-4 px-6 py-4 text-left hover:bg-[#E9DFC9]/[0.03] transition-colors"
+                        >
+                          <span className="text-[#E9DFC9]/90 text-sm font-bold leading-snug">
+                            {item.q}
+                          </span>
+                          <span
+                            className={`shrink-0 text-[#C65A24] text-lg leading-none transition-transform duration-200 ${
+                              isOpen ? "rotate-45" : ""
+                            }`}
+                            aria-hidden="true"
+                          >
+                            +
+                          </span>
+                        </button>
+                        {isOpen && (
+                          <motion.p
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className="px-6 pb-5 text-[#E9DFC9]/65 text-sm leading-relaxed"
+                          >
+                            {item.a}
+                          </motion.p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+            <a
+              href={BOOK_TRIAL_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-7 py-3.5 rounded-xl bg-[#C65A24] text-[#E9DFC9] font-bold hover:bg-[#E07B3C] transition-colors"
+            >
+              Still have questions? Book a free trial →
+            </a>
+            <Link
+              href="/faq"
+              className="px-7 py-3.5 rounded-xl border border-[#E9DFC9]/20 text-[#E9DFC9]/85 font-bold hover:bg-[#E9DFC9]/10 transition-colors"
+            >
+              See the full FAQ page
+            </Link>
           </div>
         </div>
       </section>
