@@ -393,7 +393,7 @@ export default function HomePage() {
               width={800}
               height={961}
               decoding="async"
-              className="relative w-56 sm:w-64 md:w-72 h-auto rounded-2xl border border-[#C65A24]/30 shadow-2xl shadow-black/60"
+              className="relative w-60 sm:w-72 md:w-80 lg:w-96 h-auto rounded-2xl border border-[#C65A24]/30 shadow-2xl shadow-black/60"
             />
           </div>
           <div className="flex-1 text-center md:text-left">
