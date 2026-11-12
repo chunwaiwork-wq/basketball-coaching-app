@@ -20,11 +20,13 @@ function bookHref(location: string) {
 type LocationDetail = {
   headline: string;
   venues: { name: string; note?: string }[];
+  image: string;
+  imageAlt: string;
 };
 
-// One court photo shared by all four location pages (same image everywhere)
-// Real photo: McNair sheltered court, Boon Keng
-const COURT_IMAGE = "/locations/court.jpg";
+// Court photos — real photos of each venue.
+// Locations without a real photo yet fall back to a shared image.
+const FALLBACK_COURT_IMAGE = "/locations/boon-keng.jpg";
 const COACH_PORTRAIT = "/coach-wai-portrait.jpg";
 
 const LOCATION_DETAILS: Record<string, LocationDetail> = {
@@ -34,18 +36,26 @@ const LOCATION_DETAILS: Record<string, LocationDetail> = {
       { name: "Blk 840 Tampines Street 82", note: "Sheltered court" },
       { name: "Blk 719 Tampines Street 72" },
     ],
+    image: "/locations/tampines.jpg",
+    imageAlt: "Sheltered basketball court at Blk 840 Tampines Street 82, Singapore",
   },
   khatib: {
     headline: "Khatib Multi-purpose Court",
     venues: [{ name: "Khatib Multi-purpose Court", note: "Sheltered court" }],
+    image: FALLBACK_COURT_IMAGE,
+    imageAlt: "Our sheltered basketball court in Khatib, Singapore",
   },
   kembangan: {
     headline: "Telok Kurau Park",
     venues: [{ name: "Telok Kurau Park", note: "Half court" }],
+    image: FALLBACK_COURT_IMAGE,
+    imageAlt: "Our basketball court at Telok Kurau Park in Kembangan, Singapore",
   },
   "boon-keng": {
     headline: "McNair Sheltered Basketball Court",
     venues: [{ name: "McNair Sheltered Basketball Court", note: "Sheltered court" }],
+    image: "/locations/boon-keng.jpg",
+    imageAlt: "McNair Sheltered Basketball Court in Boon Keng, Singapore",
   },
 };
 
@@ -177,10 +187,10 @@ export default function LocationPage({ location, slug }: { location: string; slu
               className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden border border-[#E9DFC9]/10 shadow-2xl shadow-black/50"
             >
               <img
-                src={COURT_IMAGE}
-                alt={`Our sheltered basketball court in ${location}, Singapore`}
-                width={1068}
-                height={601}
+                src={details.image}
+                alt={details.imageAlt}
+                width={1280}
+                height={720}
                 className="w-full h-56 sm:h-72 md:h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#171717] via-[#171717]/40 to-transparent" />
