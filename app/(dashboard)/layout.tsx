@@ -52,7 +52,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               localStorage.removeItem("isCoach");
               window.location.href = "/";
             }}
-            className="text-sm px-3 py-1.5 bg-[#C65A24]/20 text-[#E07B3C] hover:bg-[#C65A24]/30 hover:text-[#E9DFC9] border border-[#C65A24]/40 rounded-lg font-semibold tracking-wide transition-all"
+            className="text-sm px-3 py-1.5 bg-[#C65A24] text-[#E9DFC9] hover:bg-[#A34717] border border-[#C65A24] rounded-lg font-semibold tracking-wide transition-all"
           >
             ✕ Log out
           </button>
