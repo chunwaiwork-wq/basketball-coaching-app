@@ -63,7 +63,7 @@ export default function VideosPage() {
               whileHover={{ y: -5 }}
               className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden cursor-pointer group"
             >
-              <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+              <div className="aspect-video bg-gradient-to-br from-[#E9DFC9]/12 to-[#E9DFC9]/4 flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                 <span className="text-5xl opacity-30">🎬</span>
               </div>
               <div className="p-5">

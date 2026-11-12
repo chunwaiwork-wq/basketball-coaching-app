@@ -476,7 +476,7 @@ export default function CoachAdminPage() {
           </motion.div>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-600/20 text-red-300 hover:bg-[#A34717]/30 border border-red-500/30 rounded-xl text-sm font-semibold transition-all w-fit"
+            className="px-4 py-2 bg-[#C65A24]/20 text-[#E07B3C] hover:bg-[#C65A24]/30 border border-[#C65A24]/40 rounded-xl text-sm font-semibold transition-all w-fit"
           >
             ✕ Log out
           </button>

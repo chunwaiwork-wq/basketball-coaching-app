@@ -28,7 +28,7 @@ function VideoCard({ video, index }: { video: Video; index: number }) {
       onClick={() => window.open(`https://www.youtube.com/watch?v=${video.url}`, '_blank')}
       className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden cursor-pointer group"
     >
-      <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center group-hover:scale-105 transition-transform duration-500 relative">
+      <div className="aspect-video bg-gradient-to-br from-[#E9DFC9]/12 to-[#E9DFC9]/4 flex items-center justify-center group-hover:scale-105 transition-transform duration-500 relative">
         <div className="absolute inset-0 bg-[#171717]/30 group-hover:bg-[#171717]/20 transition-colors" />
         <div className="w-16 h-16 bg-[#E9DFC9]/20 backdrop-blur-sm rounded-full flex items-center justify-center z-10 group-hover:scale-110 transition-transform">
           <svg className="w-8 h-8 text-[#E9DFC9] ml-1" fill="currentColor" viewBox="0 0 24 24">
