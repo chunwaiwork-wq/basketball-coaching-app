@@ -381,14 +381,30 @@ export default function HomePage() {
         transition={{ duration: 0.8, delay: 1 }}
         className="max-w-4xl mx-auto px-8 py-10"
       >
-        <div className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-center">
-          <span className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/60 bg-clip-text text-transparent whitespace-nowrap">
-            4.9/5 Google rating
-          </span>
-          <span className="hidden sm:block text-[#E9DFC9]/40">·</span>
-          <span className="text-[#E9DFC9]/70 text-sm md:text-base">
-            Head Coach Wai, former Division 2 player, 20 years&apos; experience.
-          </span>
+        <div className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl px-8 py-6 flex flex-col items-center justify-center gap-4 text-center">
+          <div className="relative shrink-0">
+            <span
+              className="absolute inset-0 -m-1 rounded-full bg-[#C65A24]/25 blur-md"
+              aria-hidden="true"
+            />
+            <img
+              src="/coach-wai.jpg"
+              alt="Coach Wai — Head Coach at 413OPENCOURT"
+              width={96}
+              height={96}
+              decoding="async"
+              className="relative w-20 h-20 md:w-24 md:h-24 rounded-full object-cover ring-2 ring-[#C65A24]/60 shadow-lg shadow-black/40"
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1">
+            <span className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/60 bg-clip-text text-transparent whitespace-nowrap">
+              4.9/5 Google rating
+            </span>
+            <span className="hidden sm:block text-[#E9DFC9]/40">·</span>
+            <span className="text-[#E9DFC9]/70 text-sm md:text-base">
+              Head Coach Wai, former Division 2 player, 20 years&apos; experience.
+            </span>
+          </div>
         </div>
       </motion.div>
 
