@@ -23,7 +23,8 @@ type LocationDetail = {
 };
 
 // One court photo shared by all four location pages (same image everywhere)
-const COURT_IMAGE = "/locations/tampines.jpg";
+// Real photo: McNair sheltered court, Boon Keng
+const COURT_IMAGE = "/locations/court.jpg";
 const COACH_PORTRAIT = "/coach-wai-portrait.jpg";
 
 const LOCATION_DETAILS: Record<string, LocationDetail> = {
@@ -177,9 +178,9 @@ export default function LocationPage({ location, slug }: { location: string; slu
             >
               <img
                 src={COURT_IMAGE}
-                alt={`Kids playing basketball at our outdoor court in ${location}, Singapore`}
-                width={1600}
-                height={900}
+                alt={`Our sheltered basketball court in ${location}, Singapore`}
+                width={1068}
+                height={601}
                 className="w-full h-56 sm:h-72 md:h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#171717] via-[#171717]/40 to-transparent" />
