@@ -41,7 +41,7 @@ const HOME_FAQS: { icon: string; title: string; items: { q: string; a: string }[
     items: [
       {
         q: "What age groups and skill levels do you coach?",
-        a: "We coach kids from age 6–16 and working adults (17+). Each experience is tailor-made according to your level of experience — from complete beginners to competitive players.",
+        a: "We coach kids from age 3–16 and working adults (17+). Each experience is tailor-made according to your level of experience — from complete beginners to competitive players.",
       },
       {
         q: "What is the training program?",
@@ -574,36 +574,6 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Head Coach */}
-      <section id="coach" className="px-8 py-16">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-b from-[#E9DFC9]/[0.06] to-[#E9DFC9]/[0.02] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-3xl p-10 md:p-12"
-          >
-            <p className="text-[#E07B3C] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-              Head Coach
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Coach Wai</h2>
-            <p className="text-[#E9DFC9]/85 leading-relaxed mb-6 max-w-2xl">
-              Former Division 2 player with 20 years of experience coaching players of every level —
-              from complete beginners to competitive athletes.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {["Former Division 2 player", "20 years' coaching experience"].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-4 py-2 bg-[#E9DFC9]/[0.04] border border-[#E9DFC9]/[0.08] rounded-full text-sm text-[#E9DFC9]/85"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </motion.div>
         </div>
       </section>
 

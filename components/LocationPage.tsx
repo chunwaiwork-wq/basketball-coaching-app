@@ -16,6 +16,39 @@ function bookHref(location: string) {
   return `https://wa.me/6591885348?text=${encodeURIComponent(text)}`;
 }
 
+// Venue details per location — confirmed by Coach Wai
+type LocationDetail = {
+  image: string;
+  headline: string;
+  venues: { name: string; note?: string }[];
+};
+
+const LOCATION_DETAILS: Record<string, LocationDetail> = {
+  tampines: {
+    image: "/locations/tampines.jpg",
+    headline: "Two courts in Tampines",
+    venues: [
+      { name: "Blk 840 Tampines Street 82", note: "Sheltered court" },
+      { name: "Blk 719 Tampines Street 72" },
+    ],
+  },
+  khatib: {
+    image: "/locations/khatib.jpg",
+    headline: "Khatib Multi-purpose Court",
+    venues: [{ name: "Khatib Multi-purpose Court", note: "Sheltered court" }],
+  },
+  kembangan: {
+    image: "/locations/kembangan.jpg",
+    headline: "Telok Kurau Park",
+    venues: [{ name: "Telok Kurau Park", note: "Half court" }],
+  },
+  "boon-keng": {
+    image: "/locations/boon-keng.jpg",
+    headline: "McNair Sheltered Basketball Court",
+    venues: [{ name: "McNair Sheltered Basketball Court", note: "Sheltered court" }],
+  },
+};
+
 const PROGRAMMES = [
   {
     icon: "🎯",
@@ -43,6 +76,7 @@ const STEPS = [
 
 export default function LocationPage({ location, slug }: { location: string; slug: string }) {
   const href = bookHref(location);
+  const details = LOCATION_DETAILS[slug];
 
   return (
     <main className="min-h-screen bg-[#171717] text-[#E9DFC9] overflow-hidden">
@@ -133,6 +167,35 @@ export default function LocationPage({ location, slug }: { location: string; slu
           </div>
         </section>
 
+        {/* Court photo */}
+        {details && (
+          <section className="px-8 pb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.55 }}
+              className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden border border-[#E9DFC9]/10 shadow-2xl shadow-black/50"
+            >
+              <img
+                src={details.image}
+                alt={`Kids playing basketball at our outdoor court in ${location}, Singapore`}
+                width={1600}
+                height={900}
+                className="w-full h-56 sm:h-72 md:h-96 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#171717] via-[#171717]/40 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                <p className="text-[#E07B3C] text-xs font-bold tracking-[0.2em] uppercase mb-2">
+                  {location}
+                </p>
+                <p className="text-xl md:text-3xl font-extrabold leading-tight">
+                  {details.headline}
+                </p>
+              </div>
+            </motion.div>
+          </section>
+        )}
+
         {/* Proof line — links back to the 4.9/5 Google rating */}
         <section className="px-8 pb-16">
           <div className="max-w-4xl mx-auto bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-center">
@@ -146,19 +209,41 @@ export default function LocationPage({ location, slug }: { location: string; slu
           </div>
         </section>
 
-        {/* Venue details — deliberately blank until confirmed */}
+        {/* Venue details */}
         <section className="px-8 pb-16">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">{location} details</h2>
+            <h2 className="text-2xl font-bold mb-2">Where we train in {location}</h2>
+            <p className="text-[#E9DFC9]/55 text-sm mb-6">
+              Free trial sessions run at these courts.
+            </p>
             <div className="grid sm:grid-cols-2 gap-4">
-              {[`[Exact venue in ${location}: to confirm]`, `[Hours/days in ${location}: to confirm]`].map((blank) => (
+              {details?.venues.map((venue) => (
                 <div
-                  key={blank}
-                  className="bg-[#E9DFC9]/[0.02] border border-dashed border-[#E9DFC9]/15 rounded-xl px-5 py-4 text-[#E9DFC9]/55 text-sm"
+                  key={venue.name}
+                  className="flex items-start gap-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/10 rounded-xl px-5 py-4"
                 >
-                  {blank}
+                  <span className="text-[#C65A24] leading-none mt-0.5" aria-hidden="true">
+                    📍
+                  </span>
+                  <div>
+                    <p className="font-bold text-sm text-[#E9DFC9]">{venue.name}</p>
+                    {venue.note && (
+                      <p className="text-[#E9DFC9]/55 text-xs mt-1">{venue.note}</p>
+                    )}
+                  </div>
                 </div>
               ))}
+              <div className="flex items-start gap-3 bg-[#E9DFC9]/[0.02] border border-dashed border-[#E9DFC9]/15 rounded-xl px-5 py-4">
+                <span className="leading-none mt-0.5" aria-hidden="true">
+                  🕒
+                </span>
+                <div>
+                  <p className="font-bold text-sm text-[#E9DFC9]/70">Training days &amp; times</p>
+                  <p className="text-[#E9DFC9]/45 text-xs mt-1">
+                    [To confirm — ask us on WhatsApp]
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

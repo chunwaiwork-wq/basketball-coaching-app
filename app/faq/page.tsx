@@ -35,7 +35,7 @@ const FAQ_CATEGORIES: FaqCategory[] = [
     items: [
       {
         q: "What age groups and skill levels do you coach?",
-        a: "We coach kids from age 6–16 and working adults (17+). Each experience is tailor-made according to your level of experience — from complete beginners to competitive players.",
+        a: "We coach kids from age 3–16 and working adults (17+). Each experience is tailor-made according to your level of experience — from complete beginners to competitive players.",
       },
       {
         q: "What is the training program?",
