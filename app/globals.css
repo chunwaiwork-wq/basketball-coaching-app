@@ -1,21 +1,38 @@
 @import "tailwindcss";
 
+/* 413OPENCOURT brand palette
+   Black #171717 — 60% · primary backgrounds
+   Cream #E9DFC9 — 25% · text, light surfaces, contrast
+   Burnt Orange #C65A24 — 15% · buttons, CTAs, highlights, accents
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #171717;
+  --foreground: #E9DFC9;
+
+  --brand-black: #171717;
+  --brand-cream: #E9DFC9;
+  --brand-orange: #C65A24;
+  --brand-orange-light: #E07B3C;
+  --brand-orange-dark: #A34717;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-black: var(--brand-black);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-orange-light: var(--brand-orange-light);
+  --color-brand-orange-dark: var(--brand-orange-dark);
   --font-sans: "Helvetica Now Text", Helvetica, Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* Only one theme now — brand is always dark */
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #171717;
+    --foreground: #E9DFC9;
   }
 }
 
@@ -29,4 +46,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Helvetica Now Display Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   letter-spacing: -0.02em;
+}
+
+::selection {
+  background: var(--brand-orange);
+  color: var(--brand-cream);
+}
+
+/* Brand scrollbar */
+* {
+  scrollbar-color: var(--brand-orange-dark) var(--brand-black);
 }

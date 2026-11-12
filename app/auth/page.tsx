@@ -61,10 +61,10 @@ export default function LoginPage() {
   const pinDigits = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "delete"];
 
   return (
-    <main className="min-h-screen bg-[#030303] flex items-center justify-center p-4 relative overflow-hidden">
+    <main className="min-h-screen bg-[#171717] flex items-center justify-center p-4 relative overflow-hidden">
       <div className="fixed inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-red-600/10 rounded-full blur-[100px]" />
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#C65A24]/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#A34717]/10 rounded-full blur-[100px]" />
       </div>
 
       <motion.div
@@ -76,15 +76,15 @@ export default function LoginPage() {
         <div className="text-center mb-10">
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/25"
+            className="w-16 h-16 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#C65A24]/25"
           >
             <span className="text-2xl">🏀</span>
           </motion.div>
-          <h1 className="text-3xl font-black text-white">413 OPENCOURT</h1>
-          <p className="text-gray-400 text-sm mt-2">Enter your 4-digit PIN to access training</p>
+          <h1 className="text-3xl font-black text-[#E9DFC9]">413 OPENCOURT</h1>
+          <p className="text-[#E9DFC9]/70 text-sm mt-2">Enter your 4-digit PIN to access training</p>
         </div>
 
-        <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8 mb-6">
+        <div className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl p-8 mb-6">
           <div className="flex justify-center gap-4 mb-8">
             {[0, 1, 2, 3].map((i) => (
               <motion.div
@@ -95,8 +95,8 @@ export default function LoginPage() {
                 }}
                 className={`w-5 h-5 rounded-full border-2 transition-all ${
                   pin.length > i
-                    ? "bg-blue-500 border-blue-500 shadow-lg shadow-blue-500/50"
-                    : "border-white/20"
+                    ? "bg-[#C65A24] border-[#C65A24] shadow-lg shadow-[#C65A24]/50"
+                    : "border-[#E9DFC9]/20"
                 }`}
               />
             ))}
@@ -106,7 +106,7 @@ export default function LoginPage() {
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-red-400 text-sm text-center mb-4 bg-red-500/10 py-2 rounded-lg"
+              className="text-red-400 text-sm text-center mb-4 bg-[#C65A24]/10 py-2 rounded-lg"
             >
               {error}
             </motion.p>
@@ -114,7 +114,7 @@ export default function LoginPage() {
 
           {loading && (
             <div className="flex justify-center">
-              <svg className="animate-spin h-6 w-6 text-blue-400" viewBox="0 0 24 24">
+              <svg className="animate-spin h-6 w-6 text-[#E07B3C]" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
@@ -136,8 +136,8 @@ export default function LoginPage() {
                 digit === ""
                   ? "bg-transparent cursor-default"
                   : digit === "delete"
-                  ? "bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10"
-                  : "bg-white/[0.03] border border-white/[0.08] text-white hover:bg-white/[0.06]"
+                  ? "bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 text-[#E9DFC9]/70 hover:bg-[#E9DFC9]/10"
+                  : "bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06]"
               }`}
               disabled={digit === "" || loading}
             >
@@ -153,7 +153,7 @@ export default function LoginPage() {
         </div>
 
         <div className="text-center mt-8">
-          <a href="/" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+          <a href="/" className="text-sm text-[#E9DFC9]/55 hover:text-[#E9DFC9]/85 transition-colors">
             ← Back to home
           </a>
         </div>

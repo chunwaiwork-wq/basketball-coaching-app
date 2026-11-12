@@ -33,16 +33,16 @@ const navItems = [
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#030303] flex">
+    <div className="min-h-screen bg-[#171717] flex">
       {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-white/[0.02] border-r border-white/[0.05] p-6">
+      <aside className="hidden md:flex flex-col w-64 bg-[#E9DFC9]/[0.02] border-r border-[#E9DFC9]/[0.05] p-6">
         {/* Logo + Logout */}
         <div className="flex items-center justify-between mb-10">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-xl flex items-center justify-center">
               <span className="text-lg">🏀</span>
             </div>
-            <span className="text-lg font-bold text-white">413 OPENCOURT</span>
+            <span className="text-lg font-bold text-[#E9DFC9]">413 OPENCOURT</span>
           </Link>
           <button
             type="button"
@@ -52,7 +52,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               localStorage.removeItem("isCoach");
               window.location.href = "/";
             }}
-            className="text-sm px-3 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 hover:text-red-200 border border-red-500/30 rounded-lg font-semibold tracking-wide transition-all"
+            className="text-sm px-3 py-1.5 bg-red-600/20 text-red-300 hover:bg-[#A34717]/30 hover:text-red-200 border border-red-500/30 rounded-lg font-semibold tracking-wide transition-all"
           >
             ✕ Log out
           </button>
@@ -62,8 +62,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <nav className="space-y-2">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href}>
-              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/[0.05] transition-all cursor-pointer group">
-                <span className="group-hover:text-blue-400 transition-colors">{item.icon}</span>
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#E9DFC9]/70 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.05] transition-all cursor-pointer group">
+                <span className="group-hover:text-[#E07B3C] transition-colors">{item.icon}</span>
                 <span className="text-sm font-medium">{item.label}</span>
               </div>
             </Link>
@@ -71,8 +71,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         {/* Bottom */}
-        <div className="mt-auto pt-6 border-t border-white/[0.05]">
-          <Link href="/" className="flex items-center gap-2 text-gray-500 hover:text-gray-300 text-sm transition-colors">
+        <div className="mt-auto pt-6 border-t border-[#E9DFC9]/[0.05]">
+          <Link href="/" className="flex items-center gap-2 text-[#E9DFC9]/55 hover:text-[#E9DFC9]/85 text-sm transition-colors">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -82,11 +82,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Mobile Header + Nav */}
-      <div className="md:hidden fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
+      <div className="md:hidden fixed top-0 w-full z-50 bg-[#171717]/80 backdrop-blur-xl border-b border-[#E9DFC9]/5">
         <div className="flex items-center justify-between px-4 py-3">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl">🏀</span>
-            <span className="font-bold text-white">413 OPENCOURT</span>
+            <span className="font-bold text-[#E9DFC9]">413 OPENCOURT</span>
           </Link>
           <button
             type="button"
@@ -96,7 +96,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               localStorage.removeItem("isCoach");
               window.location.href = "/";
             }}
-            className="text-xs px-2.5 py-1.5 bg-red-600/20 text-red-300 hover:bg-red-600/30 border border-red-500/30 rounded-lg font-semibold transition-all"
+            className="text-xs px-2.5 py-1.5 bg-red-600/20 text-red-300 hover:bg-[#A34717]/30 border border-red-500/30 rounded-lg font-semibold transition-all"
           >
             ✕ Log out
           </button>
@@ -104,7 +104,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex gap-1 px-3 pb-2 overflow-x-auto scrollbar-none">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href}>
-              <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all text-xs font-medium whitespace-nowrap">
+              <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-[#E9DFC9]/70 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.08] transition-all text-xs font-medium whitespace-nowrap">
                 <span className="shrink-0">{item.icon}</span>
                 {item.label}
               </div>

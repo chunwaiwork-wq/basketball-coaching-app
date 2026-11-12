@@ -80,27 +80,27 @@ export default function SignupPage() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all";
+    "w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/55 focus:outline-none focus:border-[#C65A24] focus:ring-1 focus:ring-[#C65A24]/50 transition-all";
 
   return (
-    <main className="min-h-screen bg-[#030303] flex overflow-hidden relative">
+    <main className="min-h-screen bg-[#171717] flex overflow-hidden relative">
       {/* Background glow */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
-        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]" />
+        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-[#C65A24]/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#C65A24]/10 rounded-full blur-[100px]" />
       </div>
 
       {/* Left — value props */}
-      <div className="hidden lg:flex flex-1 flex-col justify-center px-16 py-16 border-r border-white/[0.06]">
+      <div className="hidden lg:flex flex-1 flex-col justify-center px-16 py-16 border-r border-[#E9DFC9]/[0.06]">
         <Link href="/" className="flex items-center gap-2 mb-12">
           <img src="/413opencourt_logo_white.png" alt="413 OpenCourt logo" className="h-9 w-auto object-contain" />
-          <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <span className="text-xl font-bold tracking-wider bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/85 bg-clip-text text-transparent">
             413OPENCOURT
           </span>
         </Link>
 
-        <h1 className="text-4xl font-black text-white mb-4">Create your account</h1>
-        <p className="text-gray-400 text-lg max-w-md leading-relaxed mb-10">
+        <h1 className="text-4xl font-black text-[#E9DFC9] mb-4">Create your account</h1>
+        <p className="text-[#E9DFC9]/70 text-lg max-w-md leading-relaxed mb-10">
           Fill in your details once — then access your training videos, sessions and progress in one place.
         </p>
 
@@ -119,14 +119,14 @@ export default function SignupPage() {
             >
               <span className="text-2xl">{item.icon}</span>
               <div>
-                <p className="text-white font-semibold">{item.title}</p>
-                <p className="text-gray-500 text-sm">{item.desc}</p>
+                <p className="text-[#E9DFC9] font-semibold">{item.title}</p>
+                <p className="text-[#E9DFC9]/55 text-sm">{item.desc}</p>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <p className="text-gray-600 text-sm mt-12">© 2026 413OPENCOURT. All rights reserved.</p>
+        <p className="text-[#E9DFC9]/40 text-sm mt-12">© 2026 413OPENCOURT. All rights reserved.</p>
       </div>
 
       {/* Right — signup form */}
@@ -137,18 +137,18 @@ export default function SignupPage() {
           className="w-full max-w-md"
         >
           <div className="lg:hidden text-center mb-8">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/25">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#C65A24]/25">
               <span className="text-2xl">🏀</span>
             </div>
-            <h1 className="text-2xl font-black text-white">413 OPENCOURT</h1>
+            <h1 className="text-2xl font-black text-[#E9DFC9]">413 OPENCOURT</h1>
           </div>
 
-          <h2 className="text-3xl font-bold text-white mb-2">Create an account</h2>
-          <p className="text-gray-400 mb-8">Enter your details to get started</p>
+          <h2 className="text-3xl font-bold text-[#E9DFC9] mb-2">Create an account</h2>
+          <p className="text-[#E9DFC9]/70 mb-8">Enter your details to get started</p>
 
           <form onSubmit={handleSignup} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Full name</label>
+              <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">Full name</label>
               <input
                 type="text"
                 value={name}
@@ -161,7 +161,7 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+              <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">Email</label>
               <input
                 type="email"
                 value={email}
@@ -174,8 +174,8 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                WhatsApp number <span className="text-gray-600">(optional)</span>
+              <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">
+                WhatsApp number <span className="text-[#E9DFC9]/40">(optional)</span>
               </label>
               <input
                 type="tel"
@@ -188,7 +188,7 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+              <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -203,7 +203,7 @@ export default function SignupPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 text-xs font-semibold"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#E9DFC9]/55 hover:text-[#E9DFC9]/85 text-xs font-semibold"
                 >
                   {showPassword ? "HIDE" : "SHOW"}
                 </button>
@@ -211,7 +211,7 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Confirm password</label>
+              <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">Confirm password</label>
               <input
                 type={showPassword ? "text" : "password"}
                 value={confirm}
@@ -242,7 +242,7 @@ export default function SignupPage() {
               whileTap={{ scale: 0.99 }}
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-bold text-base hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-600/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] text-[#E9DFC9] rounded-xl font-bold text-base hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#C65A24]/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -255,15 +255,15 @@ export default function SignupPage() {
             </motion.button>
           </form>
 
-          <p className="text-center mt-6 text-sm text-gray-500">
+          <p className="text-center mt-6 text-sm text-[#E9DFC9]/55">
             Already have an account?{" "}
-            <Link href="/auth/login" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+            <Link href="/auth/login" className="text-[#E07B3C] hover:text-[#E07B3C] font-medium transition-colors">
               Sign in
             </Link>
           </p>
 
           <div className="text-center mt-6">
-            <Link href="/" className="text-sm text-gray-600 hover:text-gray-400 transition-colors">
+            <Link href="/" className="text-sm text-[#E9DFC9]/40 hover:text-[#E9DFC9]/70 transition-colors">
               ← Back to home
             </Link>
           </div>

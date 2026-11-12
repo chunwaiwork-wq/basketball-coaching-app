@@ -385,8 +385,8 @@ export default function CoachAdminPage() {
 
   if (checking) {
     return (
-      <main className="min-h-screen bg-[#030303] flex items-center justify-center">
-        <svg className="animate-spin h-8 w-8 text-blue-400" viewBox="0 0 24 24">
+      <main className="min-h-screen bg-[#171717] flex items-center justify-center">
+        <svg className="animate-spin h-8 w-8 text-[#E07B3C]" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
@@ -396,18 +396,18 @@ export default function CoachAdminPage() {
 
   if (!authed) {
     return (
-      <main className="min-h-screen bg-[#030303] flex items-center justify-center p-4">
+      <main className="min-h-screen bg-[#171717] flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-sm bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-8"
+          className="w-full max-w-sm bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl p-8"
         >
           <div className="text-center mb-6">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/25">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#C65A24]/25">
               <span className="text-2xl">👑</span>
             </div>
-            <h1 className="text-2xl font-black text-white">Coach Admin</h1>
-            <p className="text-gray-400 text-sm mt-1">Enter your coach PIN to manage the academy</p>
+            <h1 className="text-2xl font-black text-[#E9DFC9]">Coach Admin</h1>
+            <p className="text-[#E9DFC9]/70 text-sm mt-1">Enter your coach PIN to manage the academy</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
@@ -417,19 +417,19 @@ export default function CoachAdminPage() {
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
               placeholder="••••"
-              className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white text-center text-2xl tracking-[0.5em] placeholder-gray-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all"
+              className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] text-center text-2xl tracking-[0.5em] placeholder-[#E9DFC9]/40 focus:outline-none focus:border-[#C65A24] focus:ring-1 focus:ring-[#C65A24]/50 transition-all"
               required
             />
             {error && <p className="text-red-400 text-sm text-center">{error}</p>}
             <button
               type="submit"
               disabled={pin.length !== 4}
-              className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-bold text-base hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-600/25 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3.5 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] text-[#E9DFC9] rounded-xl font-bold text-base hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#C65A24]/25 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Access Admin Panel
             </button>
           </form>
-          <a href="/dashboard/videos" className="block text-center text-sm text-gray-500 hover:text-gray-300 mt-6 transition-colors">
+          <a href="/dashboard/videos" className="block text-center text-sm text-[#E9DFC9]/55 hover:text-[#E9DFC9]/85 mt-6 transition-colors">
             ← Back to dashboard
           </a>
         </motion.div>
@@ -456,27 +456,27 @@ export default function CoachAdminPage() {
   const fmtDate = (iso: string) => new Date(iso).toLocaleString("en-SG", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
   return (
-    <main className="min-h-screen bg-[#030303] p-6 md:p-10 relative overflow-hidden">
+    <main className="min-h-screen bg-[#171717] p-6 md:p-10 relative overflow-hidden">
       <div className="fixed inset-0 -z-10">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[100px]" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#C65A24]/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#C65A24]/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <p className="text-gray-400 text-sm mb-1">Welcome back, Coach</p>
-            <h1 className="text-4xl font-black text-white">
+            <p className="text-[#E9DFC9]/70 text-sm mb-1">Welcome back, Coach</p>
+            <h1 className="text-4xl font-black text-[#E9DFC9]">
               COACH{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#E07B3C] to-[#E9DFC9] bg-clip-text text-transparent">
                 ADMIN PANEL
               </span>
             </h1>
-            <p className="text-gray-400 mt-1">Manage students, videos, and bookings in one place</p>
+            <p className="text-[#E9DFC9]/70 mt-1">Manage students, videos, and bookings in one place</p>
           </motion.div>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-600/20 text-red-300 hover:bg-red-600/30 border border-red-500/30 rounded-xl text-sm font-semibold transition-all w-fit"
+            className="px-4 py-2 bg-red-600/20 text-red-300 hover:bg-[#A34717]/30 border border-red-500/30 rounded-xl text-sm font-semibold transition-all w-fit"
           >
             ✕ Log out
           </button>
@@ -495,11 +495,11 @@ export default function CoachAdminPage() {
               key={s.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5 text-center"
+              className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-5 text-center"
             >
               <div className="text-2xl mb-1">{s.icon}</div>
-              <div className="text-3xl font-black text-white">{s.value}</div>
-              <div className="text-gray-500 text-xs mt-1 uppercase tracking-wider">{s.label}</div>
+              <div className="text-3xl font-black text-[#E9DFC9]">{s.value}</div>
+              <div className="text-[#E9DFC9]/55 text-xs mt-1 uppercase tracking-wider">{s.label}</div>
             </motion.div>
           ))}
         </div>
@@ -512,8 +512,8 @@ export default function CoachAdminPage() {
               onClick={() => setTab(t.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all ${
                 tab === t.id
-                  ? "bg-white text-black shadow-lg"
-                  : "bg-white/5 text-gray-400 hover:text-white border border-white/10"
+                  ? "bg-[#E9DFC9] text-[#171717] shadow-lg"
+                  : "bg-[#E9DFC9]/5 text-[#E9DFC9]/70 hover:text-[#E9DFC9] border border-[#E9DFC9]/10"
               }`}
             >
               <span>{t.icon}</span>
@@ -524,7 +524,7 @@ export default function CoachAdminPage() {
 
         {loading && (
           <div className="flex justify-center py-20">
-            <svg className="animate-spin h-8 w-8 text-blue-400" viewBox="0 0 24 24">
+            <svg className="animate-spin h-8 w-8 text-[#E07B3C]" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
@@ -533,25 +533,25 @@ export default function CoachAdminPage() {
 
         {!loading && tab === "overview" && (
           <div className="space-y-6">
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
-              <h2 className="text-lg font-bold text-white mb-4">👥 Students</h2>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-6">
+              <h2 className="text-lg font-bold text-[#E9DFC9] mb-4">👥 Students</h2>
               <div className="flex flex-wrap gap-2">
                 {students.map((s) => (
                   <button
                     key={s.id}
                     onClick={() => handlePickStudent(s.id)}
-                    className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-gray-200 hover:bg-blue-600/20 hover:border-blue-500/40 transition-all cursor-pointer"
+                    className="px-4 py-2 bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 rounded-full text-sm text-[#E9DFC9]/90 hover:bg-[#C65A24]/20 hover:border-[#C65A24]/40 transition-all cursor-pointer"
                     title={`Add video for ${s.name}`}
                   >
-                    {s.name} <span className="text-gray-500">· {s._count?.videos ?? 0} videos</span>
+                    {s.name} <span className="text-[#E9DFC9]/55">· {s._count?.videos ?? 0} videos</span>
                   </button>
                 ))}
               </div>
             </div>
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
-              <h2 className="text-lg font-bold text-white mb-2">📋 Quick Actions</h2>
-              <p className="text-gray-400 text-sm mb-4">Use the tabs above to manage content.</p>
-              <button onClick={() => setTab("videos")} className="px-5 py-2.5 bg-blue-600/20 text-blue-300 border border-blue-500/30 rounded-xl text-sm font-semibold hover:bg-blue-600/30 transition-all">
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-6">
+              <h2 className="text-lg font-bold text-[#E9DFC9] mb-2">📋 Quick Actions</h2>
+              <p className="text-[#E9DFC9]/70 text-sm mb-4">Use the tabs above to manage content.</p>
+              <button onClick={() => setTab("videos")} className="px-5 py-2.5 bg-[#C65A24]/20 text-[#E07B3C] border border-[#C65A24]/30 rounded-xl text-sm font-semibold hover:bg-[#C65A24]/30 transition-all">
                 ➕ Add a Training Video
               </button>
             </div>
@@ -559,14 +559,14 @@ export default function CoachAdminPage() {
         )}
 
         {!loading && tab === "students" && (
-          <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-white/[0.06]">
-              <h2 className="text-lg font-bold text-white">All Students</h2>
+          <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-[#E9DFC9]/[0.06]">
+              <h2 className="text-lg font-bold text-[#E9DFC9]">All Students</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-left text-gray-500 text-xs uppercase tracking-wider">
+                  <tr className="text-left text-[#E9DFC9]/55 text-xs uppercase tracking-wider">
                     <th className="px-6 py-3">ID</th>
                     <th className="px-6 py-3">Name</th>
                     <th className="px-6 py-3">PIN</th>
@@ -575,18 +575,18 @@ export default function CoachAdminPage() {
                     <th className="px-6 py-3"></th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.04]">
+                <tbody className="divide-y divide-[#E9DFC9]/[0.04]">
                   {students.map((s) => (
-                    <tr key={s.id} className="hover:bg-white/[0.02]">
-                      <td className="px-6 py-3 text-gray-500">{s.id}</td>
-                      <td className="px-6 py-3 text-white font-semibold">{s.name}</td>
-                      <td className="px-6 py-3 text-gray-400 font-mono">{s.pin}</td>
-                      <td className="px-6 py-3 text-gray-300">{s._count?.videos ?? 0}</td>
-                      <td className="px-6 py-3 text-gray-300">{s._count?.bookings ?? 0}</td>
+                    <tr key={s.id} className="hover:bg-[#E9DFC9]/[0.02]">
+                      <td className="px-6 py-3 text-[#E9DFC9]/55">{s.id}</td>
+                      <td className="px-6 py-3 text-[#E9DFC9] font-semibold">{s.name}</td>
+                      <td className="px-6 py-3 text-[#E9DFC9]/70 font-mono">{s.pin}</td>
+                      <td className="px-6 py-3 text-[#E9DFC9]/85">{s._count?.videos ?? 0}</td>
+                      <td className="px-6 py-3 text-[#E9DFC9]/85">{s._count?.bookings ?? 0}</td>
                       <td className="px-6 py-3 text-right">
                         <button
                           onClick={() => handlePickStudent(s.id)}
-                          className="text-xs px-3 py-1.5 bg-blue-600/20 border border-blue-500/30 rounded-lg text-blue-300 hover:bg-blue-600/30 transition-all whitespace-nowrap"
+                          className="text-xs px-3 py-1.5 bg-[#C65A24]/20 border border-[#C65A24]/30 rounded-lg text-[#E07B3C] hover:bg-[#C65A24]/30 transition-all whitespace-nowrap"
                         >
                           ➕ Add video
                         </button>
@@ -602,79 +602,79 @@ export default function CoachAdminPage() {
         {!loading && tab === "videos" && (
           <div className="space-y-8">
             {/* Add Video Form */}
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
-              <h2 className="text-lg font-bold text-white mb-4">➕ Add Video</h2>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-6">
+              <h2 className="text-lg font-bold text-[#E9DFC9] mb-4">➕ Add Video</h2>
               <form onSubmit={handleAddVideo} className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">Student</label>
+                  <label className="block text-sm text-[#E9DFC9]/70 mb-1.5">Student</label>
                   <select
                     value={addStudentId}
                     onChange={(e) => setAddStudentId(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
+                    className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] focus:outline-none focus:border-[#C65A24] transition-all"
                   >
                     <option value="">Select student…</option>
                     {students.map((s) => (
-                      <option key={s.id} value={s.id} className="bg-[#0a0a1a]">{s.name}</option>
+                      <option key={s.id} value={s.id} className="bg-[#171717]">{s.name}</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">Category</label>
+                  <label className="block text-sm text-[#E9DFC9]/70 mb-1.5">Category</label>
                   <select
                     value={addCategory}
                     onChange={(e) => setAddCategory(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
+                    className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] focus:outline-none focus:border-[#C65A24] transition-all"
                   >
-                    <option value="PAST" className="bg-[#0a0a1a]">📼 Past Training Video</option>
-                    <option value="DRIBBLING" className="bg-[#0a0a1a]">🏀 Dribbling</option>
-                    <option value="SHOOTING" className="bg-[#0a0a1a]">🎯 Shooting</option>
-                    <option value="PLAYS" className="bg-[#0a0a1a]">📋 Plays</option>
-                    <option value="SKILLSETS" className="bg-[#0a0a1a]">⚡ Skillsets</option>
+                    <option value="PAST" className="bg-[#171717]">📼 Past Training Video</option>
+                    <option value="DRIBBLING" className="bg-[#171717]">🏀 Dribbling</option>
+                    <option value="SHOOTING" className="bg-[#171717]">🎯 Shooting</option>
+                    <option value="PLAYS" className="bg-[#171717]">📋 Plays</option>
+                    <option value="SKILLSETS" className="bg-[#171717]">⚡ Skillsets</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">Title</label>
+                  <label className="block text-sm text-[#E9DFC9]/70 mb-1.5">Title</label>
                   <input
                     type="text"
                     value={addTitle}
                     onChange={(e) => setAddTitle(e.target.value)}
                     placeholder="e.g. Session on 010826"
-                    className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+                    className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/40 focus:outline-none focus:border-[#C65A24] transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">YouTube URL or Video ID</label>
+                  <label className="block text-sm text-[#E9DFC9]/70 mb-1.5">YouTube URL or Video ID</label>
                   <input
                     type="text"
                     value={addUrl}
                     onChange={(e) => setAddUrl(e.target.value)}
                     placeholder="https://youtube.com/shorts/VIDEOID or VIDEOID"
-                    className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+                    className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/40 focus:outline-none focus:border-[#C65A24] transition-all"
                   />
                 </div>
                 <div className="md:col-span-2">
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-bold text-sm hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-600/25"
+                    className="px-6 py-3 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] text-[#E9DFC9] rounded-xl font-bold text-sm hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#C65A24]/25"
                   >
                     ➕ Add Video
                   </button>
                   {addMsg && (
-                    <p className={`mt-3 text-sm ${addMsg.ok ? "text-green-400" : "text-red-400"}`}>{addMsg.text}</p>
+                    <p className={`mt-3 text-sm ${addMsg.ok ? "text-[#E07B3C]" : "text-[#E07B3C]"}`}>{addMsg.text}</p>
                   )}
                 </div>
               </form>
             </div>
 
             {/* Video List */}
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/[0.06] flex items-center justify-between">
-                <h2 className="text-lg font-bold text-white">All Videos ({videos.length})</h2>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#E9DFC9]/[0.06] flex items-center justify-between">
+                <h2 className="text-lg font-bold text-[#E9DFC9]">All Videos ({videos.length})</h2>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-gray-500 text-xs uppercase tracking-wider">
+                    <tr className="text-left text-[#E9DFC9]/55 text-xs uppercase tracking-wider">
                       <th className="px-6 py-3">Title</th>
                       <th className="px-6 py-3">Student</th>
                       <th className="px-6 py-3">Category</th>
@@ -683,26 +683,26 @@ export default function CoachAdminPage() {
                       <th className="px-6 py-3"></th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/[0.04]">
+                  <tbody className="divide-y divide-[#E9DFC9]/[0.04]">
                     {videos.map((v) => (
-                      <tr key={v.id} className="hover:bg-white/[0.02]">
-                        <td className="px-6 py-3 text-white font-semibold">{v.title}</td>
-                        <td className="px-6 py-3 text-gray-300">{v.student?.name ?? "—"}</td>
+                      <tr key={v.id} className="hover:bg-[#E9DFC9]/[0.02]">
+                        <td className="px-6 py-3 text-[#E9DFC9] font-semibold">{v.title}</td>
+                        <td className="px-6 py-3 text-[#E9DFC9]/85">{v.student?.name ?? "—"}</td>
                         <td className="px-6 py-3">
-                          <span className="px-2 py-0.5 rounded-full text-xs bg-white/5 border border-white/10 text-gray-300">{v.category}</span>
+                          <span className="px-2 py-0.5 rounded-full text-xs bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 text-[#E9DFC9]/85">{v.category}</span>
                         </td>
-                        <td className="px-6 py-3 text-gray-400 font-mono text-xs">{v.url}</td>
-                        <td className="px-6 py-3 text-gray-500 text-xs">{new Date(v.createdAt).toLocaleDateString("en-SG")}</td>
+                        <td className="px-6 py-3 text-[#E9DFC9]/70 font-mono text-xs">{v.url}</td>
+                        <td className="px-6 py-3 text-[#E9DFC9]/55 text-xs">{new Date(v.createdAt).toLocaleDateString("en-SG")}</td>
                         <td className="px-6 py-3 text-right">
                           <button
                             onClick={() => window.open(`https://www.youtube.com/watch?v=${v.url}`, "_blank")}
-                            className="text-xs px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-gray-300 hover:bg-white/10 mr-2 transition-all"
+                            className="text-xs px-3 py-1.5 bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 rounded-lg text-[#E9DFC9]/85 hover:bg-[#E9DFC9]/10 mr-2 transition-all"
                           >
                             ▶ Watch
                           </button>
                           <button
                             onClick={() => handleDeleteVideo(v.id)}
-                            className="text-xs px-3 py-1.5 bg-red-600/20 border border-red-500/30 rounded-lg text-red-300 hover:bg-red-600/30 transition-all"
+                            className="text-xs px-3 py-1.5 bg-red-600/20 border border-red-500/30 rounded-lg text-red-300 hover:bg-[#A34717]/30 transition-all"
                           >
                             ✕ Delete
                           </button>
@@ -711,7 +711,7 @@ export default function CoachAdminPage() {
                     ))}
                     {videos.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="px-6 py-10 text-center text-gray-500">No videos yet.</td>
+                        <td colSpan={6} className="px-6 py-10 text-center text-[#E9DFC9]/55">No videos yet.</td>
                       </tr>
                     )}
                   </tbody>
@@ -724,18 +724,18 @@ export default function CoachAdminPage() {
         {!loading && tab === "sessions" && (
           <div className="space-y-8">
             {/* Clock In / Clock Out */}
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
-              <h2 className="text-lg font-bold text-white mb-1">⏱️ Clock In / Clock Out</h2>
-              <p className="text-gray-500 text-sm mb-4">Select a student, then clock them in when the session starts and out when it ends.</p>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-6">
+              <h2 className="text-lg font-bold text-[#E9DFC9] mb-1">⏱️ Clock In / Clock Out</h2>
+              <p className="text-[#E9DFC9]/55 text-sm mb-4">Select a student, then clock them in when the session starts and out when it ends.</p>
               <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
                 <select
                   value={clockStudentId}
                   onChange={(e) => { setClockStudentId(e.target.value); setSessionMsg(null); }}
-                  className="flex-1 px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
+                  className="flex-1 px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] focus:outline-none focus:border-[#C65A24] transition-all"
                 >
                   <option value="">Select student…</option>
                   {students.map((s) => (
-                    <option key={s.id} value={s.id} className="bg-[#0a0a1a]">
+                    <option key={s.id} value={s.id} className="bg-[#171717]">
                       {s.name}
                       {sessions.find((x) => x.studentId === s.id && x.status === "active") ? " — 🔴 clocked in" : ""}
                     </option>
@@ -743,32 +743,32 @@ export default function CoachAdminPage() {
                 </select>
                 <button
                   onClick={() => handleClock("in")}
-                  className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-xl font-bold text-sm hover:from-green-500 hover:to-green-400 transition-all shadow-lg shadow-green-600/25 whitespace-nowrap"
+                  className="px-6 py-3 bg-gradient-to-r from-[#A34717] to-[#C65A24] text-[#E9DFC9] rounded-xl font-bold text-sm hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#A34717]/25 whitespace-nowrap"
                 >
                   🟢 Clock In
                 </button>
                 <button
                   onClick={() => handleClock("out")}
-                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl font-bold text-sm hover:from-red-500 hover:to-red-400 transition-all shadow-lg shadow-red-600/25 whitespace-nowrap"
+                  className="px-6 py-3 bg-gradient-to-r from-[#A34717] to-[#C65A24] text-[#E9DFC9] rounded-xl font-bold text-sm hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#A34717]/25 whitespace-nowrap"
                 >
                   🔴 Clock Out
                 </button>
               </div>
               {sessionMsg && (
-                <p className={`mt-3 text-sm ${sessionMsg.ok ? "text-green-400" : "text-red-400"}`}>{sessionMsg.text}</p>
+                <p className={`mt-3 text-sm ${sessionMsg.ok ? "text-[#E07B3C]" : "text-[#E07B3C]"}`}>{sessionMsg.text}</p>
               )}
 
               {/* Active sessions live */}
               {sessions.some((s) => s.status === "active") && (
                 <div className="mt-5 space-y-2">
-                  <p className="text-xs text-gray-500 uppercase tracking-wider">Currently in session</p>
+                  <p className="text-xs text-[#E9DFC9]/55 uppercase tracking-wider">Currently in session</p>
                   {sessions.filter((s) => s.status === "active").map((s) => {
                     const elapsed = Math.max(0, Math.floor((now - new Date(s.clockIn).getTime()) / 60000));
                     return (
-                      <div key={s.id} className="flex items-center justify-between bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3">
-                        <span className="text-white font-semibold">{s.student.name}</span>
-                        <span className="text-green-400 font-mono text-sm flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                      <div key={s.id} className="flex items-center justify-between bg-[#C65A24]/10 border border-[#C65A24]/30 rounded-xl px-4 py-3">
+                        <span className="text-[#E9DFC9] font-semibold">{s.student.name}</span>
+                        <span className="text-[#E07B3C] font-mono text-sm flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-[#E07B3C] animate-pulse" />
                           {Math.floor(elapsed / 60)}h {elapsed % 60}m in session
                         </span>
                       </div>
@@ -779,15 +779,15 @@ export default function CoachAdminPage() {
             </div>
 
             {/* Attendance per student */}
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/[0.06]">
-                <h2 className="text-lg font-bold text-white">📈 Attendance</h2>
-                <p className="text-gray-500 text-sm mt-0.5">Set each student&apos;s package (4, 8, 10 or 12 sessions) and see how many they&apos;ve attended.</p>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#E9DFC9]/[0.06]">
+                <h2 className="text-lg font-bold text-[#E9DFC9]">📈 Attendance</h2>
+                <p className="text-[#E9DFC9]/55 text-sm mt-0.5">Set each student&apos;s package (4, 8, 10 or 12 sessions) and see how many they&apos;ve attended.</p>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-gray-500 text-xs uppercase tracking-wider">
+                    <tr className="text-left text-[#E9DFC9]/55 text-xs uppercase tracking-wider">
                       <th className="px-6 py-3">Student</th>
                       <th className="px-6 py-3">Package</th>
                       <th className="px-6 py-3">Attended</th>
@@ -796,7 +796,7 @@ export default function CoachAdminPage() {
                       <th className="px-6 py-3">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/[0.04]">
+                  <tbody className="divide-y divide-[#E9DFC9]/[0.04]">
                     {students.map((s) => {
                       const attended = sessions.filter((x) => x.studentId === s.id && x.status === "completed").length;
                       const archived = sessions.filter((x) => x.studentId === s.id && x.status === "archived").length;
@@ -804,37 +804,37 @@ export default function CoachAdminPage() {
                       const remaining = pkg ? Math.max(0, pkg - attended) : null;
                       const pct = pkg ? Math.min(100, Math.round((attended / pkg) * 100)) : 0;
                       return (
-                        <tr key={s.id} className="hover:bg-white/[0.02]">
-                          <td className="px-6 py-3 text-white font-semibold">{s.name}</td>
+                        <tr key={s.id} className="hover:bg-[#E9DFC9]/[0.02]">
+                          <td className="px-6 py-3 text-[#E9DFC9] font-semibold">{s.name}</td>
                           <td className="px-6 py-3">
                             <select
                               value={pkg ?? ""}
                               onChange={(e) => handleSetPackage(s.id, e.target.value === "" ? null : parseInt(e.target.value))}
-                              className="px-2 py-1.5 bg-white/[0.03] border border-white/[0.08] rounded-lg text-gray-300 focus:outline-none focus:border-blue-500 text-xs"
+                              className="px-2 py-1.5 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-lg text-[#E9DFC9]/85 focus:outline-none focus:border-[#C65A24] text-xs"
                             >
-                              <option value="" className="bg-[#0a0a1a]">Not set</option>
-                              <option value={4} className="bg-[#0a0a1a]">4 sessions</option>
-                              <option value={8} className="bg-[#0a0a1a]">8 sessions</option>
-                              <option value={10} className="bg-[#0a0a1a]">10 sessions</option>
-                              <option value={12} className="bg-[#0a0a1a]">12 sessions</option>
+                              <option value="" className="bg-[#171717]">Not set</option>
+                              <option value={4} className="bg-[#171717]">4 sessions</option>
+                              <option value={8} className="bg-[#171717]">8 sessions</option>
+                              <option value={10} className="bg-[#171717]">10 sessions</option>
+                              <option value={12} className="bg-[#171717]">12 sessions</option>
                             </select>
                           </td>
-                          <td className="px-6 py-3 text-gray-300">
+                          <td className="px-6 py-3 text-[#E9DFC9]/85">
                             {attended}
-                            {pkg !== null && <span className="text-gray-600"> / {pkg}</span>}
+                            {pkg !== null && <span className="text-[#E9DFC9]/40"> / {pkg}</span>}
                           </td>
                           <td className="px-6 py-3">
                             {remaining !== null ? (
-                              <span className={remaining === 0 ? "text-red-400 font-bold" : "text-gray-300"}>{remaining} left</span>
+                              <span className={remaining === 0 ? "text-[#E07B3C] font-bold" : "text-[#E9DFC9]/85"}>{remaining} left</span>
                             ) : (
-                              <span className="text-gray-600">—</span>
+                              <span className="text-[#E9DFC9]/40">—</span>
                             )}
                           </td>
                           <td className="px-6 py-3">
                             {pkg !== null && (
-                              <div className="w-28 h-2 bg-white/10 rounded-full overflow-hidden">
+                              <div className="w-28 h-2 bg-[#E9DFC9]/10 rounded-full overflow-hidden">
                                 <div
-                                  className={`h-full rounded-full ${remaining === 0 ? "bg-red-500" : "bg-green-500"}`}
+                                  className={`h-full rounded-full ${remaining === 0 ? "bg-[#C65A24]" : "bg-[#C65A24]"}`}
                                   style={{ width: `${pct}%` }}
                                 />
                               </div>
@@ -852,8 +852,8 @@ export default function CoachAdminPage() {
                                 }
                                 className={`text-xs px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap ${
                                   attended === 0
-                                    ? "bg-white/[0.03] border-white/[0.08] text-gray-600 cursor-not-allowed"
-                                    : "bg-blue-600/20 border-blue-500/30 text-blue-300 hover:bg-blue-600/30"
+                                    ? "bg-[#E9DFC9]/[0.03] border-[#E9DFC9]/[0.08] text-[#E9DFC9]/40 cursor-not-allowed"
+                                    : "bg-[#C65A24]/20 border-[#C65A24]/30 text-[#E07B3C] hover:bg-[#C65A24]/30"
                                 }`}
                               >
                                 🔄 Reset
@@ -862,7 +862,7 @@ export default function CoachAdminPage() {
                                 <button
                                   onClick={() => handleUndoReset(s.id, s.name)}
                                   title={`Undo reset — restore ${archived} archived session${archived === 1 ? "" : "s"}`}
-                                  className="text-xs px-2.5 py-1.5 rounded-lg border bg-white/[0.03] border-white/[0.08] text-gray-300 hover:bg-white/[0.08] transition-all whitespace-nowrap"
+                                  className="text-xs px-2.5 py-1.5 rounded-lg border bg-[#E9DFC9]/[0.03] border-[#E9DFC9]/[0.08] text-[#E9DFC9]/85 hover:bg-[#E9DFC9]/[0.08] transition-all whitespace-nowrap"
                                 >
                                   ↩️ Undo
                                 </button>
@@ -874,7 +874,7 @@ export default function CoachAdminPage() {
                     })}
                     {students.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="px-6 py-10 text-center text-gray-500">No students yet.</td>
+                        <td colSpan={6} className="px-6 py-10 text-center text-[#E9DFC9]/55">No students yet.</td>
                       </tr>
                     )}
                   </tbody>
@@ -883,14 +883,14 @@ export default function CoachAdminPage() {
             </div>
 
             {/* Session history */}
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/[0.06]">
-                <h2 className="text-lg font-bold text-white">🕐 Session History ({sessions.filter((s) => s.status !== "active").length})</h2>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#E9DFC9]/[0.06]">
+                <h2 className="text-lg font-bold text-[#E9DFC9]">🕐 Session History ({sessions.filter((s) => s.status !== "active").length})</h2>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-gray-500 text-xs uppercase tracking-wider">
+                    <tr className="text-left text-[#E9DFC9]/55 text-xs uppercase tracking-wider">
                       <th className="px-6 py-3">Student</th>
                       <th className="px-6 py-3">Clocked In</th>
                       <th className="px-6 py-3">Clocked Out</th>
@@ -899,20 +899,20 @@ export default function CoachAdminPage() {
                       <th className="px-6 py-3"></th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/[0.04]">
+                  <tbody className="divide-y divide-[#E9DFC9]/[0.04]">
                     {sessions.filter((s) => s.status !== "active").map((s) => {
                       const durMin = s.clockOut ? Math.max(1, Math.round((new Date(s.clockOut).getTime() - new Date(s.clockIn).getTime()) / 60000)) : 0;
                       return (
-                        <tr key={s.id} className="hover:bg-white/[0.02]">
-                          <td className="px-6 py-3 text-white font-semibold">{s.student.name}</td>
-                          <td className="px-6 py-3 text-gray-400">{new Date(s.clockIn).toLocaleString("en-SG", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}</td>
-                          <td className="px-6 py-3 text-gray-400">{s.clockOut ? new Date(s.clockOut).toLocaleString("en-SG", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "—"}</td>
-                          <td className="px-6 py-3 text-gray-300">{durMin} min</td>
+                        <tr key={s.id} className="hover:bg-[#E9DFC9]/[0.02]">
+                          <td className="px-6 py-3 text-[#E9DFC9] font-semibold">{s.student.name}</td>
+                          <td className="px-6 py-3 text-[#E9DFC9]/70">{new Date(s.clockIn).toLocaleString("en-SG", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}</td>
+                          <td className="px-6 py-3 text-[#E9DFC9]/70">{s.clockOut ? new Date(s.clockOut).toLocaleString("en-SG", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "—"}</td>
+                          <td className="px-6 py-3 text-[#E9DFC9]/85">{durMin} min</td>
                           <td className="px-6 py-3">
                             <span className={`px-2 py-0.5 rounded-full text-xs border ${
-                              s.status === "completed" ? "bg-green-500/20 text-green-400 border-green-500/30"
-                              : s.status === "archived" ? "bg-white/10 text-gray-400 border-white/20"
-                              : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+                              s.status === "completed" ? "bg-[#C65A24]/20 text-[#E07B3C] border-[#C65A24]/30"
+                              : s.status === "archived" ? "bg-[#E9DFC9]/10 text-[#E9DFC9]/70 border-[#E9DFC9]/20"
+                              : "bg-[#C65A24]/20 text-[#E9DFC9] border-[#C65A24]/30"
                             }`}>
                               {s.status === "archived" ? "archived · prev plan" : s.status}
                             </span>
@@ -920,7 +920,7 @@ export default function CoachAdminPage() {
                           <td className="px-6 py-3 text-right">
                             <button
                               onClick={() => handleDeleteSession(s.id)}
-                              className="text-xs px-3 py-1.5 bg-red-600/20 border border-red-500/30 rounded-lg text-red-300 hover:bg-red-600/30 transition-all"
+                              className="text-xs px-3 py-1.5 bg-red-600/20 border border-red-500/30 rounded-lg text-red-300 hover:bg-[#A34717]/30 transition-all"
                             >
                               ✕
                             </button>
@@ -930,7 +930,7 @@ export default function CoachAdminPage() {
                     })}
                     {sessions.filter((s) => s.status !== "active").length === 0 && (
                       <tr>
-                        <td colSpan={6} className="px-6 py-10 text-center text-gray-500">No sessions yet. Clock a student in to get started!</td>
+                        <td colSpan={6} className="px-6 py-10 text-center text-[#E9DFC9]/55">No sessions yet. Clock a student in to get started!</td>
                       </tr>
                     )}
                   </tbody>
@@ -945,36 +945,36 @@ export default function CoachAdminPage() {
             {/* Summary cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { label: "Total earned", value: revenueTotals?.allTime ?? 0, icon: "💰", accent: "from-green-500/20 to-green-600/5 border-green-500/25" },
-                { label: "This month", value: revenueTotals?.thisMonth ?? 0, icon: "📅", accent: "from-blue-500/20 to-blue-600/5 border-blue-500/25" },
-                { label: "This year", value: revenueTotals?.thisYear ?? 0, icon: "🎯", accent: "from-purple-500/20 to-purple-600/5 border-purple-500/25" },
-                { label: "Avg payment", value: revenueTotals?.avgPerPayment ?? 0, icon: "📊", accent: "from-yellow-500/20 to-yellow-600/5 border-yellow-500/25" },
+                { label: "Total earned", value: revenueTotals?.allTime ?? 0, icon: "💰", accent: "from-[#C65A24]/20 to-[#A34717]/5 border-[#C65A24]/25" },
+                { label: "This month", value: revenueTotals?.thisMonth ?? 0, icon: "📅", accent: "from-[#C65A24]/20 to-[#C65A24]/5 border-[#C65A24]/25" },
+                { label: "This year", value: revenueTotals?.thisYear ?? 0, icon: "🎯", accent: "from-[#E9DFC9]/20 to-[#C65A24]/5 border-[#E9DFC9]/25" },
+                { label: "Avg payment", value: revenueTotals?.avgPerPayment ?? 0, icon: "📊", accent: "from-[#C65A24]/20 to-[#E9DFC9]/5 border-[#C65A24]/25" },
               ].map((c) => (
                 <div key={c.label} className={`bg-gradient-to-br ${c.accent} border rounded-2xl p-5`}>
-                  <div className="flex items-center gap-2 text-gray-400 text-xs uppercase tracking-wider mb-2">
+                  <div className="flex items-center gap-2 text-[#E9DFC9]/70 text-xs uppercase tracking-wider mb-2">
                     <span className="text-base">{c.icon}</span>
                     {c.label}
                   </div>
-                  <p className="text-2xl lg:text-3xl font-black text-white">${c.value.toFixed(2)}</p>
+                  <p className="text-2xl lg:text-3xl font-black text-[#E9DFC9]">${c.value.toFixed(2)}</p>
                 </div>
               ))}
             </div>
 
             {/* Log a payment */}
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
-              <h2 className="text-lg font-bold text-white mb-1">💵 Log a payment</h2>
-              <p className="text-gray-500 text-sm mb-4">Record money received from a student — package renewals, drop-ins, anything.</p>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-6">
+              <h2 className="text-lg font-bold text-[#E9DFC9] mb-1">💵 Log a payment</h2>
+              <p className="text-[#E9DFC9]/55 text-sm mb-4">Record money received from a student — package renewals, drop-ins, anything.</p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-3">
                 <select
                   value={revStudentId}
                   onChange={(e) => { setRevStudentId(e.target.value); setRevMsg(null); }}
-                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
+                  className="px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] focus:outline-none focus:border-[#C65A24] transition-all"
                 >
-                  <option value="" className="bg-[#0a0a1a]">Student…</option>
-                  <option value="bulk" className="bg-[#0a0a1a]">📦 Bulk month total (no student)</option>
+                  <option value="" className="bg-[#171717]">Student…</option>
+                  <option value="bulk" className="bg-[#171717]">📦 Bulk month total (no student)</option>
                   {students.map((s) => (
-                    <option key={s.id} value={s.id} className="bg-[#0a0a1a]">{s.name}</option>
+                    <option key={s.id} value={s.id} className="bg-[#171717]">{s.name}</option>
                   ))}
                 </select>
 
@@ -985,7 +985,7 @@ export default function CoachAdminPage() {
                   value={revAmount}
                   onChange={(e) => setRevAmount(e.target.value)}
                   placeholder="Amount ($)"
-                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+                  className="px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/40 focus:outline-none focus:border-[#C65A24] transition-all"
                 />
 
                 <input
@@ -994,16 +994,16 @@ export default function CoachAdminPage() {
                   value={revSessions}
                   onChange={(e) => setRevSessions(e.target.value)}
                   placeholder="Sessions (opt)"
-                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+                  className="px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/40 focus:outline-none focus:border-[#C65A24] transition-all"
                 />
 
                 <select
                   value={revMethod}
                   onChange={(e) => setRevMethod(e.target.value)}
-                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all"
+                  className="px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] focus:outline-none focus:border-[#C65A24] transition-all"
                 >
                   {["PayNow", "Cash", "Bank Transfer", "Card", "Other"].map((m) => (
-                    <option key={m} value={m} className="bg-[#0a0a1a]">{m}</option>
+                    <option key={m} value={m} className="bg-[#171717]">{m}</option>
                   ))}
                 </select>
 
@@ -1012,12 +1012,12 @@ export default function CoachAdminPage() {
                   value={revDate}
                   onChange={(e) => setRevDate(e.target.value)}
                   title="Payment date (defaults to today)"
-                  className="px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-blue-500 transition-all [color-scheme:dark]"
+                  className="px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] focus:outline-none focus:border-[#C65A24] transition-all [color-scheme:dark]"
                 />
 
                 <button
                   onClick={handleAddPayment}
-                  className="px-5 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-xl font-bold text-sm hover:from-green-500 hover:to-green-400 transition-all shadow-lg shadow-green-600/25 whitespace-nowrap"
+                  className="px-5 py-3 bg-gradient-to-r from-[#A34717] to-[#C65A24] text-[#E9DFC9] rounded-xl font-bold text-sm hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#A34717]/25 whitespace-nowrap"
                 >
                   + Add payment
                 </button>
@@ -1028,19 +1028,19 @@ export default function CoachAdminPage() {
                 value={revNote}
                 onChange={(e) => setRevNote(e.target.value)}
                 placeholder="Note (optional) — e.g. 4-session renewal, July block"
-                className="mt-3 w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 transition-all"
+                className="mt-3 w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/40 focus:outline-none focus:border-[#C65A24] transition-all"
               />
 
               {revMsg && (
-                <p className={`mt-3 text-sm ${revMsg.ok ? "text-green-400" : "text-red-400"}`}>{revMsg.text}</p>
+                <p className={`mt-3 text-sm ${revMsg.ok ? "text-[#E07B3C]" : "text-[#E07B3C]"}`}>{revMsg.text}</p>
               )}
             </div>
 
             {/* Last 6 months + revenue by student */}
             <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6">
-                <h2 className="text-lg font-bold text-white mb-1">📈 Last 6 months</h2>
-                <p className="text-gray-500 text-sm mb-5">Monthly money collected</p>
+              <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-6">
+                <h2 className="text-lg font-bold text-[#E9DFC9] mb-1">📈 Last 6 months</h2>
+                <p className="text-[#E9DFC9]/55 text-sm mb-5">Monthly money collected</p>
                 <div className="space-y-3">
                   {monthly.map((m) => {
                     const max = Math.max(...monthly.map((x) => x.total), 1);
@@ -1049,14 +1049,14 @@ export default function CoachAdminPage() {
                     const label = new Date(parseInt(yr), parseInt(mo) - 1, 1).toLocaleDateString("en-SG", { month: "short" });
                     return (
                       <div key={m.month} className="flex items-center gap-3">
-                        <span className="text-xs text-gray-500 w-9 shrink-0">{label}</span>
-                        <div className="flex-1 h-6 bg-white/[0.04] rounded-lg overflow-hidden">
+                        <span className="text-xs text-[#E9DFC9]/55 w-9 shrink-0">{label}</span>
+                        <div className="flex-1 h-6 bg-[#E9DFC9]/[0.04] rounded-lg overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-lg transition-all"
+                            className="h-full bg-gradient-to-r from-[#A34717] to-[#E07B3C] rounded-lg transition-all"
                             style={{ width: `${pct}%` }}
                           />
                         </div>
-                        <span className="text-xs font-mono text-gray-300 w-20 text-right shrink-0">
+                        <span className="text-xs font-mono text-[#E9DFC9]/85 w-20 text-right shrink-0">
                           ${m.total.toFixed(0)}
                         </span>
                       </div>
@@ -1065,42 +1065,42 @@ export default function CoachAdminPage() {
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
-                <div className="px-6 py-4 border-b border-white/[0.06]">
-                  <h2 className="text-lg font-bold text-white">🏆 Revenue by student</h2>
-                  <p className="text-gray-500 text-sm mt-0.5">{revenueTotals?.payingStudents ?? 0} paying students</p>
+              <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden">
+                <div className="px-6 py-4 border-b border-[#E9DFC9]/[0.06]">
+                  <h2 className="text-lg font-bold text-[#E9DFC9]">🏆 Revenue by student</h2>
+                  <p className="text-[#E9DFC9]/55 text-sm mt-0.5">{revenueTotals?.payingStudents ?? 0} paying students</p>
                 </div>
-                <div className="divide-y divide-white/[0.04] max-h-[340px] overflow-y-auto">
+                <div className="divide-y divide-[#E9DFC9]/[0.04] max-h-[340px] overflow-y-auto">
                   {byStudent.map((b) => (
                     <div key={b.studentId} className="flex items-center justify-between px-6 py-3">
                       <div>
-                        <p className="text-white font-semibold text-sm">{b.name}</p>
-                        <p className="text-gray-500 text-xs">{b.count} payment{b.count === 1 ? "" : "s"}</p>
+                        <p className="text-[#E9DFC9] font-semibold text-sm">{b.name}</p>
+                        <p className="text-[#E9DFC9]/55 text-xs">{b.count} payment{b.count === 1 ? "" : "s"}</p>
                       </div>
-                      <span className="text-green-400 font-bold font-mono text-sm">${b.total.toFixed(2)}</span>
+                      <span className="text-[#E07B3C] font-bold font-mono text-sm">${b.total.toFixed(2)}</span>
                     </div>
                   ))}
                   {byStudent.length === 0 && (
-                    <p className="px-6 py-10 text-center text-gray-500 text-sm">No payments logged yet.</p>
+                    <p className="px-6 py-10 text-center text-[#E9DFC9]/55 text-sm">No payments logged yet.</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Payment history */}
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/[0.06] flex items-center justify-between">
-                <h2 className="text-lg font-bold text-white">🧾 Payment history ({payments.length})</h2>
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#E9DFC9]/[0.06] flex items-center justify-between">
+                <h2 className="text-lg font-bold text-[#E9DFC9]">🧾 Payment history ({payments.length})</h2>
                 {revenueTotals && revenueTotals.allTime > 0 && (
-                  <span className="text-sm text-gray-400">
-                    Total: <span className="text-green-400 font-bold">${revenueTotals.allTime.toFixed(2)}</span>
+                  <span className="text-sm text-[#E9DFC9]/70">
+                    Total: <span className="text-[#E07B3C] font-bold">${revenueTotals.allTime.toFixed(2)}</span>
                   </span>
                 )}
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-gray-500 text-xs uppercase tracking-wider">
+                    <tr className="text-left text-[#E9DFC9]/55 text-xs uppercase tracking-wider">
                       <th className="px-6 py-3">Date</th>
                       <th className="px-6 py-3">Student</th>
                       <th className="px-6 py-3">Method</th>
@@ -1110,23 +1110,23 @@ export default function CoachAdminPage() {
                       <th className="px-6 py-3"></th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/[0.04]">
+                  <tbody className="divide-y divide-[#E9DFC9]/[0.04]">
                     {payments.map((p) => (
-                      <tr key={p.id} className="hover:bg-white/[0.02]">
-                        <td className="px-6 py-3 text-gray-400 whitespace-nowrap">
+                      <tr key={p.id} className="hover:bg-[#E9DFC9]/[0.02]">
+                        <td className="px-6 py-3 text-[#E9DFC9]/70 whitespace-nowrap">
                           {new Date(p.paidAt).toLocaleDateString("en-SG", { day: "2-digit", month: "short", year: "numeric" })}
                         </td>
-                        <td className="px-6 py-3 text-white font-semibold">
-                          {p.student?.name ?? <span className="text-gray-400 italic font-normal">📦 Bulk total</span>}
+                        <td className="px-6 py-3 text-[#E9DFC9] font-semibold">
+                          {p.student?.name ?? <span className="text-[#E9DFC9]/70 italic font-normal">📦 Bulk total</span>}
                         </td>
-                        <td className="px-6 py-3 text-gray-400">{p.method}</td>
-                        <td className="px-6 py-3 text-gray-400">{p.sessions ?? "—"}</td>
-                        <td className="px-6 py-3 text-gray-500 max-w-[220px] truncate">{p.note || "—"}</td>
-                        <td className="px-6 py-3 text-right text-green-400 font-bold font-mono">${p.amount.toFixed(2)}</td>
+                        <td className="px-6 py-3 text-[#E9DFC9]/70">{p.method}</td>
+                        <td className="px-6 py-3 text-[#E9DFC9]/70">{p.sessions ?? "—"}</td>
+                        <td className="px-6 py-3 text-[#E9DFC9]/55 max-w-[220px] truncate">{p.note || "—"}</td>
+                        <td className="px-6 py-3 text-right text-[#E07B3C] font-bold font-mono">${p.amount.toFixed(2)}</td>
                         <td className="px-6 py-3 text-right">
                           <button
                             onClick={() => handleDeletePayment(p.id, `$${p.amount.toFixed(2)} · ${p.student?.name ?? ""}`)}
-                            className="text-xs px-3 py-1.5 bg-red-600/20 border border-red-500/30 rounded-lg text-red-300 hover:bg-red-600/30 transition-all"
+                            className="text-xs px-3 py-1.5 bg-red-600/20 border border-red-500/30 rounded-lg text-red-300 hover:bg-[#A34717]/30 transition-all"
                           >
                             ✕
                           </button>
@@ -1135,7 +1135,7 @@ export default function CoachAdminPage() {
                     ))}
                     {payments.length === 0 && (
                       <tr>
-                        <td colSpan={7} className="px-6 py-10 text-center text-gray-500">
+                        <td colSpan={7} className="px-6 py-10 text-center text-[#E9DFC9]/55">
                           No payments yet. Log your first one above ☝️
                         </td>
                       </tr>
@@ -1148,32 +1148,32 @@ export default function CoachAdminPage() {
         )}
 
         {!loading && tab === "bookings" && (
-          <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-white/[0.06]">
-              <h2 className="text-lg font-bold text-white">All Bookings ({bookings.length})</h2>
+          <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-[#E9DFC9]/[0.06]">
+              <h2 className="text-lg font-bold text-[#E9DFC9]">All Bookings ({bookings.length})</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-left text-gray-500 text-xs uppercase tracking-wider">
+                  <tr className="text-left text-[#E9DFC9]/55 text-xs uppercase tracking-wider">
                     <th className="px-6 py-3">Date</th>
                     <th className="px-6 py-3">Student</th>
                     <th className="px-6 py-3">Duration</th>
                     <th className="px-6 py-3">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.04]">
+                <tbody className="divide-y divide-[#E9DFC9]/[0.04]">
                   {bookings.map((b) => (
-                    <tr key={b.id} className="hover:bg-white/[0.02]">
-                      <td className="px-6 py-3 text-white">{fmtDate(b.date)}</td>
-                      <td className="px-6 py-3 text-gray-300">{b.student?.name ?? "—"}</td>
-                      <td className="px-6 py-3 text-gray-400">{b.duration} min</td>
+                    <tr key={b.id} className="hover:bg-[#E9DFC9]/[0.02]">
+                      <td className="px-6 py-3 text-[#E9DFC9]">{fmtDate(b.date)}</td>
+                      <td className="px-6 py-3 text-[#E9DFC9]/85">{b.student?.name ?? "—"}</td>
+                      <td className="px-6 py-3 text-[#E9DFC9]/70">{b.duration} min</td>
                       <td className="px-6 py-3">
                         <span className={`px-2 py-0.5 rounded-full text-xs border ${
-                          b.status === "confirmed" ? "bg-green-500/20 text-green-400 border-green-500/30"
-                          : b.status === "booked" ? "bg-blue-500/20 text-blue-400 border-blue-500/30"
-                          : b.status === "completed" ? "bg-white/10 text-gray-300 border-white/20"
-                          : "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+                          b.status === "confirmed" ? "bg-[#C65A24]/20 text-[#E07B3C] border-[#C65A24]/30"
+                          : b.status === "booked" ? "bg-[#C65A24]/20 text-[#E07B3C] border-[#C65A24]/30"
+                          : b.status === "completed" ? "bg-[#E9DFC9]/10 text-[#E9DFC9]/85 border-[#E9DFC9]/20"
+                          : "bg-[#C65A24]/20 text-[#E9DFC9] border-[#C65A24]/30"
                         }`}>
                           {b.status}
                         </span>
@@ -1182,7 +1182,7 @@ export default function CoachAdminPage() {
                   ))}
                   {bookings.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="px-6 py-10 text-center text-gray-500">No bookings yet.</td>
+                      <td colSpan={4} className="px-6 py-10 text-center text-[#E9DFC9]/55">No bookings yet.</td>
                     </tr>
                   )}
                 </tbody>

@@ -148,25 +148,25 @@ export default function BookingsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#030303] p-6 md:p-10 relative overflow-hidden">
+    <main className="min-h-screen bg-[#171717] p-6 md:p-10 relative overflow-hidden">
       <div className="fixed inset-0 -z-10">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[100px]" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#C65A24]/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-2">
+          <h1 className="text-4xl md:text-5xl font-black text-[#E9DFC9] mb-2">
             BOOK{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">
               COACHING
             </span>
           </h1>
-          <p className="text-gray-400 mb-1">Hey {studentName || "baller"} — book your next session below</p>
-          <p className="text-gray-500 text-sm">📍 Venue: TBC after booking • 📲 I&apos;ll send a reminder before each session</p>
+          <p className="text-[#E9DFC9]/70 mb-1">Hey {studentName || "baller"} — book your next session below</p>
+          <p className="text-[#E9DFC9]/55 text-sm">📍 Venue: TBC after booking • 📲 I&apos;ll send a reminder before each session</p>
           {studentId && (
             <div className="flex items-center gap-3 mt-1">
-              <p className="text-green-500/70 text-xs flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <p className="text-[#C65A24]/70 text-xs flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-[#C65A24] rounded-full animate-pulse" />
                 Live — refreshes every 15s
               </p>
             </div>
@@ -183,8 +183,8 @@ export default function BookingsPage() {
               exit={{ opacity: 0, y: -10 }}
               className={`mb-6 p-4 rounded-xl text-sm font-medium ${
                 message.type === "success"
-                  ? "bg-green-500/10 text-green-400 border border-green-500/20"
-                  : "bg-red-500/10 text-red-400 border border-red-500/20"
+                  ? "bg-[#C65A24]/10 text-[#E07B3C] border border-[#C65A24]/20"
+                  : "bg-[#C65A24]/10 text-[#E07B3C] border border-[#C65A24]/20"
               }`}
             >
               {message.text}
@@ -199,10 +199,10 @@ export default function BookingsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-sm mx-auto mt-10"
           >
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 text-center">
+            <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-8 text-center">
               <div className="text-5xl mb-4">🏀</div>
-              <h2 className="text-2xl font-bold text-white mb-2">Student Access</h2>
-              <p className="text-gray-400 text-sm mb-6">Enter your 4-digit PIN to book a session</p>
+              <h2 className="text-2xl font-bold text-[#E9DFC9] mb-2">Student Access</h2>
+              <p className="text-[#E9DFC9]/70 text-sm mb-6">Enter your 4-digit PIN to book a session</p>
 
               <div className="flex justify-center gap-2 mb-6">
                 {[0, 1, 2, 3].map((i) => (
@@ -227,7 +227,7 @@ export default function BookingsPage() {
                     key={n}
                     type="button"
                     onClick={() => pinInput.length < 4 && setPinInput(pinInput + n)}
-                    className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xl font-bold transition-all active:scale-95"
+                    className="w-full aspect-square rounded-xl bg-[#E9DFC9]/5 hover:bg-[#E9DFC9]/10 border border-[#E9DFC9]/10 text-[#E9DFC9] text-xl font-bold transition-all active:scale-95"
                   >
                     {n}
                   </button>
@@ -235,14 +235,14 @@ export default function BookingsPage() {
                 <button
                   type="button"
                   onClick={() => setPinInput(pinInput.slice(0, -1))}
-                  className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-400 text-sm font-medium transition-all"
+                  className="w-full aspect-square rounded-xl bg-[#E9DFC9]/5 hover:bg-[#E9DFC9]/10 border border-[#E9DFC9]/10 text-[#E9DFC9]/70 text-sm font-medium transition-all"
                 >
                   ⌫
                 </button>
                 <button
                   type="button"
                   onClick={() => pinInput.length < 4 && setPinInput(pinInput + "0")}
-                  className="w-full aspect-square rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xl font-bold transition-all active:scale-95"
+                  className="w-full aspect-square rounded-xl bg-[#E9DFC9]/5 hover:bg-[#E9DFC9]/10 border border-[#E9DFC9]/10 text-[#E9DFC9] text-xl font-bold transition-all active:scale-95"
                 >
                   0
                 </button>
@@ -250,7 +250,7 @@ export default function BookingsPage() {
                   type="button"
                   onClick={handlePinSubmit}
                   disabled={pinInput.length !== 4 || pinLoading}
-                  className="w-full aspect-square rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 disabled:opacity-40 text-white text-sm font-bold transition-all flex items-center justify-center"
+                  className="w-full aspect-square rounded-xl bg-gradient-to-r from-[#C65A24] to-[#A34717] hover:from-[#C65A24] hover:to-[#C65A24] disabled:opacity-40 text-[#E9DFC9] text-sm font-bold transition-all flex items-center justify-center"
                 >
                   {pinLoading ? "⏳" : "✓"}
                 </button>
@@ -258,7 +258,7 @@ export default function BookingsPage() {
 
               {/* Also accept keyboard input — type your PIN directly */}
               <div className="mt-4">
-                <label className="text-gray-500 text-xs mb-2 block">Or type your PIN:</label>
+                <label className="text-[#E9DFC9]/55 text-xs mb-2 block">Or type your PIN:</label>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -268,7 +268,7 @@ export default function BookingsPage() {
                   onChange={(e) => setPinInput(e.target.value.replace(/\D/g, "").slice(0, 4))}
                   onKeyDown={(e) => e.key === "Enter" && pinInput.length === 4 && handlePinSubmit()}
                   placeholder="Enter 4-digit PIN"
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-center text-lg font-bold placeholder:text-gray-600 focus:border-blue-500 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 text-[#E9DFC9] text-center text-lg font-bold placeholder:text-[#E9DFC9]/40 focus:border-[#C65A24] focus:outline-none transition-all"
                 />
               </div>
 
@@ -279,7 +279,7 @@ export default function BookingsPage() {
           </motion.div>
         ) : loading ? (
           <div className="flex justify-center py-20">
-            <svg className="animate-spin h-8 w-8 text-blue-400" viewBox="0 0 24 24">
+            <svg className="animate-spin h-8 w-8 text-[#E07B3C]" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
@@ -287,36 +287,36 @@ export default function BookingsPage() {
         ) : (
           <div className="grid md:grid-cols-2 gap-6">
             {/* Request Your Own Session */}
-            <div className="mt-6 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-5">
-              <h3 className="text-base font-bold text-white mb-3 flex items-center gap-2">
+            <div className="mt-6 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-5">
+              <h3 className="text-base font-bold text-[#E9DFC9] mb-3 flex items-center gap-2">
                 ✋ Request Your Own Session
               </h3>
-              <p className="text-gray-500 text-xs mb-4">Don't see a time that works? Pick your own slot below.</p>
+              <p className="text-[#E9DFC9]/55 text-xs mb-4">Don't see a time that works? Pick your own slot below.</p>
               <div className="flex flex-wrap gap-2 items-end">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Date</label>
+                  <label className="block text-xs text-[#E9DFC9]/55 mb-1">Date</label>
                   <input
                     type="date"
                     value={requestDate}
                     onChange={(e) => setRequestDate(e.target.value)}
-                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50"
+                    className="bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 rounded-xl px-3 py-2 text-[#E9DFC9] text-sm focus:outline-none focus:border-[#C65A24]/50"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Time</label>
+                  <label className="block text-xs text-[#E9DFC9]/55 mb-1">Time</label>
                   <input
                     type="time"
                     value={requestTime}
                     onChange={(e) => setRequestTime(e.target.value)}
-                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50"
+                    className="bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 rounded-xl px-3 py-2 text-[#E9DFC9] text-sm focus:outline-none focus:border-[#C65A24]/50"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Duration</label>
+                  <label className="block text-xs text-[#E9DFC9]/55 mb-1">Duration</label>
                   <select
                     value={requestDuration}
                     onChange={(e) => setRequestDuration(parseInt(e.target.value))}
-                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50"
+                    className="bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 rounded-xl px-3 py-2 text-[#E9DFC9] text-sm focus:outline-none focus:border-[#C65A24]/50"
                   >
                     <option value={30}>30 min</option>
                     <option value={45}>45 min</option>
@@ -329,7 +329,7 @@ export default function BookingsPage() {
                   type="button"
                   onClick={handleRequestSession}
                   disabled={requesting}
-                  className="px-5 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition-all"
+                  className="px-5 py-2 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] hover:from-[#E9DFC9]/25 hover:to-[#C65A24] disabled:opacity-50 text-[#E9DFC9] text-sm font-semibold rounded-xl transition-all"
                 >
                   {requesting ? "⏳" : "Request"}
                 </button>
@@ -338,12 +338,12 @@ export default function BookingsPage() {
 
             {/* My Bookings */}
             <div>
-              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-[#E9DFC9] mb-4 flex items-center gap-2">
                 <span className="text-2xl">🏀</span> My Bookings
               </h2>
               {myBookings.length === 0 ? (
-                <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 text-center">
-                  <p className="text-gray-500">No bookings yet. Grab a slot!</p>
+                <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-8 text-center">
+                  <p className="text-[#E9DFC9]/55">No bookings yet. Grab a slot!</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -355,25 +355,25 @@ export default function BookingsPage() {
                       transition={{ delay: i * 0.05 }}
                       className={`border rounded-xl p-5 transition-all ${
                         slot.status === "confirmed"
-                          ? "bg-green-500/5 border-green-500/20"
+                          ? "bg-[#C65A24]/5 border-[#C65A24]/20"
                           : isPast(slot.date) && slot.status === "booked"
-                          ? "bg-gray-500/5 border-gray-500/20"
-                          : "bg-white/[0.03] border-white/[0.08]"
+                          ? "bg-[#E9DFC9]/5 border-[#E9DFC9]/20"
+                          : "bg-[#E9DFC9]/[0.03] border-[#E9DFC9]/[0.08]"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-white font-semibold">{formatDate(slot.date)}</p>
-                          <p className="text-gray-400 text-sm mt-1">
+                          <p className="text-[#E9DFC9] font-semibold">{formatDate(slot.date)}</p>
+                          <p className="text-[#E9DFC9]/70 text-sm mt-1">
                             🕐 {formatTime(slot.date)} · {slot.duration} min
                           </p>
                           <span className={`inline-block mt-2 text-xs font-medium px-3 py-1 rounded-full ${
                             slot.status === "confirmed"
-                              ? "bg-green-500/20 text-green-400"
+                              ? "bg-[#C65A24]/20 text-[#E07B3C]"
                               : slot.status === "booked"
-                              ? "bg-yellow-500/20 text-yellow-400"
+                              ? "bg-[#C65A24]/20 text-[#E9DFC9]"
                               : slot.status === "completed"
-                              ? "bg-blue-500/20 text-blue-400"
+                              ? "bg-[#C65A24]/20 text-[#E07B3C]"
                               : ""
                           }`}>
                             {slot.status === "confirmed" ? "✅ Confirmed" : slot.status === "booked" ? "⏳ Pending" : slot.status === "completed" ? "✓ Completed" : slot.status}
@@ -384,7 +384,7 @@ export default function BookingsPage() {
                             href={slot.googleEventLink || getGoogleCalLink(slot)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="shrink-0 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-medium rounded-xl transition-all flex items-center gap-1"
+                            className="shrink-0 px-3 py-2 bg-[#E9DFC9]/5 hover:bg-[#E9DFC9]/10 border border-[#E9DFC9]/10 text-[#E9DFC9] text-xs font-medium rounded-xl transition-all flex items-center gap-1"
                           >
                             📅 View in Calendar
                           </a>

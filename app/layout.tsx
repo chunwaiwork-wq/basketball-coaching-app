@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     description: "Train like NBA. Professional basketball coaching platform with pro-level drills and progress tracking.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#171717",
 };
 
 export default function RootLayout({

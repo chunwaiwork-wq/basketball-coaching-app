@@ -105,20 +105,20 @@ function LoginContent() {
   };
 
   return (
-    <main className="min-h-screen bg-[#030303] flex overflow-hidden">
+    <main className="min-h-screen bg-[#171717] flex overflow-hidden">
       {/* Left — Brand Panel */}
       <div className="hidden lg:flex flex-col justify-between w-1/2 p-16 relative">
         <div className="fixed inset-0 -z-10">
-          <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]" />
+          <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-[#C65A24]/10 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#C65A24]/10 rounded-full blur-[100px]" />
         </div>
 
         <div>
-          <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-blue-500/25">
+          <div className="w-14 h-14 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-[#C65A24]/25">
             <span className="text-2xl">🏀</span>
           </div>
-          <h1 className="text-4xl font-black text-white mb-4">413 OPENCOURT</h1>
-          <p className="text-gray-400 text-lg max-w-md leading-relaxed">
+          <h1 className="text-4xl font-black text-[#E9DFC9] mb-4">413 OPENCOURT</h1>
+          <p className="text-[#E9DFC9]/70 text-lg max-w-md leading-relaxed">
             Elite basketball training platform. Access your personalized
             training videos, book coaching sessions, and track your progress.
           </p>
@@ -139,14 +139,14 @@ function LoginContent() {
             >
               <span className="text-2xl">{item.icon}</span>
               <div>
-                <p className="text-white font-semibold">{item.title}</p>
-                <p className="text-gray-500 text-sm">{item.desc}</p>
+                <p className="text-[#E9DFC9] font-semibold">{item.title}</p>
+                <p className="text-[#E9DFC9]/55 text-sm">{item.desc}</p>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <p className="text-gray-600 text-sm">© 2026 413OPENCOURT. All rights reserved.</p>
+        <p className="text-[#E9DFC9]/40 text-sm">© 2026 413OPENCOURT. All rights reserved.</p>
       </div>
 
       {/* Right — Login Form */}
@@ -158,25 +158,25 @@ function LoginContent() {
         >
           {/* Mobile logo */}
           <div className="lg:hidden text-center mb-10">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/25">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#C65A24]/25">
               <span className="text-2xl">🏀</span>
             </div>
-            <h1 className="text-2xl font-black text-white">413 OPENCOURT</h1>
+            <h1 className="text-2xl font-black text-[#E9DFC9]">413 OPENCOURT</h1>
           </div>
 
-          <h2 className="text-3xl font-bold text-white mb-2">Welcome back</h2>
-          <p className="text-gray-400 mb-8">Sign in to access your training dashboard</p>
+          <h2 className="text-3xl font-bold text-[#E9DFC9] mb-2">Welcome back</h2>
+          <p className="text-[#E9DFC9]/70 mb-8">Sign in to access your training dashboard</p>
 
           {/* Tab Toggle */}
-          <div className="flex bg-white/[0.03] rounded-xl p-1 mb-8 border border-white/[0.06]">
+          <div className="flex bg-[#E9DFC9]/[0.03] rounded-xl p-1 mb-8 border border-[#E9DFC9]/[0.06]">
             {(["student", "coach"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => { setTab(t); setError(""); }}
                 className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                   tab === t
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25"
-                    : "text-gray-400 hover:text-white"
+                    ? "bg-[#C65A24] text-[#E9DFC9] shadow-lg shadow-[#C65A24]/25"
+                    : "text-[#E9DFC9]/70 hover:text-[#E9DFC9]"
                 }`}
               >
                 {t === "student" ? "🏀 Student" : "👑 Coach"}
@@ -193,7 +193,7 @@ function LoginContent() {
               className="space-y-5"
             >
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">PIN</label>
+                <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">PIN</label>
                 <input
                   type="password"
                   inputMode="numeric"
@@ -206,9 +206,9 @@ function LoginContent() {
                   }}
                   placeholder="Enter your 4-digit PIN"
                   required
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all text-center tracking-[0.5em]"
+                  className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/55 focus:outline-none focus:border-[#C65A24] focus:ring-1 focus:ring-[#C65A24]/50 transition-all text-center tracking-[0.5em]"
                 />
-                <p className="text-xs text-gray-600 mt-2">Coach, use your 4-digit PIN to sign in</p>
+                <p className="text-xs text-[#E9DFC9]/40 mt-2">Coach, use your 4-digit PIN to sign in</p>
               </div>
 
               <AnimatePresence>
@@ -229,7 +229,7 @@ function LoginContent() {
                 whileTap={{ scale: 0.99 }}
                 type="submit"
                 disabled={pinLoading}
-                className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-bold text-base hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-600/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] text-[#E9DFC9] rounded-xl font-bold text-base hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#C65A24]/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {pinLoading ? (
                   <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -245,19 +245,19 @@ function LoginContent() {
             <>
             <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+              <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/55 focus:outline-none focus:border-[#C65A24] focus:ring-1 focus:ring-[#C65A24]/50 transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+              <label className="block text-sm font-medium text-[#E9DFC9]/85 mb-2">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -266,12 +266,12 @@ function LoginContent() {
                   placeholder="••••••••"
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 transition-all pr-12"
+                  className="w-full px-4 py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] placeholder-[#E9DFC9]/55 focus:outline-none focus:border-[#C65A24] focus:ring-1 focus:ring-[#C65A24]/50 transition-all pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#E9DFC9]/55 hover:text-[#E9DFC9]/85"
                 >
                   {showPassword ? (
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -305,7 +305,7 @@ function LoginContent() {
               whileTap={{ scale: 0.99 }}
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl font-bold text-base hover:from-blue-500 hover:to-blue-400 transition-all shadow-lg shadow-blue-600/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3.5 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] text-[#E9DFC9] rounded-xl font-bold text-base hover:from-[#C65A24] hover:to-[#E07B3C] transition-all shadow-lg shadow-[#C65A24]/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -322,7 +322,7 @@ function LoginContent() {
             href="/auth"
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className="w-full py-3.5 bg-white/[0.03] border border-white/[0.15] rounded-xl font-bold text-base text-white hover:bg-white/[0.06] transition-all flex items-center justify-center gap-2 mt-4"
+            className="w-full py-3.5 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.15] rounded-xl font-bold text-base text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-all flex items-center justify-center gap-2 mt-4"
           >
             🔑 Login with PIN
           </motion.a>
@@ -333,9 +333,9 @@ function LoginContent() {
           <>
           {/* Divider */}
           <div className="flex items-center gap-3 my-6">
-            <div className="flex-1 h-px bg-white/[0.08]" />
-            <span className="text-xs text-gray-500 font-medium">OR</span>
-            <div className="flex-1 h-px bg-white/[0.08]" />
+            <div className="flex-1 h-px bg-[#E9DFC9]/[0.08]" />
+            <span className="text-xs text-[#E9DFC9]/55 font-medium">OR</span>
+            <div className="flex-1 h-px bg-[#E9DFC9]/[0.08]" />
           </div>
 
           {/* Google Sign In */}
@@ -343,7 +343,7 @@ function LoginContent() {
             href="/api/auth/google"
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className="w-full py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white font-medium text-sm hover:bg-white/[0.06] transition-all flex items-center justify-center gap-3"
+            className="w-full py-3 bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-xl text-[#E9DFC9] font-medium text-sm hover:bg-[#E9DFC9]/[0.06] transition-all flex items-center justify-center gap-3"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
@@ -354,9 +354,9 @@ function LoginContent() {
             Continue with Google
           </motion.a>
 
-          <p className="text-center mt-8 text-sm text-gray-500">
+          <p className="text-center mt-8 text-sm text-[#E9DFC9]/55">
             Don&apos;t have an account?{" "}
-            <a href="/auth/signup" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+            <a href="/auth/signup" className="text-[#E07B3C] hover:text-[#E07B3C] font-medium transition-colors">
               Create one
             </a>
           </p>
@@ -365,7 +365,7 @@ function LoginContent() {
           )}
 
           <div className="text-center mt-8">
-            <a href="/" className="text-sm text-gray-600 hover:text-gray-400 transition-colors">
+            <a href="/" className="text-sm text-[#E9DFC9]/40 hover:text-[#E9DFC9]/70 transition-colors">
               ← Back to home
             </a>
           </div>
@@ -378,8 +378,8 @@ function LoginContent() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <main className="min-h-screen bg-[#030303] flex items-center justify-center">
-        <svg className="animate-spin h-8 w-8 text-blue-400" viewBox="0 0 24 24">
+      <main className="min-h-screen bg-[#171717] flex items-center justify-center">
+        <svg className="animate-spin h-8 w-8 text-[#E07B3C]" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>

@@ -36,9 +36,9 @@ export default function TrackerPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#030303] p-6 md:p-10 relative overflow-hidden">
+    <main className="min-h-screen bg-[#171717] p-6 md:p-10 relative overflow-hidden">
       <div className="fixed inset-0 -z-10">
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-green-600/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#A34717]/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="max-w-4xl mx-auto">
@@ -47,14 +47,14 @@ export default function TrackerPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-10"
         >
-          <p className="text-gray-400 text-sm mb-2">{getToday()}</p>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-2">
+          <p className="text-[#E9DFC9]/70 text-sm mb-2">{getToday()}</p>
+          <h1 className="text-4xl md:text-5xl font-black text-[#E9DFC9] mb-2">
             DRILL{" "}
-            <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">
               TRACKER
             </span>
           </h1>
-          <p className="text-gray-400">Tap to clock in your completed drills</p>
+          <p className="text-[#E9DFC9]/70">Tap to clock in your completed drills</p>
         </motion.div>
 
         {/* Progress Card */}
@@ -62,25 +62,25 @@ export default function TrackerPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-6 mb-8"
+          className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl p-6 mb-8"
         >
           <div className="flex justify-between items-center mb-3">
-            <span className="text-white font-semibold">Today&apos;s Progress</span>
-            <span className="text-gray-400 text-sm">{completedCount}/{drills.length} completed</span>
+            <span className="text-[#E9DFC9] font-semibold">Today&apos;s Progress</span>
+            <span className="text-[#E9DFC9]/70 text-sm">{completedCount}/{drills.length} completed</span>
           </div>
-          <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+          <div className="h-2 bg-[#E9DFC9]/5 rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="h-full bg-gradient-to-r from-green-500 to-blue-500 rounded-full"
+              className="h-full bg-gradient-to-r from-[#C65A24] to-[#E07B3C] rounded-full"
             />
           </div>
           {progress === 100 && (
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-green-400 text-sm mt-3 text-center font-semibold"
+              className="text-[#E07B3C] text-sm mt-3 text-center font-semibold"
             >
               🏆 ALL DRILLS COMPLETED! GREAT WORK!
             </motion.p>
@@ -99,8 +99,8 @@ export default function TrackerPage() {
               onClick={() => toggleDrill(drill.id)}
               className={`p-5 rounded-2xl border cursor-pointer transition-all duration-300 ${
                 drill.completed
-                  ? "bg-green-500/10 border-green-500/30"
-                  : "bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.04]"
+                  ? "bg-[#C65A24]/10 border-[#C65A24]/30"
+                  : "bg-[#E9DFC9]/[0.02] border-[#E9DFC9]/[0.05] hover:bg-[#E9DFC9]/[0.04]"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -108,15 +108,15 @@ export default function TrackerPage() {
                   <div
                     className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
                       drill.completed
-                        ? "bg-green-500 border-green-500"
-                        : "border-white/20"
+                        ? "bg-[#C65A24] border-[#C65A24]"
+                        : "border-[#E9DFC9]/20"
                     }`}
                   >
                     {drill.completed && (
                       <motion.svg
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="w-4 h-4 text-white"
+                        className="w-4 h-4 text-[#E9DFC9]"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -129,15 +129,15 @@ export default function TrackerPage() {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{drill.icon}</span>
-                      <h3 className={`font-semibold ${drill.completed ? "text-green-400 line-through" : "text-white"}`}>
+                      <h3 className={`font-semibold ${drill.completed ? "text-[#E07B3C] line-through" : "text-[#E9DFC9]"}`}>
                         {drill.name}
                       </h3>
                     </div>
-                    <p className="text-gray-500 text-xs mt-1">{drill.category}</p>
+                    <p className="text-[#E9DFC9]/55 text-xs mt-1">{drill.category}</p>
                   </div>
                 </div>
 
-                <span className="text-gray-400 text-sm">{drill.duration}</span>
+                <span className="text-[#E9DFC9]/70 text-sm">{drill.duration}</span>
               </div>
             </motion.div>
           ))}
@@ -146,7 +146,7 @@ export default function TrackerPage() {
         <div className="text-center mt-10">
           <button
             onClick={() => setDrills(drills.map(d => ({ ...d, completed: false })))}
-            className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+            className="text-sm text-[#E9DFC9]/55 hover:text-[#E9DFC9]/85 transition-colors"
           >
             Reset all drills
           </button>
