@@ -2,125 +2,35 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
-// --- KIDS PRICING (Ages 3–16) ---
-const KIDS_GROUP = [
-  { name: "Drop-in Session", detail: "1 session, single class", price: "S$40", per: "/ session" },
-  { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly", price: "S$140", per: "/ mth (S$35 / session)", highlight: false },
-  { name: "Term Pack (12 sessions)", detail: "1x per week, ~3 months, best value", price: "S$390", per: "/ term (S$32.50 / session)", highlight: true },
+// --- SIMPLE PRICING (headline "from" rates only) ---
+const PLANS = [
+  {
+    emoji: "🧒",
+    title: "Kids",
+    ages: "Ages 3–16",
+    price: "from $50",
+    per: "per session",
+    accent: "from-[#C65A24]/30 to-[#A34717]/10 border-[#C65A24]/30",
+  },
+  {
+    emoji: "🧑",
+    title: "Adults",
+    ages: "Ages 17+",
+    price: "from $70",
+    per: "per session",
+    accent: "from-[#E9DFC9]/15 to-[#E9DFC9]/5 border-[#E9DFC9]/20",
+  },
 ];
 
-const KIDS_SEMI = [
-  { name: "Drop-in Session", detail: "1 session, 3–5 players", price: "S$65", per: "/ session" },
-  { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly", price: "S$240", per: "/ mth (S$60 / session)" },
-];
-
-const KIDS_PRIVATE = [
-  { name: "Single Session", detail: "1 hour, 1-to-1", price: "S$95", per: "/ hr" },
-  { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly", price: "S$340", per: "/ mth (S$85 / session)" },
-  { name: "Term Pack (12 sessions)", detail: "1x per week, ~3 months, best value", price: "S$960", per: "/ term (S$80 / session)", highlight: true },
-];
-
-// --- ADULT PRICING (Ages 17+) ---
-const ADULT_PRIVATE = [
-  { name: "Drop-in Session", detail: "1 hour, 1-to-1", price: "S$60", per: "/ session" },
-  { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly", price: "S$220", per: "/ mth (S$55 / session)" },
-  { name: "Term Pack (8 sessions)", detail: "1x per week, ~2 months, best value", price: "S$450", per: "/ term (S$56.25 / session)", highlight: true },
-];
-
-const ADULT_SEMI = [
-  { name: "Drop-in Session", detail: "1 session, 2–3 players, per person", price: "S$40", per: "/ session" },
-  { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly, per person", price: "S$140", per: "/ mth (S$35 / session)" },
-];
-
-const ADULT_GROUP = [
-  { name: "Drop-in Session", detail: "1 session, 4–6 players, per person", price: "S$30", per: "/ session" },
-  { name: "Monthly (4 sessions)", detail: "1x per week, billed monthly, per person", price: "S$100", per: "/ mth (S$25 / session)" },
-];
-
-const GOOD_TO_KNOW_KIDS = [
-  "Packages are billed upfront; sessions expire 6 weeks after purchase date.",
-  "Reschedules with 24hrs notice are free; no-shows forfeit the session.",
+const GOOD_TO_KNOW = [
+  "Every new player starts with a FREE 60-minute skills assessment.",
+  "Reschedules with 24 hours' notice are free; no-shows forfeit the session.",
   "Rained-out outdoor sessions are rescheduled at no charge.",
-  "Sibling discount: 10% off a second child on any monthly or term pack.",
+  "Sibling discount: 10% off a second child.",
 ];
-
-const GOOD_TO_KNOW_ADULT = [
-  "Packages are billed upfront; sessions expire 6 weeks after purchase date.",
-  "Reschedules with 24hrs notice are free; no-shows forfeit the session.",
-  "Rained-out outdoor sessions are rescheduled at no charge.",
-  "Partner/sibling discount: 10% off a second adult on any monthly or term pack.",
-];
-
-interface PlanItem {
-  name: string;
-  detail: string;
-  price: string;
-  per: string;
-  highlight?: boolean;
-}
-
-function PricingTable({ title, emoji, items, accentColor }: { title: string; emoji: string; items: PlanItem[]; accentColor: string }) {
-  const isGreen = accentColor === "green";
-  const isBlue = accentColor === "blue";
-  const isPurple = accentColor === "purple";
-  const isOrange = accentColor === "orange";
-
-  const borderColor = isGreen ? "border-[#C65A24]/30" : isBlue ? "border-[#C65A24]/30" : isPurple ? "border-[#E9DFC9]/30" : "border-[#C65A24]/30";
-  const headerBg = isGreen ? "from-[#C65A24]/40 to-[#C65A24]/20" : isBlue ? "from-[#A34717]/40 to-[#A34717]/20" : isPurple ? "from-[#E07B3C]/40 to-[#E07B3C]/20" : "from-[#E9DFC9]/40 to-[#E9DFC9]/20";
-
-  return (
-    <div className={`rounded-2xl border ${borderColor} overflow-hidden`}>
-      <div className={`bg-gradient-to-r ${headerBg} px-6 py-4`}>
-        <h2 className="text-lg font-bold text-[#E9DFC9]">{emoji} {title}</h2>
-      </div>
-      <div className="divide-y divide-[#E9DFC9]/[0.06]">
-        {items.map((item, i) => (
-          <div key={i} className={`px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 ${item.highlight ? "bg-[#E9DFC9]/[0.03]" : ""}`}>
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-base font-semibold text-[#E9DFC9]">{item.name}</span>
-                {item.highlight && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C65A24]/20 text-[#E07B3C] border border-[#C65A24]/30">BEST VALUE</span>
-                )}
-              </div>
-              <p className="text-sm text-[#E9DFC9]/70 mt-0.5">{item.detail}</p>
-            </div>
-            <div className="text-right flex-shrink-0">
-              <span className="text-2xl font-extrabold text-[#E9DFC9]">{item.price}</span>
-              <span className="text-sm text-[#E9DFC9]/70 ml-1">{item.per}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function KidsPricing() {
-  return (
-    <>
-      <PricingTable title="GROUP CLASSES (up to 8 players)" emoji="🏀" accentColor="green" items={KIDS_GROUP} />
-      <PricingTable title="SEMI-PRIVATE (3–5 players)" emoji="👥" accentColor="blue" items={KIDS_SEMI} />
-      <PricingTable title="PRIVATE 1-TO-1 COACHING" emoji="🎯" accentColor="purple" items={KIDS_PRIVATE} />
-    </>
-  );
-}
-
-function AdultPricing() {
-  return (
-    <>
-      <PricingTable title="PRIVATE 1-TO-1 COACHING" emoji="🎯" accentColor="purple" items={ADULT_PRIVATE} />
-      <PricingTable title="SEMI-PRIVATE (2–3 players) — per person" emoji="👥" accentColor="blue" items={ADULT_SEMI} />
-      <PricingTable title="SMALL GROUP (4–6 players) — per person" emoji="🏃" accentColor="orange" items={ADULT_GROUP} />
-    </>
-  );
-}
 
 export default function RatesPage() {
-  const [tab, setTab] = useState<"kids" | "adult">("kids");
-
   return (
     <div className="min-h-screen bg-[#171717] text-[#E9DFC9]">
       {/* Simple Nav */}
@@ -136,90 +46,62 @@ export default function RatesPage() {
       </nav>
 
       {/* Header */}
-      <header className="max-w-4xl mx-auto px-6 pt-12 pb-4">
+      <header className="max-w-4xl mx-auto px-6 pt-12 pb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-xs font-bold text-[#E9DFC9]/55 uppercase tracking-widest mb-2">Basketball Coaching • Singapore</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#E9DFC9]">
-            2026 Pricing
-          </h1>
+          <p className="text-xs font-bold text-[#E9DFC9]/55 uppercase tracking-widest mb-2">
+            Basketball Coaching • Singapore
+          </p>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-[#E9DFC9]">2026 Pricing</h1>
           <p className="text-[#E9DFC9]/70 mt-2 max-w-xl">
-            Structured basketball coaching for kids (ages 3–16) and adults (17+). Every player gets a Player Card that tracks drills, homework and progress.
+            Structured basketball coaching for kids (ages 3–16) and adults (17+). Every player gets a
+            Player Card that tracks drills, homework and progress.
           </p>
         </motion.div>
       </header>
 
-      {/* Tab Toggle */}
-      <div className="max-w-4xl mx-auto px-6 pb-6">
-        <div className="flex gap-2 p-1 bg-[#E9DFC9]/[0.04] rounded-xl w-fit">
-          <button
-            onClick={() => setTab("kids")}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
-              tab === "kids"
-                ? "bg-[#C65A24]/20 text-[#E07B3C] border border-[#C65A24]/30"
-                : "text-[#E9DFC9]/70 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06]"
-            }`}
-          >
-            🧒 Kids (3–16)
-          </button>
-          <button
-            onClick={() => setTab("adult")}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
-              tab === "adult"
-                ? "bg-[#E9DFC9]/20 text-[#E9DFC9] border border-[#E9DFC9]/30"
-                : "text-[#E9DFC9]/70 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06]"
-            }`}
-          >
-            🧑 Adults (17+)
-          </button>
-        </div>
-      </div>
-
-      {/* Pricing Tables */}
+      {/* Pricing cards */}
       <main className="max-w-4xl mx-auto px-6 pb-16 space-y-8">
-        {tab === "kids" ? (
-          <motion.div
-            key="kids"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-8"
-          >
-            <KidsPricing />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="adult"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-8"
-          >
-            <AdultPricing />
-          </motion.div>
-        )}
+        <div className="grid sm:grid-cols-2 gap-6">
+          {PLANS.map((plan, i) => (
+            <motion.div
+              key={plan.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className={`bg-gradient-to-b ${plan.accent} backdrop-blur-xl border rounded-2xl p-8 text-center`}
+            >
+              <p className="text-3xl mb-3">{plan.emoji}</p>
+              <h2 className="text-xl font-extrabold mb-1">{plan.title}</h2>
+              <p className="text-sm text-[#E9DFC9]/55 mb-6">{plan.ages}</p>
+              <p className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent leading-none">
+                {plan.price}
+              </p>
+              <p className="text-sm text-[#E9DFC9]/70 mt-3">{plan.per}</p>
+            </motion.div>
+          ))}
+        </div>
 
         {/* Free Trial */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.35 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
           className="bg-gradient-to-r from-[#C65A24]/30 to-[#A34717]/20 border border-[#C65A24]/20 rounded-2xl p-6 text-center"
         >
           <p className="text-2xl mb-1">🎁</p>
           <h2 className="text-xl font-bold text-[#E07B3C]">NEW PLAYER TRIAL — FREE</h2>
           <p className="text-[#E9DFC9]/85 mt-1">
-            {tab === "kids"
-              ? "Kids: one free group session. Adults: one free private session."
-              : "Adults: one free private session. Kids: one free group session."}
-            {" "}No commitment, no payment details needed.
+            Kids get one free group session. Adults get one free private session. No commitment, no
+            payment details needed.
           </p>
           <a
             href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20free%20trial%20session%20🔥"
             target="_blank"
+            rel="noopener noreferrer"
             className="inline-block mt-4 px-6 py-3 bg-[#C65A24]/20 border border-[#C65A24]/40 rounded-full text-sm font-bold text-[#E07B3C] hover:bg-[#C65A24]/30 transition-all"
           >
             Book Free Trial →
@@ -230,12 +112,14 @@ export default function RatesPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="border border-[#E9DFC9]/[0.08] rounded-2xl p-6"
         >
-          <h2 className="text-sm font-bold text-[#E9DFC9]/60 uppercase tracking-wider mb-4">📌 Good to Know</h2>
+          <h2 className="text-sm font-bold text-[#E9DFC9]/60 uppercase tracking-wider mb-4">
+            📌 Good to Know
+          </h2>
           <ul className="space-y-2">
-            {(tab === "kids" ? GOOD_TO_KNOW_KIDS : GOOD_TO_KNOW_ADULT).map((tip, i) => (
+            {GOOD_TO_KNOW.map((tip, i) => (
               <li key={i} className="text-sm text-[#E9DFC9]/70 flex items-start gap-2">
                 <span className="text-[#E9DFC9]/40 mt-0.5">•</span>
                 {tip}
@@ -248,7 +132,7 @@ export default function RatesPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.45 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
           className="text-center pt-4"
         >
           <p className="text-sm text-[#E9DFC9]/55 mb-4">Ready to get started?</p>
@@ -256,6 +140,7 @@ export default function RatesPage() {
             <a
               href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20free%20trial%20🔥"
               target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-3 bg-[#E9DFC9]/10 border border-[#E9DFC9]/20 rounded-full text-sm font-bold hover:bg-[#E9DFC9]/20 transition-all"
             >
               📱 Book via WhatsApp
