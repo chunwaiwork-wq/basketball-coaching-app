@@ -44,6 +44,10 @@ const HOME_FAQS: { icon: string; title: string; items: { q: string; a: string }[
         a: "We coach kids from age 6–16 and working adults (17+). Each experience is tailor-made according to your level of experience — from complete beginners to competitive players.",
       },
       {
+        q: "What is the training program?",
+        a: "Depending on your level of experience, the program will be tailored to you.",
+      },
+      {
         q: "How is the training conducted?",
         a: "Training will be conducted in a fun and enriching manner. There will be lots of learnings and takeaways after each session.",
       },
