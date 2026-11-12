@@ -24,9 +24,7 @@ type LocationDetail = {
   imageAlt: string;
 };
 
-// Court photos — real photos of each venue.
-// Locations without a real photo yet fall back to a shared image.
-const FALLBACK_COURT_IMAGE = "/locations/boon-keng.jpg";
+// Court photos — real photos of each venue, one per location.
 const COACH_PORTRAIT = "/coach-wai-portrait.jpg";
 
 const LOCATION_DETAILS: Record<string, LocationDetail> = {
@@ -42,14 +40,14 @@ const LOCATION_DETAILS: Record<string, LocationDetail> = {
   khatib: {
     headline: "Khatib Multi-purpose Court",
     venues: [{ name: "Khatib Multi-purpose Court", note: "Sheltered court" }],
-    image: FALLBACK_COURT_IMAGE,
-    imageAlt: "Our sheltered basketball court in Khatib, Singapore",
+    image: "/locations/khatib.jpg",
+    imageAlt: "Sheltered multi-purpose basketball court in Khatib, Singapore",
   },
   kembangan: {
     headline: "Telok Kurau Park",
     venues: [{ name: "Telok Kurau Park", note: "Half court" }],
-    image: FALLBACK_COURT_IMAGE,
-    imageAlt: "Our basketball court at Telok Kurau Park in Kembangan, Singapore",
+    image: "/locations/kembangan.jpg",
+    imageAlt: "Outdoor half basketball court at Telok Kurau Park in Kembangan, Singapore",
   },
   "boon-keng": {
     headline: "McNair Sheltered Basketball Court",
