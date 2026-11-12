@@ -204,6 +204,36 @@ export default function LocationPage({ location, slug }: { location: string; slu
           </section>
         )}
 
+        {/* Head coach — sits directly above the Google rating proof line */}
+        <section className="px-8 pb-6">
+          <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#E9DFC9]/[0.06] to-[#E9DFC9]/[0.02] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            <div className="relative shrink-0">
+              <span
+                className="absolute inset-0 -m-2 rounded-3xl bg-[#C65A24]/20 blur-xl"
+                aria-hidden="true"
+              />
+              <img
+                src={COACH_PORTRAIT}
+                alt="Coach Wai — Head Coach at 413OPENCOURT"
+                width={800}
+                height={961}
+                className="relative w-60 sm:w-72 md:w-80 lg:w-96 h-auto rounded-2xl border border-[#C65A24]/30 shadow-2xl shadow-black/60"
+              />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <p className="text-[#E07B3C] text-xs font-bold tracking-[0.2em] uppercase mb-2">
+                Head Coach
+              </p>
+              <p className="text-2xl md:text-3xl font-extrabold mb-3">Coach Wai</p>
+              <p className="text-[#E9DFC9]/85 leading-relaxed">
+                Former Division 2 player with 20 years of experience coaching players of every level
+                — from complete beginners to competitive athletes. Training in {location} and across
+                Singapore.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Proof line — links back to the 4.9/5 Google rating */}
         <section className="px-8 pb-16">
           <div className="max-w-4xl mx-auto bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-center">
@@ -298,36 +328,6 @@ export default function LocationPage({ location, slug }: { location: string; slu
                   <p className="text-[#E9DFC9]/70 text-sm leading-relaxed">{s.desc}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Head coach */}
-        <section className="px-8 py-12">
-          <div className="max-w-4xl mx-auto bg-gradient-to-b from-[#E9DFC9]/[0.06] to-[#E9DFC9]/[0.02] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 md:gap-8">
-            <div className="relative shrink-0">
-              <span
-                className="absolute inset-0 -m-2 rounded-3xl bg-[#C65A24]/20 blur-xl"
-                aria-hidden="true"
-              />
-              <img
-                src={COACH_PORTRAIT}
-                alt="Coach Wai — Head Coach at 413OPENCOURT"
-                width={800}
-                height={961}
-                className="relative w-60 sm:w-72 md:w-80 lg:w-96 h-auto rounded-2xl border border-[#C65A24]/30 shadow-2xl shadow-black/60"
-              />
-            </div>
-            <div className="flex-1 text-center md:text-left">
-              <p className="text-[#E07B3C] text-xs font-bold tracking-[0.2em] uppercase mb-2">
-                Head Coach
-              </p>
-              <p className="text-2xl md:text-3xl font-extrabold mb-3">Coach Wai</p>
-              <p className="text-[#E9DFC9]/85 leading-relaxed">
-                Former Division 2 player with 20 years of experience coaching players of every level
-                — from complete beginners to competitive athletes. Training in {location} and across
-                Singapore.
-              </p>
             </div>
           </div>
         </section>
