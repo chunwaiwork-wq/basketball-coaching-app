@@ -72,7 +72,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
               </Link>
               <Link
                 href="/auth/login"
-                className="px-4 md:px-6 py-2 md:py-2.5 bg-[#E9DFC9]/10 backdrop-blur-sm border border-[#E9DFC9]/20 rounded-full text-xs md:text-sm font-semibold hover:bg-[#E9DFC9]/20 transition-all whitespace-nowrap"
+                className="px-4 md:px-6 py-2 md:py-2.5 bg-[#E9DFC9]/10 backdrop-blur-sm border border-[#E9DFC9]/20 rounded-full text-xs md:text-sm font-bold hover:bg-[#E9DFC9]/20 transition-all whitespace-nowrap"
               >
                 LOGIN
               </Link>
@@ -96,7 +96,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-8"
+              className="text-5xl md:text-7xl font-extrabold tracking-tighter leading-none mb-8"
             >
               BASKETBALL TRAINING
               <br />
@@ -124,7 +124,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
               <a
                 href={href}
                 target="_blank"
-                className="inline-block px-8 py-4 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] rounded-full font-semibold text-lg shadow-xl shadow-[#C65A24]/25 hover:shadow-[#C65A24]/40 transition-shadow"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] rounded-full font-bold text-lg shadow-xl shadow-[#C65A24]/25 hover:shadow-[#C65A24]/40 transition-shadow"
               >
                 Book My Free Trial and Assessment in {location}
               </a>
@@ -136,7 +136,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
         {/* Proof line — links back to the 4.9/5 Google rating */}
         <section className="px-8 pb-16">
           <div className="max-w-4xl mx-auto bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-center">
-            <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/60 bg-clip-text text-transparent whitespace-nowrap">
+            <span className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/60 bg-clip-text text-transparent whitespace-nowrap">
               4.9/5 Google rating
             </span>
             <span className="hidden sm:block text-[#E9DFC9]/40">·</span>
@@ -179,7 +179,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
                   <div className="w-14 h-14 bg-[#E9DFC9]/5 rounded-2xl flex items-center justify-center text-2xl mb-6">{p.icon}</div>
                   <h3 className="font-bold text-xl mb-1">{p.title}</h3>
                   <p className="text-[#E9DFC9]/55 text-sm mb-4">{p.who}</p>
-                  <p className="text-2xl font-black bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/70 bg-clip-text text-transparent mb-4">{p.price}</p>
+                  <p className="text-2xl font-extrabold bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/70 bg-clip-text text-transparent mb-4">{p.price}</p>
                   <p className="text-[#E9DFC9]/70 text-sm leading-relaxed">{p.desc}</p>
                 </div>
               ))}
@@ -198,7 +198,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
             <div className="grid md:grid-cols-3 gap-6">
               {STEPS.map((s) => (
                 <div key={s.step} className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl p-8">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C65A24] to-[#A34717] flex items-center justify-center font-black text-lg mb-5">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C65A24] to-[#A34717] flex items-center justify-center font-extrabold text-lg mb-5">
                     {s.step}
                   </div>
                   <h3 className="font-bold text-lg mb-3">{s.title}</h3>

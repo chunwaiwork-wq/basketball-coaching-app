@@ -107,7 +107,7 @@ export default function LeadsCRMPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-black text-[#E9DFC9] mb-2">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#E9DFC9] mb-2">
             LEADS{" "}
             <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">
               CRM
@@ -132,7 +132,7 @@ export default function LeadsCRMPage() {
               className={`bg-gradient-to-b ${stat.color} backdrop-blur-xl border rounded-2xl p-5`}
             >
               <p className="text-[#E9DFC9]/70 text-xs mb-1">{stat.label}</p>
-              <p className="text-3xl font-black text-[#E9DFC9]">{stat.value}</p>
+              <p className="text-3xl font-extrabold text-[#E9DFC9]">{stat.value}</p>
             </motion.div>
           ))}
         </div>
@@ -176,7 +176,7 @@ export default function LeadsCRMPage() {
             ))}
             <button
               onClick={exportCSV}
-              className="px-4 py-2.5 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] rounded-xl text-sm font-semibold text-[#E9DFC9] hover:shadow-lg hover:shadow-[#C65A24]/25 transition-all"
+              className="px-4 py-2.5 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] rounded-xl text-sm font-bold text-[#E9DFC9] hover:shadow-lg hover:shadow-[#C65A24]/25 transition-all"
             >
               Export CSV
             </button>
@@ -428,7 +428,7 @@ export default function LeadsCRMPage() {
               />
               <button
                 onClick={saveNotes}
-                className="mt-2 px-5 py-2 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] rounded-xl text-sm font-semibold text-[#E9DFC9] hover:shadow-lg hover:shadow-[#C65A24]/25 transition-all"
+                className="mt-2 px-5 py-2 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] rounded-xl text-sm font-bold text-[#E9DFC9] hover:shadow-lg hover:shadow-[#C65A24]/25 transition-all"
               >
                 Save Notes
               </button>

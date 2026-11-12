@@ -107,7 +107,7 @@ export default function VideosPage() {
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <p className="text-[#E9DFC9]/70 text-sm mb-1">Welcome back, {studentName}</p>
-          <h1 className="text-4xl md:text-5xl font-black text-[#E9DFC9] mb-2">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#E9DFC9] mb-2">
             YOUR{" "}
             <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">
               VIDEOS

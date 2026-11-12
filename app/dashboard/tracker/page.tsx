@@ -48,7 +48,7 @@ export default function TrackerPage() {
           className="mb-10"
         >
           <p className="text-[#E9DFC9]/70 text-sm mb-2">{getToday()}</p>
-          <h1 className="text-4xl md:text-5xl font-black text-[#E9DFC9] mb-2">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#E9DFC9] mb-2">
             DRILL{" "}
             <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">
               TRACKER

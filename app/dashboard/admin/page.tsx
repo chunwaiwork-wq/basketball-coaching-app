@@ -406,7 +406,7 @@ export default function CoachAdminPage() {
             <div className="w-14 h-14 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#C65A24]/25">
               <span className="text-2xl">👑</span>
             </div>
-            <h1 className="text-2xl font-black text-[#E9DFC9]">Coach Admin</h1>
+            <h1 className="text-2xl font-extrabold text-[#E9DFC9]">Coach Admin</h1>
             <p className="text-[#E9DFC9]/70 text-sm mt-1">Enter your coach PIN to manage the academy</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -466,7 +466,7 @@ export default function CoachAdminPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="text-[#E9DFC9]/70 text-sm mb-1">Welcome back, Coach</p>
-            <h1 className="text-4xl font-black text-[#E9DFC9]">
+            <h1 className="text-4xl font-extrabold text-[#E9DFC9]">
               COACH{" "}
               <span className="bg-gradient-to-r from-[#E07B3C] to-[#E9DFC9] bg-clip-text text-transparent">
                 ADMIN PANEL
@@ -476,7 +476,7 @@ export default function CoachAdminPage() {
           </motion.div>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-[#C65A24]/20 text-[#E07B3C] hover:bg-[#C65A24]/30 border border-[#C65A24]/40 rounded-xl text-sm font-semibold transition-all w-fit"
+            className="px-4 py-2 bg-[#C65A24]/20 text-[#E07B3C] hover:bg-[#C65A24]/30 border border-[#C65A24]/40 rounded-xl text-sm font-bold transition-all w-fit"
           >
             ✕ Log out
           </button>
@@ -498,7 +498,7 @@ export default function CoachAdminPage() {
               className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-5 text-center"
             >
               <div className="text-2xl mb-1">{s.icon}</div>
-              <div className="text-3xl font-black text-[#E9DFC9]">{s.value}</div>
+              <div className="text-3xl font-extrabold text-[#E9DFC9]">{s.value}</div>
               <div className="text-[#E9DFC9]/55 text-xs mt-1 uppercase tracking-wider">{s.label}</div>
             </motion.div>
           ))}
@@ -551,7 +551,7 @@ export default function CoachAdminPage() {
             <div className="bg-[#E9DFC9]/[0.03] border border-[#E9DFC9]/[0.08] rounded-2xl p-6">
               <h2 className="text-lg font-bold text-[#E9DFC9] mb-2">📋 Quick Actions</h2>
               <p className="text-[#E9DFC9]/70 text-sm mb-4">Use the tabs above to manage content.</p>
-              <button onClick={() => setTab("videos")} className="px-5 py-2.5 bg-[#C65A24]/20 text-[#E07B3C] border border-[#C65A24]/30 rounded-xl text-sm font-semibold hover:bg-[#C65A24]/30 transition-all">
+              <button onClick={() => setTab("videos")} className="px-5 py-2.5 bg-[#C65A24]/20 text-[#E07B3C] border border-[#C65A24]/30 rounded-xl text-sm font-bold hover:bg-[#C65A24]/30 transition-all">
                 ➕ Add a Training Video
               </button>
             </div>
@@ -955,7 +955,7 @@ export default function CoachAdminPage() {
                     <span className="text-base">{c.icon}</span>
                     {c.label}
                   </div>
-                  <p className="text-2xl lg:text-3xl font-black text-[#E9DFC9]">${c.value.toFixed(2)}</p>
+                  <p className="text-2xl lg:text-3xl font-extrabold text-[#E9DFC9]">${c.value.toFixed(2)}</p>
                 </div>
               ))}
             </div>

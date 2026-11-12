@@ -199,7 +199,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-[0.95] mb-4"
+            className="text-5xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter leading-[0.95] mb-4"
           >
             FREE Basketball
             <br />
@@ -255,7 +255,7 @@ export default function HomePage() {
         className="max-w-4xl mx-auto px-8 py-10"
       >
         <div className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-center">
-          <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/60 bg-clip-text text-transparent whitespace-nowrap">
+          <span className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/60 bg-clip-text text-transparent whitespace-nowrap">
             4.9/5 Google rating
           </span>
           <span className="hidden sm:block text-[#E9DFC9]/40">·</span>
@@ -311,7 +311,7 @@ export default function HomePage() {
                 <div className="w-14 h-14 bg-[#E9DFC9]/5 rounded-2xl flex items-center justify-center text-2xl mb-6">{p.icon}</div>
                 <h3 className="font-bold text-xl mb-1">{p.title}</h3>
                 <p className="text-[#E9DFC9]/55 text-sm mb-4">{p.who}</p>
-                <p className="text-2xl font-black bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/70 bg-clip-text text-transparent mb-4">{p.price}</p>
+                <p className="text-2xl font-extrabold bg-gradient-to-r from-[#E9DFC9] to-[#C65A24]/70 bg-clip-text text-transparent mb-4">{p.price}</p>
                 <p className="text-[#E9DFC9]/70 text-sm leading-relaxed">{p.desc}</p>
               </motion.div>
             ))}
@@ -365,7 +365,7 @@ export default function HomePage() {
                 transition={{ delay: i * 0.15 }}
                 className="bg-[#E9DFC9]/[0.03] backdrop-blur-xl border border-[#E9DFC9]/[0.08] rounded-2xl p-8"
               >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C65A24] to-[#A34717] flex items-center justify-center font-black text-lg mb-5">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#C65A24] to-[#A34717] flex items-center justify-center font-extrabold text-lg mb-5">
                   {s.step}
                 </div>
                 <h3 className="font-bold text-lg mb-3">{s.title}</h3>

@@ -155,7 +155,7 @@ export default function BookingsPage() {
 
       <div className="max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-4xl md:text-5xl font-black text-[#E9DFC9] mb-2">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#E9DFC9] mb-2">
             BOOK{" "}
             <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">
               COACHING
@@ -329,7 +329,7 @@ export default function BookingsPage() {
                   type="button"
                   onClick={handleRequestSession}
                   disabled={requesting}
-                  className="px-5 py-2 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] hover:from-[#E9DFC9]/25 hover:to-[#C65A24] disabled:opacity-50 text-[#E9DFC9] text-sm font-semibold rounded-xl transition-all"
+                  className="px-5 py-2 bg-gradient-to-r from-[#C65A24] to-[#E07B3C] hover:from-[#E9DFC9]/25 hover:to-[#C65A24] disabled:opacity-50 text-[#E9DFC9] text-sm font-bold rounded-xl transition-all"
                 >
                   {requesting ? "⏳" : "Request"}
                 </button>
@@ -384,7 +384,7 @@ export default function BookingsPage() {
                             href={slot.googleEventLink || getGoogleCalLink(slot)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="shrink-0 px-3 py-2 bg-[#E9DFC9]/5 hover:bg-[#E9DFC9]/10 border border-[#E9DFC9]/10 text-[#E9DFC9] text-xs font-medium rounded-xl transition-all flex items-center gap-1"
+                            className="shrink-0 px-3 py-2 bg-[#E9DFC9]/5 hover:bg-[#E9DFC9]/10 border border-[#E9DFC9]/10 text-[#E9DFC9] text-xs font-bold rounded-xl transition-all flex items-center gap-1"
                           >
                             📅 View in Calendar
                           </a>

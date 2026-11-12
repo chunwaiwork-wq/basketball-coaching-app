@@ -117,7 +117,7 @@ export default function CoachingAdminPage() {
   return (
     <div className="min-h-screen bg-[#171717] p-6 md:p-10">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-black text-[#E9DFC9] mb-2">
+        <h1 className="text-3xl font-extrabold text-[#E9DFC9] mb-2">
           🏀 <span className="bg-gradient-to-r from-[#E9DFC9] to-[#C65A24] bg-clip-text text-transparent">COACH DASHBOARD</span>
         </h1>
         <p className="text-[#E9DFC9]/70 mb-8">Manage your coaching schedule</p>
@@ -174,7 +174,7 @@ export default function CoachingAdminPage() {
             <button
               onClick={createSlots}
               disabled={creating}
-              className="px-6 py-2.5 bg-gradient-to-r from-[#C65A24] to-[#A34717] hover:from-[#C65A24] hover:to-[#C65A24] text-[#E9DFC9] text-sm font-semibold rounded-xl transition-all disabled:opacity-50"
+              className="px-6 py-2.5 bg-gradient-to-r from-[#C65A24] to-[#A34717] hover:from-[#C65A24] hover:to-[#C65A24] text-[#E9DFC9] text-sm font-bold rounded-xl transition-all disabled:opacity-50"
             >
               {creating ? "⏳" : "➕ Create"}
             </button>
@@ -218,24 +218,24 @@ export default function CoachingAdminPage() {
                     </span>
                   )}
                   {slot.googleEventLink && (
-                    <a href={slot.googleEventLink} target="_blank" rel="noopener noreferrer" className="text-[#E07B3C] text-xs font-medium bg-[#C65A24]/10 px-2 py-1 rounded-lg hover:bg-[#C65A24]/20 transition-all">
+                    <a href={slot.googleEventLink} target="_blank" rel="noopener noreferrer" className="text-[#E07B3C] text-xs font-bold bg-[#C65A24]/10 px-2 py-1 rounded-lg hover:bg-[#C65A24]/20 transition-all">
                       📅 View
                     </a>
                   )}
                 </div>
                 <div className="flex gap-2 shrink-0">
                   {slot.status === "booked" && (
-                    <button onClick={() => updateStatus(slot.id, "confirmed")} className="px-3 py-1.5 bg-[#A34717]/20 hover:bg-[#A34717]/30 text-[#E07B3C] text-xs font-semibold rounded-lg transition-all">
+                    <button onClick={() => updateStatus(slot.id, "confirmed")} className="px-3 py-1.5 bg-[#A34717]/20 hover:bg-[#A34717]/30 text-[#E07B3C] text-xs font-bold rounded-lg transition-all">
                       ✓ Confirm
                     </button>
                   )}
                   {slot.status === "confirmed" && (
-                    <button onClick={() => updateStatus(slot.id, "completed")} className="px-3 py-1.5 bg-[#C65A24]/20 hover:bg-[#C65A24]/30 text-[#E07B3C] text-xs font-semibold rounded-lg transition-all">
+                    <button onClick={() => updateStatus(slot.id, "completed")} className="px-3 py-1.5 bg-[#C65A24]/20 hover:bg-[#C65A24]/30 text-[#E07B3C] text-xs font-bold rounded-lg transition-all">
                       Done
                     </button>
                   )}
                   {(slot.status === "available" || slot.status === "booked") && (
-                    <button onClick={() => deleteSlot(slot.id)} className="px-3 py-1.5 bg-red-600/20 hover:bg-[#A34717]/30 text-[#E07B3C] text-xs font-semibold rounded-lg transition-all">
+                    <button onClick={() => deleteSlot(slot.id)} className="px-3 py-1.5 bg-red-600/20 hover:bg-[#A34717]/30 text-[#E07B3C] text-xs font-bold rounded-lg transition-all">
                       ✕
                     </button>
                   )}

@@ -99,7 +99,7 @@ export default function SignupPage() {
           </span>
         </Link>
 
-        <h1 className="text-4xl font-black text-[#E9DFC9] mb-4">Create your account</h1>
+        <h1 className="text-4xl font-extrabold text-[#E9DFC9] mb-4">Create your account</h1>
         <p className="text-[#E9DFC9]/70 text-lg max-w-md leading-relaxed mb-10">
           Fill in your details once — then access your training videos, sessions and progress in one place.
         </p>
@@ -140,7 +140,7 @@ export default function SignupPage() {
             <div className="w-14 h-14 bg-gradient-to-br from-[#C65A24] to-[#A34717] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[#C65A24]/25">
               <span className="text-2xl">🏀</span>
             </div>
-            <h1 className="text-2xl font-black text-[#E9DFC9]">413 OPENCOURT</h1>
+            <h1 className="text-2xl font-extrabold text-[#E9DFC9]">413 OPENCOURT</h1>
           </div>
 
           <h2 className="text-3xl font-bold text-[#E9DFC9] mb-2">Create an account</h2>

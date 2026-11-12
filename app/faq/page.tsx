@@ -244,13 +244,13 @@ export default function FaqPage() {
             <a
               href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20have%20a%20question%20about%20413OPENCOURT%20🏀"
               target="_blank"
-              className="px-6 py-3 bg-[#E9DFC9]/10 border border-[#E9DFC9]/20 rounded-full text-sm font-semibold hover:bg-[#E9DFC9]/20 transition-all"
+              className="px-6 py-3 bg-[#E9DFC9]/10 border border-[#E9DFC9]/20 rounded-full text-sm font-bold hover:bg-[#E9DFC9]/20 transition-all"
             >
               📱 Chat on WhatsApp
             </a>
             <a
               href="/rates"
-              className="px-6 py-3 bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 rounded-full text-sm font-semibold hover:bg-[#E9DFC9]/10 transition-all"
+              className="px-6 py-3 bg-[#E9DFC9]/5 border border-[#E9DFC9]/10 rounded-full text-sm font-bold hover:bg-[#E9DFC9]/10 transition-all"
             >
               💰 View Pricing
             </a>

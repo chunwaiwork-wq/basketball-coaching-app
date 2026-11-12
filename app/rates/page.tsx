@@ -88,7 +88,7 @@ function PricingTable({ title, emoji, items, accentColor }: { title: string; emo
               <p className="text-sm text-[#E9DFC9]/70 mt-0.5">{item.detail}</p>
             </div>
             <div className="text-right flex-shrink-0">
-              <span className="text-2xl font-black text-[#E9DFC9]">{item.price}</span>
+              <span className="text-2xl font-extrabold text-[#E9DFC9]">{item.price}</span>
               <span className="text-sm text-[#E9DFC9]/70 ml-1">{item.per}</span>
             </div>
           </div>
@@ -220,7 +220,7 @@ export default function RatesPage() {
           <a
             href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20free%20trial%20session%20🔥"
             target="_blank"
-            className="inline-block mt-4 px-6 py-3 bg-[#C65A24]/20 border border-[#C65A24]/40 rounded-full text-sm font-semibold text-[#E07B3C] hover:bg-[#C65A24]/30 transition-all"
+            className="inline-block mt-4 px-6 py-3 bg-[#C65A24]/20 border border-[#C65A24]/40 rounded-full text-sm font-bold text-[#E07B3C] hover:bg-[#C65A24]/30 transition-all"
           >
             Book Free Trial →
           </a>
@@ -256,7 +256,7 @@ export default function RatesPage() {
             <a
               href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20book%20a%20free%20trial%20🔥"
               target="_blank"
-              className="px-8 py-3 bg-[#E9DFC9]/10 border border-[#E9DFC9]/20 rounded-full text-sm font-semibold hover:bg-[#E9DFC9]/20 transition-all"
+              className="px-8 py-3 bg-[#E9DFC9]/10 border border-[#E9DFC9]/20 rounded-full text-sm font-bold hover:bg-[#E9DFC9]/20 transition-all"
             >
               📱 Book via WhatsApp
             </a>

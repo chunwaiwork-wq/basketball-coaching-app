@@ -178,7 +178,7 @@ export default function TrialChat({ onClose }: TrialChatProps) {
               </p>
               <button
                 onClick={handleStart}
-                className="px-8 py-3 bg-[#C65A24] hover:bg-[#A34717] text-[#E9DFC9] rounded-full font-semibold text-sm transition-colors"
+                className="px-8 py-3 bg-[#C65A24] hover:bg-[#A34717] text-[#E9DFC9] rounded-full font-bold text-sm transition-colors"
               >
                 Start
               </button>
