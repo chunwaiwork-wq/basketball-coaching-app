@@ -199,14 +199,23 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-8"
+            className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-[0.95] mb-4"
           >
-            TRAIN LIKE
+            FREE Basketball
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-red-400 bg-clip-text text-transparent">
-              A PRO
+              Trial Lesson*
             </span>
           </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-xs md:text-sm text-gray-500 tracking-wider mb-8"
+          >
+            For Selected Locations in Singapore
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
