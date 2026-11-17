@@ -62,6 +62,35 @@ export async function POST(request: Request) {
   }
 }
 
+// PATCH /api/coach/admin/students — rename a student
+// body: { pin: coachPin, studentId, name }
+export async function PATCH(request: Request) {
+  try {
+    const { pin, studentId, name } = await request.json();
+
+    const coach = await verifyCoach(pin);
+    if (!coach) {
+      return NextResponse.json({ error: "Unauthorized — coach PIN required" }, { status: 401 });
+    }
+    if (!studentId) {
+      return NextResponse.json({ error: "studentId required" }, { status: 400 });
+    }
+    if (!name || !name.trim()) {
+      return NextResponse.json({ error: "Student name is required" }, { status: 400 });
+    }
+
+    const student = await prisma.student.update({
+      where: { id: parseInt(studentId) },
+      data: { name: name.trim() },
+    });
+
+    return NextResponse.json({ success: true, student });
+  } catch (error) {
+    console.error("Coach rename student error:", error);
+    return NextResponse.json({ error: "Failed to rename student" }, { status: 500 });
+  }
+}
+
 // DELETE /api/coach/admin/students — remove a student (and their videos/sessions)
 // body: { pin: coachPin, studentId }
 export async function DELETE(request: Request) {
