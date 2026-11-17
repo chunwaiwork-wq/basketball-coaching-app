@@ -9,6 +9,7 @@ interface Lead {
   contacted: boolean;
   notes: string | null;
   createdAt: string;
+  student?: { id: number; name: string; pin: string; packageSize: number | null } | null;
 }
 
 export default function LeadsCRMPage() {
@@ -239,7 +240,14 @@ export default function LeadsCRMPage() {
                             <div className="w-9 h-9 bg-gradient-to-br from-[#C65A24]/20 to-[#C65A24]/10 rounded-xl flex items-center justify-center text-sm">
                               {lead.name.charAt(0).toUpperCase()}
                             </div>
-                            <span className="text-[#E9DFC9] font-medium">{lead.name}</span>
+                            <div className="flex flex-col items-start gap-1">
+                              <span className="text-[#E9DFC9] font-medium">{lead.name}</span>
+                              {lead.student && (
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#C65A24]/15 text-[#E07B3C] border border-[#C65A24]/30">
+                                  🎓 Student · PIN {lead.student.pin}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 text-[#E9DFC9]/70">{lead.email}</td>
@@ -306,6 +314,11 @@ export default function LeadsCRMPage() {
                         <div>
                           <p className="text-[#E9DFC9] font-medium text-sm">{lead.name}</p>
                           <p className="text-[#E9DFC9]/55 text-xs">{lead.email}</p>
+                          {lead.student && (
+                            <span className="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#C65A24]/15 text-[#E07B3C] border border-[#C65A24]/30">
+                              🎓 Student · PIN {lead.student.pin}
+                            </span>
+                          )}
                         </div>
                       </div>
                       <span
@@ -399,6 +412,21 @@ export default function LeadsCRMPage() {
                   minute: "2-digit",
                 })}
               </p>
+            </div>
+
+            <div className="mb-4">
+              <p className="text-[#E9DFC9]/70 text-xs font-semibold uppercase tracking-wider mb-2">Student Account</p>
+              {selectedLead.student ? (
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-[#E07B3C]">🎓</span>
+                  <span className="text-[#E9DFC9]/85">
+                    {selectedLead.student.name} · PIN{" "}
+                    <span className="font-bold text-[#E9DFC9]">{selectedLead.student.pin}</span>
+                  </span>
+                </div>
+              ) : (
+                <p className="text-[#E9DFC9]/40 text-sm">No student account linked yet.</p>
+              )}
             </div>
 
             <div className="mb-4">

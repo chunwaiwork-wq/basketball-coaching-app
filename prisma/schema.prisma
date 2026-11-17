@@ -30,6 +30,7 @@ model Student {
   bookings    CoachingSlot[]  // used when booking without User link
   sessions    SessionRecord[]
   payments    Payment[]
+  lead        Lead?           // lead record this student came from, if any
 }
 
 model Payment {
@@ -64,6 +65,8 @@ model Lead {
   contacted Boolean  @default(false)
   notes     String?
   createdAt DateTime @default(now())
+  studentId Int?     @unique                 // linked student account, once they sign up
+  student   Student? @relation(fields: [studentId], references: [id], onDelete: SetNull)
 }
 
 model Video {

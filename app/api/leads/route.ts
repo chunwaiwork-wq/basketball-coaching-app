@@ -22,6 +22,9 @@ export async function GET(request: Request) {
     const leads = await prisma.lead.findMany({
       where,
       orderBy: { createdAt: "desc" },
+      include: {
+        student: { select: { id: true, name: true, pin: true, packageSize: true } },
+      },
     });
 
     return NextResponse.json({ leads });
@@ -60,7 +63,7 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const { id, contacted, notes } = await request.json();
+    const { id, contacted, notes, studentId } = await request.json();
 
     if (!id) {
       return NextResponse.json(
@@ -72,6 +75,10 @@ export async function PATCH(request: Request) {
     const updateData: any = {};
     if (contacted !== undefined) updateData.contacted = contacted;
     if (notes !== undefined) updateData.notes = notes;
+    if (studentId !== undefined) {
+      updateData.studentId =
+        studentId === null || studentId === "" ? null : parseInt(studentId);
+    }
 
     const lead = await prisma.lead.update({
       where: { id: parseInt(id) },
