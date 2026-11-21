@@ -10,6 +10,7 @@ const LOCATIONS = [
   { name: "Khatib", slug: "khatib" },
   { name: "Kembangan", slug: "kembangan" },
   { name: "Boon Keng", slug: "boon-keng" },
+  { name: "Kovan", slug: "kovan" },
 ];
 
 const BOOK_TRIAL_HREF =
@@ -361,7 +362,7 @@ export default function HomePage() {
             className="text-lg md:text-xl text-[#E9DFC9]/70 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             <span className="text-[#E9DFC9] font-semibold">FREE 60-minute basketball skills assessment</span>,
-            for kids and adults starting from zero. Train at Tampines, Khatib, Kembangan or Boon Keng.
+            for kids and adults starting from zero. Train at Tampines, Khatib, Kembangan, Boon Keng or Kovan.
           </motion.p>
 
           <motion.div
@@ -474,7 +475,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Where we train — links to the four location pages */}
+          {/* Where we train — links to the location pages */}
           <div className="mt-12 text-center">
             <p className="text-[#E9DFC9]/55 text-xs uppercase tracking-[0.2em] mb-4">Where we train</p>
             <div className="flex flex-wrap justify-center gap-3">
@@ -868,7 +869,7 @@ export default function HomePage() {
         >
           <h2 className="text-4xl font-bold mb-4">READY TO SEE WHERE YOU&apos;RE AT?</h2>
           <p className="text-[#E9DFC9]/70 mb-8">
-            Book your free 60-minute skills assessment at Tampines, Khatib, Kembangan or Boon Keng.
+            Book your free 60-minute skills assessment at Tampines, Khatib, Kembangan, Boon Keng or Kovan.
             No payment details needed.
           </p>
           <motion.a

@@ -9,6 +9,7 @@ export const LOCATIONS = [
   { name: "Khatib", slug: "khatib" },
   { name: "Kembangan", slug: "kembangan" },
   { name: "Boon Keng", slug: "boon-keng" },
+  { name: "Kovan", slug: "kovan" },
 ];
 
 function bookHref(location: string) {
@@ -54,6 +55,12 @@ const LOCATION_DETAILS: Record<string, LocationDetail> = {
     venues: [{ name: "McNair Sheltered Basketball Court", note: "Sheltered court" }],
     image: "/locations/boon-keng.jpg",
     imageAlt: "McNair Sheltered Basketball Court in Boon Keng, Singapore",
+  },
+  kovan: {
+    headline: "Kovan Basketball Court",
+    venues: [{ name: "Kovan Basketball Court", note: "Outdoor court · floodlit" }],
+    image: "/locations/kovan.jpg",
+    imageAlt: "Floodlit outdoor basketball court in Kovan, Singapore",
   },
 };
 
