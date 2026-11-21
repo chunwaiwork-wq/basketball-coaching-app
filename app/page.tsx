@@ -272,6 +272,12 @@ export default function HomePage() {
 
           <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
             <Link href="/rates" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">RATES</Link>
+            <Link href="/merchandise" className="relative text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">
+              MERCHANDISE
+              <span className="absolute -top-2.5 -right-5 px-1.5 py-[3px] rounded-full bg-[#C65A24] text-[#E9DFC9] text-[8px] font-extrabold tracking-wider leading-none">
+                SOON
+              </span>
+            </Link>
             <a href="#faqs" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">FAQs</a>
             <a href="#testimonials" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">TESTIMONIALS</a>
             <a href="#guide" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors">FREE GUIDE</a>
@@ -298,6 +304,10 @@ export default function HomePage() {
             className="md:hidden bg-[#171717]/95 backdrop-blur-xl border-b border-[#E9DFC9]/10 px-4 py-4 flex flex-col"
           >
             <Link href="/rates" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">💰 RATES</Link>
+            <Link href="/merchandise" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors flex items-center gap-2">
+              🛒 MERCHANDISE
+              <span className="px-2 py-0.5 rounded-full bg-[#C65A24] text-[#E9DFC9] text-[9px] font-extrabold tracking-wider">SOON</span>
+            </Link>
             <a href="#faqs" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">❓ FAQs</a>
             <a href="#testimonials" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">⭐ TESTIMONIALS</a>
             <a href="#guide" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">📖 FREE GUIDE</a>
@@ -938,6 +948,7 @@ export default function HomePage() {
           <div className="flex gap-6">
             <a href="#features" className="hover:text-[#E9DFC9]/85 transition-colors">Features</a>
             <a href="#testimonials" className="hover:text-[#E9DFC9]/85 transition-colors">Reviews</a>
+            <Link href="/merchandise" className="hover:text-[#E9DFC9]/85 transition-colors">Merchandise</Link>
             <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial." className="hover:text-[#E9DFC9]/85 transition-colors">Free Trial</a>
             <a href="#guide" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors hidden md:block">FREE GUIDE</a>
             <a href="/auth/login" className="hover:text-[#E9DFC9]/85 transition-colors">Coach Login</a>

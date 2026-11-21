@@ -374,6 +374,7 @@ export default function LocationPage({ location, slug }: { location: string; slu
             <div className="flex gap-6">
               <Link href="/" className="hover:text-[#E9DFC9]/85 transition-colors">Home</Link>
               <Link href="/rates" className="hover:text-[#E9DFC9]/85 transition-colors">Rates</Link>
+              <Link href="/merchandise" className="hover:text-[#E9DFC9]/85 transition-colors">Merchandise</Link>
               <Link href="/faq" className="hover:text-[#E9DFC9]/85 transition-colors">FAQs</Link>
               <Link href="/auth/login" className="hover:text-[#E9DFC9]/85 transition-colors">Coach Login</Link>
             </div>
