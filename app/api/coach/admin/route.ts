@@ -22,7 +22,10 @@ export async function GET(req: Request) {
     const [students, videos, bookings] = await Promise.all([
       prisma.student.findMany({
         orderBy: { id: "asc" },
-        include: { _count: { select: { videos: true, bookings: true } } },
+        include: {
+          _count: { select: { videos: true, bookings: true } },
+          user: { select: { id: true, email: true, name: true, role: true } },
+        },
       }),
       prisma.video.findMany({
         orderBy: { createdAt: "desc" },
