@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+import { sendEmail } from "../../../../../lib/email";
 
 const COACH_PIN = "2507";
 
-// POST /api/coach/admin/test-email — coach-only Brevo diagnostic
+// POST /api/coach/admin/test-email — coach-only email diagnostic
 // body: { pin: coachPin, to?: "someone@example.com" }
-// Reports whether the API key exists/validates and what Brevo returns when we
-// actually try to send. Never returns the key itself.
+// Sends a real test message through whichever provider is configured and
+// reports the provider, status and raw response body. Never returns secrets.
 export async function POST(request: Request) {
   try {
     const { pin, to } = await request.json();
@@ -14,57 +15,33 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized — coach PIN required" }, { status: 401 });
     }
 
-    const apiKey = process.env.BREVO_API_KEY;
-    const result: Record<string, unknown> = {
-      keyPresent: !!apiKey,
-      keyLength: apiKey ? apiKey.length : 0,
-      keyPrefix: apiKey ? `${apiKey.slice(0, 6)}…` : null,
-      sender: "413opencourt@gmail.com",
+    const target = typeof to === "string" && to.includes("@") ? to : "413opencourt@gmail.com";
+
+    const env = {
+      resendKeyPresent: !!process.env.RESEND_API_KEY,
+      resendKeyPrefix: process.env.RESEND_API_KEY
+        ? `${process.env.RESEND_API_KEY.slice(0, 5)}…`
+        : null,
+      brevoKeyPresent: !!process.env.BREVO_API_KEY,
+      from: process.env.EMAIL_FROM || "413OPENCOURT <noreply@413opencourt.com> (default)",
     };
 
-    if (!apiKey) {
-      result.verdict = "BREVO_API_KEY is not set in this environment — no email can be sent.";
-      return NextResponse.json(result);
-    }
+    const result = await sendEmail({
+      to: target,
+      subject: "413OPENCOURT email test",
+      html: `<div style="font-family:Arial,sans-serif"><h2>Sending works ✅</h2><p>Diagnostic test from your 413OPENCOURT site.</p><p>Provider: <strong>${process.env.RESEND_API_KEY ? "Resend" : "Brevo"}</strong></p></div>`,
+    });
 
-    // 1) Is the key itself valid?
-    try {
-      const acc = await fetch("https://api.brevo.com/v3/account", {
-        headers: { "api-key": apiKey, accept: "application/json" },
-        cache: "no-store",
-      });
-      const accBody = await acc.text();
-      result.accountCheck = { status: acc.status, body: accBody.slice(0, 600) };
-    } catch (err: any) {
-      result.accountCheck = { status: 0, body: `fetch failed: ${err?.message || err}` };
-    }
-
-    // 2) Can we actually send?
-    const target = typeof to === "string" && to.includes("@") ? to : "413opencourt@gmail.com";
-    try {
-      const res = await fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-        headers: { "api-key": apiKey, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
-          to: [{ email: target }],
-          subject: "413OPENCOURT email test",
-          htmlContent:
-            '<div style="font-family:Arial,sans-serif"><h2>Sending works ✅</h2><p>This is a diagnostic test from your 413OPENCOURT site.</p></div>',
-        }),
-      });
-      const body = await res.text();
-      result.sendCheck = {
+    return NextResponse.json({
+      env,
+      sending: {
         to: target,
-        status: res.status,
-        ok: res.ok,
-        body: body.slice(0, 900),
-      };
-    } catch (err: any) {
-      result.sendCheck = { to: target, status: 0, ok: false, body: `fetch failed: ${err?.message || err}` };
-    }
-
-    return NextResponse.json(result);
+        provider: result.provider,
+        status: result.status,
+        ok: result.ok,
+        response: result.body.slice(0, 900),
+      },
+    });
   } catch (error) {
     console.error("test-email error:", error);
     return NextResponse.json({ error: "Diagnostic failed" }, { status: 500 });

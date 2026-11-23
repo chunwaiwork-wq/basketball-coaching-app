@@ -1,5 +1,97 @@
 const TO_YOU = 214421742; // This Telegram chat
 
+// ── Provider layer ────────────────────────────────────────────────────
+// Uses Resend when RESEND_API_KEY is set, otherwise falls back to Brevo.
+// Sender is configurable with EMAIL_FROM (must be a verified domain/address
+// on the provider you're using).
+
+const DEFAULT_FROM = "413OPENCOURT <noreply@413opencourt.com>";
+
+type SendResult = {
+  ok: boolean;
+  provider: "resend" | "brevo" | "none";
+  status: number;
+  body: string;
+};
+
+type Attachment = { filename: string; content: string }; // content = base64
+
+export async function sendEmail(opts: {
+  to: string;
+  toName?: string;
+  subject: string;
+  html: string;
+  attachments?: Attachment[];
+}): Promise<SendResult> {
+  const from = process.env.EMAIL_FROM || DEFAULT_FROM;
+  const resendKey = process.env.RESEND_API_KEY;
+
+  // ── Resend ──
+  if (resendKey) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from,
+          to: [opts.to],
+          subject: opts.subject,
+          html: opts.html,
+          ...(opts.attachments?.length
+            ? { attachments: opts.attachments.map((a) => ({ filename: a.filename, content: a.content })) }
+            : {}),
+        }),
+      });
+      const body = await res.text();
+      if (res.ok) {
+        console.log(`✅ Email sent via Resend to ${opts.to}`);
+      } else {
+        console.error("❌ Resend error:", res.status, body);
+      }
+      return { ok: res.ok, provider: "resend", status: res.status, body };
+    } catch (err: any) {
+      console.error("❌ Resend fetch failed:", err);
+      return { ok: false, provider: "resend", status: 0, body: String(err?.message || err) };
+    }
+  }
+
+  // ── Brevo (fallback) ──
+  const brevoKey = process.env.BREVO_API_KEY;
+  if (brevoKey) {
+    try {
+      const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: { "api-key": brevoKey, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
+          to: [{ email: opts.to, ...(opts.toName ? { name: opts.toName } : {}) }],
+          subject: opts.subject,
+          htmlContent: opts.html,
+          ...(opts.attachments?.length
+            ? { attachment: opts.attachments.map((a) => ({ name: a.filename, content: a.content })) }
+            : {}),
+        }),
+      });
+      const body = await res.text();
+      if (res.ok) {
+        console.log(`✅ Email sent via Brevo to ${opts.to}`);
+      } else {
+        console.error("❌ Brevo error:", res.status, body);
+      }
+      return { ok: res.ok, provider: "brevo", status: res.status, body };
+    } catch (err: any) {
+      console.error("❌ Brevo fetch failed:", err);
+      return { ok: false, provider: "brevo", status: 0, body: String(err?.message || err) };
+    }
+  }
+
+  console.error("❌ No email provider configured (need RESEND_API_KEY or BREVO_API_KEY)");
+  return { ok: false, provider: "none", status: 0, body: "No email provider configured" };
+}
+
 // ── Exported: notify the business owner ───────────────────────────────
 
 export async function sendLeadNotification(name: string, email: string) {
@@ -21,24 +113,24 @@ export async function sendLeadNotification(name: string, email: string) {
 // ── Exported: email the PDF guide directly to the lead ───────────────
 
 export async function sendGuideToLead(name: string, email: string) {
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) {
-    console.log("ℹ️  BREVO_API_KEY not set — can't email guide to lead");
-    return;
-  }
-
   console.log(`📧 Sending free shooting guide to ${name} <${email}>`);
 
   // Read the PDF from the filesystem
   const fs = await import("fs");
   const path = await import("path");
   const pdfPath = path.join(process.cwd(), "public", "free-shooting-guide.pdf");
-  const pdfBuffer = fs.readFileSync(pdfPath);
-  const pdfBase64 = pdfBuffer.toString("base64");
+
+  let attachments: Attachment[] | undefined;
+  try {
+    const pdfBase64 = fs.readFileSync(pdfPath).toString("base64");
+    attachments = [{ filename: "free-shooting-guide.pdf", content: pdfBase64 }];
+  } catch (err) {
+    console.error("Could not read free-shooting-guide.pdf — sending without attachment:", err);
+  }
 
   const html = [
     `<div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto;">`,
-    `  <h2 style="color: #e53e3e;">🏀 Here's Your Free Shooting Guide!</h2>`,
+    `  <h2 style="color: #C65A24;">🏀 Here's Your Free Shooting Guide!</h2>`,
     `  <p>Hey ${name},</p>`,
     `  <p>Thanks for signing up! Your free shooting guide is attached to this email.</p>`,
     `  <p>Practice these drills and watch your game improve 💪</p>`,
@@ -47,32 +139,13 @@ export async function sendGuideToLead(name: string, email: string) {
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": apiKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
-      to: [{ email, name }],
-      subject: "Your Free Shooting Guide 🏀",
-      htmlContent: html,
-      attachment: [
-        {
-          name: "free-shooting-guide.pdf",
-          content: pdfBase64,
-        },
-      ],
-    }),
+  await sendEmail({
+    to: email,
+    toName: name,
+    subject: "Your Free Shooting Guide 🏀",
+    html,
+    attachments,
   });
-
-  if (res.ok) {
-    console.log("✅ Guide emailed to lead via Brevo");
-  } else {
-    const err = await res.text();
-    console.error("❌ Brevo guide email error:", res.status, err);
-  }
 }
 
 // ── Exported: password reset link ─────────────────────────────────────
@@ -81,13 +154,7 @@ export async function sendPasswordResetEmail(
   name: string,
   email: string,
   resetUrl: string
-) {
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) {
-    console.error("❌ BREVO_API_KEY not set — can't send password reset email");
-    return false;
-  }
-
+): Promise<boolean> {
   const html = [
     `<div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto; background:#171717; padding:32px; border-radius:16px;">`,
     `  <h2 style="color:#E9DFC9; margin:0 0 16px;">Reset your password 🏀</h2>`,
@@ -102,22 +169,14 @@ export async function sendPasswordResetEmail(
     `</div>`,
   ].join("\n");
 
-  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: { "api-key": apiKey, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
-      to: [{ email, name }],
-      subject: "Reset your 413OPENCOURT password",
-      htmlContent: html,
-    }),
+  const result = await sendEmail({
+    to: email,
+    toName: name,
+    subject: "Reset your 413OPENCOURT password",
+    html,
   });
 
-  if (!res.ok) {
-    console.error("❌ Brevo reset email error:", res.status, await res.text());
-    return false;
-  }
-  return true;
+  return result.ok;
 }
 
 // ── Telegram (notify owner) ──────────────────────────────────────────
@@ -156,4 +215,3 @@ async function sendTelegram(name: string, email: string, timestamp: string) {
     console.error("Telegram error:", res.status, body);
   }
 }
-
