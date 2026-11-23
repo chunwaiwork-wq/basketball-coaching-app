@@ -47,9 +47,14 @@ export async function POST(request: Request) {
       const origin = new URL(request.url).origin;
       const resetUrl = `${origin}/auth/reset?token=${token}`;
 
-      sendPasswordResetEmail(user.name, user.email, resetUrl).catch((err) =>
-        console.error("Password reset email failed:", err)
-      );
+      // Must be awaited: on serverless, fire-and-forget work is killed as soon
+      // as the response is returned, so the email would never actually send.
+      try {
+        const sent = await sendPasswordResetEmail(user.name, user.email, resetUrl);
+        if (!sent) console.error("Password reset email was not accepted by Brevo");
+      } catch (err) {
+        console.error("Password reset email failed:", err);
+      }
     }
 
     return generic;
