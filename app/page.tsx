@@ -286,6 +286,12 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
+            <Link
+              href="/auth/forgot"
+              className="hidden lg:block text-sm text-[#E9DFC9]/55 hover:text-[#E9DFC9] transition-colors whitespace-nowrap"
+            >
+              Forgot password?
+            </Link>
             <motion.a
               href="/auth/login"
               whileHover={{ scale: 1.05 }}
@@ -313,6 +319,7 @@ export default function HomePage() {
             <a href="#testimonials" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">⭐ TESTIMONIALS</a>
             <a href="#guide" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">📖 FREE GUIDE</a>
             <a href={BOOK_TRIAL_HREF} target="_blank" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">🎁 FREE TRIAL</a>
+            <Link href="/auth/forgot" onClick={() => setMobileOpen(false)} className="py-4 px-4 rounded-xl text-base text-[#E9DFC9]/85 hover:text-[#E9DFC9] hover:bg-[#E9DFC9]/[0.06] transition-colors">🔑 RESET PASSWORD</Link>
           </motion.div>
         )}
       </motion.nav>
@@ -950,6 +957,7 @@ export default function HomePage() {
             <a href="#features" className="hover:text-[#E9DFC9]/85 transition-colors">Features</a>
             <a href="#testimonials" className="hover:text-[#E9DFC9]/85 transition-colors">Reviews</a>
             <Link href="/merchandise" className="hover:text-[#E9DFC9]/85 transition-colors">Merchandise</Link>
+            <Link href="/auth/forgot" className="hover:text-[#E9DFC9]/85 transition-colors">Reset Password</Link>
             <a href="https://wa.me/6591885348?text=Hi%20Coach!%20I%20want%20to%20sign%20up%20for%20a%20free%20trial." className="hover:text-[#E9DFC9]/85 transition-colors">Free Trial</a>
             <a href="#guide" className="text-sm text-[#E9DFC9]/70 hover:text-[#E9DFC9] transition-colors hidden md:block">FREE GUIDE</a>
             <a href="/auth/login" className="hover:text-[#E9DFC9]/85 transition-colors">Coach Login</a>

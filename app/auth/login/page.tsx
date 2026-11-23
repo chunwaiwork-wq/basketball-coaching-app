@@ -287,6 +287,15 @@ function LoginContent() {
               </div>
             </div>
 
+            <div className="text-right -mt-2">
+              <a
+                href="/auth/forgot"
+                className="text-sm text-[#E07B3C] hover:text-[#E07B3C]/80 font-medium transition-colors"
+              >
+                Forgot password?
+              </a>
+            </div>
+
             <AnimatePresence>
               {error && (
                 <motion.p

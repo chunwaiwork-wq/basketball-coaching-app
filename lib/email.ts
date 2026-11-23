@@ -75,6 +75,51 @@ export async function sendGuideToLead(name: string, email: string) {
   }
 }
 
+// ── Exported: password reset link ─────────────────────────────────────
+
+export async function sendPasswordResetEmail(
+  name: string,
+  email: string,
+  resetUrl: string
+) {
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) {
+    console.error("❌ BREVO_API_KEY not set — can't send password reset email");
+    return false;
+  }
+
+  const html = [
+    `<div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto; background:#171717; padding:32px; border-radius:16px;">`,
+    `  <h2 style="color:#E9DFC9; margin:0 0 16px;">Reset your password 🏀</h2>`,
+    `  <p style="color:#E9DFC9; opacity:.8; line-height:1.6;">Hi ${name},</p>`,
+    `  <p style="color:#E9DFC9; opacity:.8; line-height:1.6;">We got a request to reset the password for your 413OPENCOURT account. Tap the button below to choose a new one.</p>`,
+    `  <p style="margin:28px 0;">`,
+    `    <a href="${resetUrl}" style="background:#C65A24; color:#E9DFC9; padding:14px 28px; border-radius:999px; text-decoration:none; font-weight:bold; display:inline-block;">Set a new password</a>`,
+    `  </p>`,
+    `  <p style="color:#E9DFC9; opacity:.55; font-size:13px; line-height:1.6;">This link expires in 30 minutes and can only be used once. If you didn't ask for this, you can safely ignore this email — your password won't change.</p>`,
+    `  <p style="color:#E9DFC9; opacity:.35; font-size:11px; word-break:break-all;">If the button doesn't work, paste this into your browser:<br/>${resetUrl}</p>`,
+    `  <p style="color:#E9DFC9; opacity:.55; font-size:13px; margin-top:28px;">— 413OPENCOURT</p>`,
+    `</div>`,
+  ].join("\n");
+
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: { "api-key": apiKey, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      sender: { name: "413OPENCOURT", email: "413opencourt@gmail.com" },
+      to: [{ email, name }],
+      subject: "Reset your 413OPENCOURT password",
+      htmlContent: html,
+    }),
+  });
+
+  if (!res.ok) {
+    console.error("❌ Brevo reset email error:", res.status, await res.text());
+    return false;
+  }
+  return true;
+}
+
 // ── Telegram (notify owner) ──────────────────────────────────────────
 
 async function sendTelegram(name: string, email: string, timestamp: string) {

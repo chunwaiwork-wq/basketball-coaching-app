@@ -62,11 +62,12 @@ export async function POST(request: Request) {
   }
 }
 
-// PATCH /api/coach/admin/students — rename a student
-// body: { pin: coachPin, studentId, name }
+// PATCH /api/coach/admin/students — update a student
+// body: { pin: coachPin, studentId, name?, studentPin? }
+// studentPin resets a student's login PIN (PIN accounts can't use email resets).
 export async function PATCH(request: Request) {
   try {
-    const { pin, studentId, name } = await request.json();
+    const { pin, studentId, name, studentPin } = await request.json();
 
     const coach = await verifyCoach(pin);
     if (!coach) {
@@ -75,19 +76,43 @@ export async function PATCH(request: Request) {
     if (!studentId) {
       return NextResponse.json({ error: "studentId required" }, { status: 400 });
     }
-    if (!name || !name.trim()) {
-      return NextResponse.json({ error: "Student name is required" }, { status: 400 });
+
+    const updates: { name?: string; pin?: string } = {};
+
+    if (name !== undefined) {
+      if (!name || !String(name).trim()) {
+        return NextResponse.json({ error: "Student name cannot be empty" }, { status: 400 });
+      }
+      updates.name = String(name).trim();
+    }
+
+    if (studentPin !== undefined) {
+      if (!/^\d{4}$/.test(String(studentPin))) {
+        return NextResponse.json({ error: "studentPin must be exactly 4 digits" }, { status: 400 });
+      }
+      const dup = await prisma.student.findUnique({ where: { pin: String(studentPin) } });
+      if (dup && dup.id !== parseInt(studentId)) {
+        return NextResponse.json(
+          { error: `PIN ${studentPin} is already used by ${dup.name}` },
+          { status: 409 }
+        );
+      }
+      updates.pin = String(studentPin);
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
     }
 
     const student = await prisma.student.update({
       where: { id: parseInt(studentId) },
-      data: { name: name.trim() },
+      data: updates,
     });
 
     return NextResponse.json({ success: true, student });
   } catch (error) {
-    console.error("Coach rename student error:", error);
-    return NextResponse.json({ error: "Failed to rename student" }, { status: 500 });
+    console.error("Coach update student error:", error);
+    return NextResponse.json({ error: "Failed to update student" }, { status: 500 });
   }
 }
 

@@ -16,6 +16,19 @@ model User {
   createdAt DateTime @default(now())
   student   Student?
   bookings  CoachingSlot[]
+  passwordResets PasswordReset[]
+}
+
+model PasswordReset {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique   // sha256 of the emailed token — never store the token itself
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
 }
 
 model Student {
